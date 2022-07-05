@@ -3,43 +3,16 @@
     <div class="button-box clearflex">
       <el-button size="mini" type="primary" icon="el-icon-plus" @click="addAuthority('0')">新增角色</el-button>
     </div>
-    <el-table
-      :data="tableData"
-      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
-      border
-      row-key="authorityId"
-      stripe
-      style="width: 100%"
-    >
+    <el-table :data="tableData" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" border row-key="authorityId" stripe style="width: 100%">
       <el-table-column label="角色id" min-width="180" prop="authorityId" />
       <el-table-column label="角色名称" min-width="180" prop="authorityName" />
       <el-table-column fixed="right" label="操作" width="460">
         <template slot-scope="scope">
           <el-button size="mini" type="primary" @click="opdendrawer(scope.row)">设置权限</el-button>
-          <el-button
-            icon="el-icon-plus"
-            size="mini"
-            type="primary"
-            @click="addAuthority(scope.row.authorityId)"
-          >新增子角色</el-button>
-          <el-button
-            icon="el-icon-copy-document"
-            size="mini"
-            type="primary"
-            @click="copyAuthority(scope.row)"
-          >拷贝</el-button>
-          <el-button
-            icon="el-icon-edit"
-            size="mini"
-            type="primary"
-            @click="editAuthority(scope.row)"
-          >编辑</el-button>
-          <el-button
-            icon="el-icon-delete"
-            size="mini"
-            type="danger"
-            @click="deleteAuth(scope.row)"
-          >删除</el-button>
+          <el-button icon="el-icon-plus" size="mini" type="primary" @click="addAuthority(scope.row.authorityId)">新增子角色</el-button>
+          <el-button icon="el-icon-copy-document" size="mini" type="primary" @click="copyAuthority(scope.row)">拷贝</el-button>
+          <el-button icon="el-icon-edit" size="mini" type="primary" @click="editAuthority(scope.row)">编辑</el-button>
+          <el-button icon="el-icon-delete" size="mini" type="danger" @click="deleteAuth(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -49,15 +22,15 @@
         <el-form-item label="父级角色" prop="parentId">
           <el-cascader
             v-model="form.parentId"
-            :disabled="dialogType=='add'"
+            :disabled="dialogType == 'add'"
             :options="AuthorityOption"
-            :props="{ checkStrictly: true,label:'authorityName',value:'authorityId',disabled:'disabled',emitPath:false}"
+            :props="{ checkStrictly: true, label: 'authorityName', value: 'authorityId', disabled: 'disabled', emitPath: false }"
             :show-all-levels="false"
             filterable
           />
         </el-form-item>
         <el-form-item label="角色ID" prop="authorityId">
-          <el-input v-model="form.authorityId" :disabled="dialogType=='edit'" autocomplete="off" />
+          <el-input v-model="form.authorityId" :disabled="dialogType == 'edit'" autocomplete="off" />
         </el-form-item>
         <el-form-item label="角色姓名" prop="authorityName">
           <el-input v-model="form.authorityName" autocomplete="off" />
@@ -88,13 +61,8 @@
 <script>
 // 获取列表内容封装在mixins内部  getTableData方法 初始化已封装完成
 
-import {
-  getAuthorityList,
-  deleteAuthority,
-  createAuthority,
-  updateAuthority,
-  copyAuthority
-} from '@/api/authority'
+import { getAuthorityList, deleteAuthority, createAuthority, updateAuthority, copyAuthority } from '@/api/authority'
+import { getStudentList } from '@/api/student'
 
 import Menus from '@/view/superAdmin/authority/components/menus'
 import Apis from '@/view/superAdmin/authority/components/apis'
@@ -143,18 +111,16 @@ export default {
           { required: true, message: '请输入角色ID', trigger: 'blur' },
           { validator: mustUint, trigger: 'blur' }
         ],
-        authorityName: [
-          { required: true, message: '请输入角色名', trigger: 'blur' }
-        ],
-        parentId: [
-          { required: true, message: '请选择请求方式', trigger: 'blur' }
-        ]
+        authorityName: [{ required: true, message: '请输入角色名', trigger: 'blur' }],
+        parentId: [{ required: true, message: '请选择请求方式', trigger: 'blur' }]
       }
     }
   },
   async created() {
     this.pageSize = 999
     await this.getTableData()
+    const res = await getStudentList()
+    console.log(res)
   },
   methods: {
     autoEnter(activeName, oldActiveName) {
@@ -188,7 +154,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       })
-        .then(async() => {
+        .then(async () => {
           const res = await deleteAuthority({ authorityId: row.authorityId })
           if (res.code === 0) {
             this.$message({
@@ -315,11 +281,7 @@ export default {
               disabled: disabled || item.authorityId === this.form.authorityId,
               children: []
             }
-            this.setAuthorityOptions(
-              item.children,
-              option.children,
-              disabled || item.authorityId === this.form.authorityId
-            )
+            this.setAuthorityOptions(item.children, option.children, disabled || item.authorityId === this.form.authorityId)
             optionsData.push(option)
           } else {
             const option = {

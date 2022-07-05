@@ -1,9 +1,9 @@
 import service from '@/utils/request'
 
-export const getApiList = data => {
+export const getStudentList = data => {
   return service({
-    url: '/api/getApiList',
-    method: 'post',
+    url: '/student/getStudentList',
+    method: 'get',
     data
   })
 }
