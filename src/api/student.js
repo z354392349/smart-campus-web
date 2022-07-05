@@ -1,9 +1,9 @@
-import service from "@/utils/request";
+import service from '@/utils/request'
 
-export const getApiList = (data) => {
+export const getApiList = data => {
   return service({
-    url: "/api/getApiList",
-    method: "post",
-    data,
-  });
-};
+    url: '/api/getApiList',
+    method: 'post',
+    data
+  })
+}
