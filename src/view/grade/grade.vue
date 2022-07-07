@@ -141,7 +141,7 @@ export default {
   created() {
     this.getTableData()
     getGradeList()
-    createGrade({ name: '测试', description: '测试' })
+    // createGrade({ name: '测试', description: '测试' })
   },
   methods: {
     //  选中api

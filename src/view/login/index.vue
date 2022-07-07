@@ -138,7 +138,7 @@ export default {
       return await this.LoginIn(this.loginForm)
     },
     async submitForm() {
-      this.$refs.loginForm.validate(async(v) => {
+      this.$refs.loginForm.validate(async (v) => {
         if (v) {
           const flag = await this.login()
           if (!flag) {

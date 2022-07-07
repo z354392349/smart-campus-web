@@ -5,7 +5,7 @@ import getPageTitle from '@/utils/page'
 let asyncRouterFlag = 0
 
 const whiteList = ['Login', 'Init']
-router.beforeEach(async(to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const token = store.getters['user/token']
   // 在白名单中的判断情况
   // 修改网页标签名称

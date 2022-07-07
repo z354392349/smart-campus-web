@@ -45,10 +45,10 @@ export const user = {
         ...userInfo
       }
     },
-    ChangeActiveColor: async(state, val) => {
+    ChangeActiveColor: async (state, val) => {
       state.userInfo.activeColor = val
     },
-    ChangeSideMode: async(state, val) => {
+    ChangeSideMode: async (state, val) => {
       state.userInfo.sideMode = val
     },
     ChangeBaseColor: (state, val) => {

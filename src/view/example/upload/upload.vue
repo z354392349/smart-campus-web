@@ -112,7 +112,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       })
-        .then(async() => {
+        .then(async () => {
           const res = await deleteFile(row)
           if (res.code === 0) {
             this.$message({
