@@ -13,12 +13,7 @@
         </el-form-item>
         <el-form-item label="请求">
           <el-select v-model="searchInfo.method" clearable placeholder="请选择">
-            <el-option
-              v-for="item in methodOptions"
-              :key="item.value"
-              :label="`${item.label}(${item.value})`"
-              :value="item.value"
-            />
+            <el-option v-for="item in methodOptions" :key="item.value" :label="`${item.label}(${item.value})`" :value="item.value" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -36,10 +31,7 @@
       </el-form>
     </div>
     <el-table :data="tableData" border stripe @sort-change="sortChange" @selection-change="handleSelectionChange">
-      <el-table-column
-        type="selection"
-        width="55"
-      />
+      <el-table-column type="selection" width="55" />
       <el-table-column label="id" min-width="60" prop="ID" sortable="custom" />
       <el-table-column label="api路径" min-width="150" prop="path" sortable="custom" />
       <el-table-column label="api分组" min-width="150" prop="apiGroup" sortable="custom" />
@@ -48,12 +40,7 @@
         <template slot-scope="scope">
           <div>
             {{ scope.row.method }}
-            <el-tag
-              :key="scope.row.methodFiletr"
-              :type="scope.row.method|tagTypeFiletr"
-              effect="dark"
-              size="mini"
-            >{{ scope.row.method|methodFiletr }}</el-tag>
+            <el-tag :key="scope.row.methodFiletr" :type="scope.row.method | tagTypeFiletr" effect="dark" size="mini">{{ scope.row.method | methodFiletr }}</el-tag>
             <!-- {{scope.row.method|methodFiletr}} -->
           </div>
         </template>
@@ -62,12 +49,7 @@
       <el-table-column fixed="right" label="操作" width="200">
         <template slot-scope="scope">
           <el-button size="small" type="primary" icon="el-icon-edit" @click="editApi(scope.row)">编辑</el-button>
-          <el-button
-            size="small"
-            type="danger"
-            icon="el-icon-delete"
-            @click="deleteApi(scope.row)"
-          >删除</el-button>
+          <el-button size="small" type="danger" icon="el-icon-delete" @click="deleteApi(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -75,7 +57,7 @@
       :current-page="page"
       :page-size="pageSize"
       :page-sizes="[10, 30, 50, 100]"
-      :style="{float:'right',padding:'20px'}"
+      :style="{ float: 'right', padding: '20px' }"
       :total="total"
       layout="total, sizes, prev, pager, next, jumper"
       @current-change="handleCurrentChange"
@@ -89,12 +71,7 @@
         </el-form-item>
         <el-form-item label="请求" prop="method">
           <el-select v-model="form.method" placeholder="请选择">
-            <el-option
-              v-for="item in methodOptions"
-              :key="item.value"
-              :label="`${item.label}(${item.value})`"
-              :value="item.value"
-            />
+            <el-option v-for="item in methodOptions" :key="item.value" :label="`${item.label}(${item.value})`" :value="item.value" />
           </el-select>
         </el-form-item>
         <el-form-item label="api分组" prop="apiGroup">
@@ -116,14 +93,7 @@
 <script>
 // 获取列表内容封装在mixins内部  getTableData方法 初始化已封装完成 条件搜索时候 请把条件安好后台定制的结构体字段 放到 this.searchInfo 中即可实现条件搜索
 
-import {
-  getApiById,
-  getApiList,
-  createApi,
-  updateApi,
-  deleteApi,
-  deleteApisByIds
-} from '@/api/api'
+import { getApiById, getApiList, createApi, updateApi, deleteApi, deleteApisByIds } from '@/api/api'
 import infoList from '@/mixins/infoList'
 import { toSQLLine } from '@/utils/stringFun'
 const methodOptions = [
@@ -180,15 +150,9 @@ export default {
       type: '',
       rules: {
         path: [{ required: true, message: '请输入api路径', trigger: 'blur' }],
-        apiGroup: [
-          { required: true, message: '请输入组名称', trigger: 'blur' }
-        ],
-        method: [
-          { required: true, message: '请选择请求方式', trigger: 'blur' }
-        ],
-        description: [
-          { required: true, message: '请输入api介绍', trigger: 'blur' }
-        ]
+        apiGroup: [{ required: true, message: '请输入组名称', trigger: 'blur' }],
+        method: [{ required: true, message: '请选择请求方式', trigger: 'blur' }],
+        description: [{ required: true, message: '请输入api介绍', trigger: 'blur' }]
       }
     }
   },

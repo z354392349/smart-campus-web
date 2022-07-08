@@ -140,7 +140,7 @@ export default {
   },
   created() {
     this.getTableData()
-    getGradeList()
+    getGradeList({ name: '测试', pageSize: 1 })
     // createGrade({ name: '测试', description: '测试' })
   },
   methods: {
