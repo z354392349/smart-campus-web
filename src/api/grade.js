@@ -17,3 +17,21 @@ export const createGrade = data => {
     data
   })
 }
+
+// 更新年级
+export const upGrade = data => {
+  return service({
+    url: '/grade/upGrade',
+    method: 'put',
+    data
+  })
+}
+
+// 删除年级
+export const deleteGrade = data => {
+  return service({
+    url: '/grade/deleteGrade',
+    method: 'delete',
+    data
+  })
+}

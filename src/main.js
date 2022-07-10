@@ -12,9 +12,11 @@ import { auth } from '@/directive/auth'
 // 按钮权限指令
 auth(Vue)
 
+import conf from '@/conf/conf.js'
+Vue.use(conf)
+
 export default new Vue({
   render: h => h(App),
   router,
   store
 }).$mount('#app')
-
