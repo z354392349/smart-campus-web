@@ -2,8 +2,8 @@
   <div>
     <div class="search-term">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
-        <el-form-item label="年级">
-          <el-input v-model="searchInfo.name" placeholder="请输入年级名称" />
+        <el-form-item label="教师">
+          <el-input v-model="searchInfo.name" placeholder="请输入教师姓名" />
         </el-form-item>
         <el-form-item>
           <!-- @click="onSubmit" -->
@@ -54,6 +54,7 @@
 // 获取列表内容封装在mixins内部  getTableData方法 初始化已封装完成 条件搜索时候 请把条件安好后台定制的结构体字段 放到 this.searchInfo 中即可实现条件搜索
 
 import { getGradeList, createGrade, upGrade, deleteGrade } from '@/api/grade'
+import { createtTeacher } from '@/api/teacher'
 import infoList from '@/mixins/infoList'
 
 export default {
@@ -77,6 +78,7 @@ export default {
   },
   created() {
     this.getTableData()
+    createtTeacher({ name: '张三', sex: 1, birthday: '2022-07-10', telephone: '13651196456', description: '' })
   },
   methods: {
     // // 条件搜索前端看此方法

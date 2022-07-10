@@ -2,8 +2,8 @@
   <div>
     <div class="search-term">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
-        <el-form-item label="年级">
-          <el-input v-model="searchInfo.name" placeholder="请输入年级名称" />
+        <el-form-item label="班级">
+          <el-input v-model="searchInfo.name" placeholder="请输入班级名称" />
         </el-form-item>
         <el-form-item>
           <!-- @click="onSubmit" -->
@@ -36,7 +36,17 @@
     <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :width="$conf.minDialogWidth">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="年级名称" prop="name">
-          <el-input v-model="form.name" autocomplete="off" placeholder="请输入年级名称" />
+          <el-select v-model="form.name" placeholder="请选择年级">
+            <el-option v-for="n in gradeList" :key="n.ID" :label="n.name" :value="n.ID" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="班级名称" prop="name">
+          <el-input v-model="form.name" autocomplete="off" placeholder="请输入班级名称" />
+        </el-form-item>
+        <el-form-item label="班主任" prop="name">
+          <el-select v-model="form.name" placeholder="请选择年级">
+            <el-option v-for="n in gradeList" :key="n.ID" :label="n.name" :value="n.ID" />
+          </el-select>
         </el-form-item>
         <el-form-item label="描述">
           <el-input v-model="form.description" autocomplete="off" placeholder="请选择输入描述" />
@@ -54,6 +64,7 @@
 // 获取列表内容封装在mixins内部  getTableData方法 初始化已封装完成 条件搜索时候 请把条件安好后台定制的结构体字段 放到 this.searchInfo 中即可实现条件搜索
 
 import { getGradeList, createGrade, upGrade, deleteGrade } from '@/api/grade'
+import { createClass } from '@/api/class'
 import infoList from '@/mixins/infoList'
 
 export default {
@@ -63,28 +74,30 @@ export default {
   data() {
     return {
       listApi: getGradeList,
-      dialogFormVisible: false,
-      dialogTitle: '新增年级',
+      dialogFormVisible: true,
+      dialogTitle: '新增班级',
       form: {
         name: '',
+        gradeID: '',
         description: ''
       },
       type: '',
       rules: {
         name: [{ required: true, message: '请输入年级名称', trigger: 'blur' }]
-      }
+      },
+      gradeList: []
     }
   },
   created() {
-    this.getTableData()
+    // this.getTableData()
+    this.getGradeList()
   },
   methods: {
-    // // 条件搜索前端看此方法
-    // onSubmit() {
-    //   this.page = 1
-    //   this.pageSize = 10
-    //   this.getTableData()
-    // },
+    async getGradeList() {
+      const res = await getGradeList()
+      this.gradeList = res.data.list
+      console.log(this.gradeList)
+    },
     initForm() {
       this.$refs.form.resetFields()
       this.form = {
@@ -92,17 +105,19 @@ export default {
         description: ''
       }
     },
+
     closeDialog() {
       this.initForm()
       this.dialogFormVisible = false
     },
+
     openDialog(type) {
       switch (type) {
         case 'add':
-          this.dialogTitle = '新增年级'
+          this.dialogTitle = '新增班级'
           break
         case 'edit':
-          this.dialogTitle = '编辑年级'
+          this.dialogTitle = '编辑班级'
           break
         default:
           break
