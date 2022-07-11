@@ -13,7 +13,7 @@
       </el-form>
     </div>
     <el-table :data="tableData" border :stripe="true">
-      <el-table-column label="年级名称" prop="name" />
+      <el-table-column label="姓名" prop="name" />
       <el-table-column label="描述" prop="description" />
       <el-table-column label="操作">
         <template slot-scope="scope">
@@ -51,8 +51,6 @@
 </template>
 
 <script>
-// 获取列表内容封装在mixins内部  getTableData方法 初始化已封装完成 条件搜索时候 请把条件安好后台定制的结构体字段 放到 this.searchInfo 中即可实现条件搜索
-
 import { getGradeList, createGrade, upGrade, deleteGrade } from '@/api/grade'
 import infoList from '@/mixins/infoList'
 
@@ -79,12 +77,6 @@ export default {
     this.getTableData()
   },
   methods: {
-    // // 条件搜索前端看此方法
-    // onSubmit() {
-    //   this.page = 1
-    //   this.pageSize = 10
-    //   this.getTableData()
-    // },
     initForm() {
       this.$refs.form.resetFields()
       this.form = {

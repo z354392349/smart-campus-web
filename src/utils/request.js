@@ -19,7 +19,7 @@ const showLoading = () => {
     if (acitveAxios > 0) {
       context.$bus.emit('showLoading')
     }
-  }, 400)
+  }, 300)
 }
 
 const closeLoading = () => {

@@ -14,11 +14,17 @@
     </div>
     <el-table :data="tableData" border :stripe="true">
       <el-table-column label="年级名称" prop="name" />
+      <el-table-column label="性别" prop="sex" />
+      <el-table-column label="生日" prop="birthday" />
+      <el-table-column label="电话号码" prop="telephone" />
+      <el-table-column label="年龄">
+        <template slot-scope="scope">{{ a(scope.row.birthday ), }},</template>
+      </el-table-column>
       <el-table-column label="描述" prop="description" />
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="small" type="primary" icon="el-icon-edit" @click="editGrade(scope.row)">编辑</el-button>
-          <el-button size="small" type="danger" icon="el-icon-delete" @click="deleteGrade(scope.row)">删除</el-button>
+          <el-button size="small" type="primary" icon="el-icon-edit" @click="editTeacher(scope.row)">编辑</el-button>
+          <el-button size="small" type="danger" icon="el-icon-delete" @click="deleteTeacher(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -35,7 +41,7 @@
 
     <!-- { name: '张三', sex: 1, birthday: 1657468800, telephone: '13651196456', description: '' } -->
     <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :width="$conf.minDialogWidth">
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px" class="dialog-form">
         <el-form-item label="姓名" prop="name">
           <el-input v-model="form.name" autocomplete="off" placeholder="请输入教师姓名" />
         </el-form-item>
@@ -63,11 +69,10 @@
 
 <script>
 import moment from 'moment'
-import { upGrade, deleteGrade } from '@/api/grade'
-// upTeacher , deleteTeacher
-import { createtTeacher, getTeacherList } from '@/api/teacher'
+import { createtTeacher, upTeacher, getTeacherList, deleteTeacher } from '@/api/teacher'
 import infoList from '@/mixins/infoList'
 import { copyObj } from '@/utils/tool.js'
+import { telephoneRE } from '@/utils/regexp.js'
 
 export default {
   name: 'Grade',
@@ -76,9 +81,10 @@ export default {
   data() {
     return {
       listApi: getTeacherList,
-      dialogFormVisible: true,
+      dialogFormVisible: false,
       dialogTitle: '新增教师',
       form: {
+        id: '',
         name: '',
         description: '',
         sex: 1,
@@ -90,27 +96,30 @@ export default {
         name: [{ required: true, message: '请输入教师名称', trigger: 'blur' }],
         sex: [{ required: true, message: '请选择性别', trigger: 'blur' }],
         birthday: [{ required: true, message: '请选择生日', trigger: 'blur' }],
-        telephone: [{ required: true, message: '请输入手机号码', trigger: 'blur' }]
+        telephone: [
+          { required: true, message: '请输入手机号码', trigger: 'blur' },
+          { pattern: telephoneRE, message: '手机号格式不对', trigger: 'blur' }
+        ]
       }
     }
   },
   created() {
-    // this.getTableData()
-    // upTeacher({ name: '张老大', sex: 1, birthday: 1657468800, telephone: '13651196457', description: '', ID: 1 })
-    // deleteTeacher({ ID: 1 })
+    this.getTableData()
   },
   methods: {
-    // // 条件搜索前端看此方法
-    // onSubmit() {
-    //   this.page = 1
-    //   this.pageSize = 10
-    //   this.getTableData()
-    // },
+    moment,
+    a(birthday) {
+      return moment().diff(moment(birthday), 'years')
+    },
     initForm() {
       this.$refs.form.resetFields()
       this.form = {
+        id: '',
         name: '',
-        description: ''
+        description: '',
+        sex: 1,
+        birthday: parseInt(moment().startOf('day').unix() * 1000),
+        telephone: ''
       }
     },
     closeDialog() {
@@ -131,14 +140,19 @@ export default {
       this.type = type
       this.dialogFormVisible = true
     },
-    async editGrade(row) {
-      this.form.id = row.ID
-      this.form.name = row.name
 
+    async editTeacher(row) {
+      row = copyObj(row)
+      for (const key in this.form) {
+        if (key == 'birthday') row[key] = row[key] * 1000
+        this.form[key] = row[key]
+      }
+      this.form.id = row.ID
       this.openDialog('edit')
     },
-    async deleteGrade(row) {
-      this.deleteTableData(row.name, deleteGrade, { id: row.ID })
+
+    async deleteTeacher(row) {
+      this.deleteTableData(row.name, deleteTeacher, { id: row.ID })
     },
 
     async enterDialog() {
@@ -147,6 +161,7 @@ export default {
           let form = copyObj(this.form)
           form.birthday = parseInt(form.birthday / 1000)
           if (this.type === 'add') {
+            delete form.id
             const res = await createtTeacher(form)
 
             if (res.code === 0) {
@@ -154,13 +169,14 @@ export default {
               this.getTableData()
             }
           } else {
-            const res = await upGrade(form)
+            const res = await upTeacher(form)
             if (res.code === 0) {
               this.$message.success('编辑成功')
               this.getTableData()
             }
           }
           this.closeDialog()
+          this.getTableData()
         }
       })
     }

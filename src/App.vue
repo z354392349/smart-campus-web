@@ -15,6 +15,7 @@ export default {
 @import '@/style/main.scss';
 @import '@/style/base.scss';
 @import '@/style/mobile.scss';
+@import '@/style/common.scss';
 #app {
   background: #eee;
   height: 100vh;

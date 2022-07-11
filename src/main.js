@@ -15,6 +15,7 @@ auth(Vue)
 import conf from '@/conf/conf.js'
 Vue.use(conf)
 
+import '@/style/common.scss' // 公共的css
 export default new Vue({
   render: (h) => h(App),
   router,
