@@ -16,7 +16,14 @@
       <el-table-column label="昵称" min-width="150" prop="nickName" />
       <el-table-column label="用户角色" min-width="150">
         <template slot-scope="scope">
-          <el-cascader v-model="scope.row.authority.authorityId" :options="authOptions" :show-all-levels="false" :props="{ checkStrictly: true, label: 'authorityName', value: 'authorityId', disabled: 'disabled', emitPath: false }" filterable @change="changeAuthority(scope.row)" />
+          <el-cascader
+            v-model="scope.row.authority.authorityId"
+            :options="authOptions"
+            :show-all-levels="false"
+            :props="{ checkStrictly: true, label: 'authorityName', value: 'authorityId', disabled: 'disabled', emitPath: false }"
+            filterable
+            @change="changeAuthority(scope.row)"
+          />
         </template>
       </el-table-column>
       <el-table-column label="操作" min-width="150">
@@ -32,7 +39,16 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :style="{ float: 'right', padding: '20px' }" :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
+    <el-pagination
+      :current-page="page"
+      :page-size="pageSize"
+      :page-sizes="[10, 30, 50, 100]"
+      :style="{ float: 'right', padding: '20px' }"
+      :total="total"
+      layout="total, sizes, prev, pager, next, jumper"
+      @current-change="handleCurrentChange"
+      @size-change="handleSizeChange"
+    />
 
     <el-dialog :visible.sync="addUserDialog" custom-class="user-dialog" title="新增用户">
       <el-form ref="userForm" :rules="rules" :model="userInfo">

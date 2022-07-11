@@ -30,7 +30,16 @@
       </el-table-column>
     </el-table>
 
-    <el-pagination :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :style="{ float: 'right', padding: '20px' }" :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
+    <el-pagination
+      :current-page="page"
+      :page-size="pageSize"
+      :page-sizes="[10, 30, 50, 100]"
+      :style="{ float: 'right', padding: '20px' }"
+      :total="total"
+      layout="total, sizes, prev, pager, next, jumper"
+      @current-change="handleCurrentChange"
+      @size-change="handleSizeChange"
+    />
 
     <el-dialog :before-close="closeDialog" :visible.sync="dialogFormVisible" title="客户">
       <el-form :inline="true" :model="form" label-width="80px">

@@ -63,9 +63,11 @@
 
 <script>
 import moment from 'moment'
-import { createGrade, upGrade, deleteGrade } from '@/api/grade'
+import { upGrade, deleteGrade } from '@/api/grade'
+// upTeacher , deleteTeacher
 import { createtTeacher, getTeacherList } from '@/api/teacher'
 import infoList from '@/mixins/infoList'
+import { copyObj } from '@/utils/tool.js'
 
 export default {
   name: 'Grade',
@@ -93,8 +95,9 @@ export default {
     }
   },
   created() {
-    this.getTableData()
-    createtTeacher({ name: '张三', sex: 1, birthday: 1657468800, telephone: '13651196456', description: '' })
+    // this.getTableData()
+    // upTeacher({ name: '张老大', sex: 1, birthday: 1657468800, telephone: '13651196457', description: '', ID: 1 })
+    // deleteTeacher({ ID: 1 })
   },
   methods: {
     // // 条件搜索前端看此方法
@@ -141,14 +144,17 @@ export default {
     async enterDialog() {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
+          let form = copyObj(this.form)
+          form.birthday = parseInt(form.birthday / 1000)
           if (this.type === 'add') {
-            const res = await createGrade(this.form)
+            const res = await createtTeacher(form)
+
             if (res.code === 0) {
               this.$message.success('添加成功')
               this.getTableData()
             }
           } else {
-            const res = await upGrade(this.form)
+            const res = await upGrade(form)
             if (res.code === 0) {
               this.$message.success('编辑成功')
               this.getTableData()

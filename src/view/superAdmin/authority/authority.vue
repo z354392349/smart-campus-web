@@ -20,7 +20,14 @@
     <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible">
       <el-form ref="authorityForm" :model="form" :rules="rules">
         <el-form-item label="父级角色" prop="parentId">
-          <el-cascader v-model="form.parentId" :disabled="dialogType == 'add'" :options="AuthorityOption" :props="{ checkStrictly: true, label: 'authorityName', value: 'authorityId', disabled: 'disabled', emitPath: false }" :show-all-levels="false" filterable />
+          <el-cascader
+            v-model="form.parentId"
+            :disabled="dialogType == 'add'"
+            :options="AuthorityOption"
+            :props="{ checkStrictly: true, label: 'authorityName', value: 'authorityId', disabled: 'disabled', emitPath: false }"
+            :show-all-levels="false"
+            filterable
+          />
         </el-form-item>
         <el-form-item label="角色ID" prop="authorityId">
           <el-input v-model="form.authorityId" :disabled="dialogType == 'edit'" autocomplete="off" />
