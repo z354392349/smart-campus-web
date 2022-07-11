@@ -35,7 +35,7 @@ export default {
   mounted() {
     marked.setOptions({
       renderer: new marked.Renderer(),
-      highlight: function(code) {
+      highlight: function (code) {
         return hljs.highlightAuto(code).value
       },
       pedantic: false,

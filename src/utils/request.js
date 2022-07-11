@@ -31,7 +31,7 @@ const closeLoading = () => {
 }
 // http request 拦截器
 service.interceptors.request.use(
-  config => {
+  (config) => {
     if (!config.donNotShowLoading) {
       showLoading()
     }
@@ -45,7 +45,7 @@ service.interceptors.request.use(
     }
     return config
   },
-  error => {
+  (error) => {
     closeLoading()
     Message({
       showClose: true,
@@ -58,7 +58,7 @@ service.interceptors.request.use(
 
 // http response 拦截器
 service.interceptors.response.use(
-  response => {
+  (response) => {
     closeLoading()
 
     if (response.headers['new-token']) {
@@ -78,21 +78,24 @@ service.interceptors.response.use(
       return response.data.msg ? response.data : response
     }
   },
-  error => {
+  (error) => {
     closeLoading()
-    MessageBox.confirm(`
+    MessageBox.confirm(
+      `
     <p>检测到接口错误${error}</p>
     <p>错误码500：此类错误内容常见于后台panic，如果影响您正常使用可强制登出清理缓存</p>
     <p>错误码404：此类错误多为接口未注册（或未重启）或者请求路径（方法）与api路径（方法）不符</p>
-    `, '接口报错', {
-      dangerouslyUseHTMLString: true,
-      distinguishCancelAndClose: true,
-      confirmButtonText: '清理缓存',
-      cancelButtonText: '取消'
+    `,
+      '接口报错',
+      {
+        dangerouslyUseHTMLString: true,
+        distinguishCancelAndClose: true,
+        confirmButtonText: '清理缓存',
+        cancelButtonText: '取消'
+      }
+    ).then(() => {
+      store.commit('user/LoginOut')
     })
-      .then(() => {
-        store.commit('user/LoginOut')
-      })
     return error
   }
 )

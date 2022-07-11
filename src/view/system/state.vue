@@ -52,11 +52,7 @@
                 </el-row>
               </el-col>
               <el-col :span="12">
-                <el-progress
-                  type="dashboard"
-                  :percentage="state.disk.usedPercent"
-                  :color="colors"
-                />
+                <el-progress type="dashboard" :percentage="state.disk.usedPercent" :color="colors" />
               </el-col>
             </el-row>
           </div>
@@ -65,11 +61,7 @@
     </el-row>
     <el-row :gutter="15" class="system_state">
       <el-col :span="12">
-        <el-card
-          v-if="state.cpu"
-          class="card_item"
-          :body-style="{ height: '180px', 'overflow-y': 'scroll' }"
-        >
+        <el-card v-if="state.cpu" class="card_item" :body-style="{ height: '180px', 'overflow-y': 'scroll' }">
           <div slot="header">CPU</div>
           <div>
             <el-row :gutter="10">
@@ -79,13 +71,7 @@
             <template v-for="(item, index) in state.cpu.cpus">
               <el-row :key="index" :gutter="10">
                 <el-col :span="12">core {{ index }}:</el-col>
-                <el-col
-                  :span="12"
-                ><el-progress
-                  type="line"
-                  :percentage="+item.toFixed(0)"
-                  :color="colors"
-                /></el-col>
+                <el-col :span="12"><el-progress type="line" :percentage="+item.toFixed(0)" :color="colors" /></el-col>
               </el-row>
             </template>
           </div>
@@ -111,18 +97,11 @@
                 </el-row>
                 <el-row :gutter="10">
                   <el-col :span="12">used (GB)</el-col>
-                  <el-col
-                    :span="12"
-                    v-text="(state.ram.usedMb / 1024).toFixed(2)"
-                  />
+                  <el-col :span="12" v-text="(state.ram.usedMb / 1024).toFixed(2)" />
                 </el-row>
               </el-col>
               <el-col :span="12">
-                <el-progress
-                  type="dashboard"
-                  :percentage="state.ram.usedPercent"
-                  :color="colors"
-                />
+                <el-progress type="dashboard" :percentage="state.ram.usedPercent" :color="colors" />
               </el-col>
             </el-row>
           </div>

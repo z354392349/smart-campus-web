@@ -39,48 +39,48 @@
 
     <el-dialog :before-close="handleClose" :title="dialogTitle" :visible.sync="dialogFormVisible">
       <el-form ref="menuForm" :inline="true" :model="form" :rules="rules" label-position="top" label-width="85px">
-        <el-form-item label="路由name" prop="path" style="width:30%">
+        <el-form-item label="路由name" prop="path" style="width: 30%">
           <el-input v-model="form.name" autocomplete="off" placeholder="唯一英文字符串" @change="changeName" />
         </el-form-item>
-        <el-form-item prop="path" style="width:30%">
-          <div slot="label" style="display:inline-block">
+        <el-form-item prop="path" style="width: 30%">
+          <div slot="label" style="display: inline-block">
             路由path
-            <el-checkbox v-model="checkFlag" style="float:right;margin-left:20px;">添加参数</el-checkbox>
+            <el-checkbox v-model="checkFlag" style="float: right; margin-left: 20px">添加参数</el-checkbox>
           </div>
           <el-input v-model="form.path" :disabled="!checkFlag" autocomplete="off" placeholder="建议只在后方拼接参数" />
         </el-form-item>
-        <el-form-item label="是否隐藏" style="width:30%">
+        <el-form-item label="是否隐藏" style="width: 30%">
           <el-select v-model="form.hidden" placeholder="是否在列表隐藏">
             <el-option :value="false" label="否" />
             <el-option :value="true" label="是" />
           </el-select>
         </el-form-item>
-        <el-form-item label="父节点Id" style="width:30%">
+        <el-form-item label="父节点Id" style="width: 30%">
           <el-cascader v-model="form.parentId" :disabled="!isEdit" :options="menuOption" :props="{ checkStrictly: true, label: 'title', value: 'ID', disabled: 'disabled', emitPath: false }" :show-all-levels="false" filterable />
         </el-form-item>
-        <el-form-item label="文件路径" prop="component" style="width:60%">
+        <el-form-item label="文件路径" prop="component" style="width: 60%">
           <el-input v-model="form.component" autocomplete="off" />
-          <span style="font-size:12px;margin-right:12px;">如果菜单包含子菜单，请创建router-view二级路由页面或者</span>
+          <span style="font-size: 12px; margin-right: 12px">如果菜单包含子菜单，请创建router-view二级路由页面或者</span>
           <el-button size="mini" @click="form.component = 'view/routerHolder.vue'">点我设置</el-button>
         </el-form-item>
-        <el-form-item label="展示名称" prop="meta.title" style="width:30%">
+        <el-form-item label="展示名称" prop="meta.title" style="width: 30%">
           <el-input v-model="form.meta.title" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="图标" prop="meta.icon" style="width:30%">
+        <el-form-item label="图标" prop="meta.icon" style="width: 30%">
           <icon :meta="form.meta">
             <template slot="prepend">el-icon-</template>
           </icon>
         </el-form-item>
-        <el-form-item label="排序标记" prop="sort" style="width:30%">
+        <el-form-item label="排序标记" prop="sort" style="width: 30%">
           <el-input v-model.number="form.sort" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="keepAlive" prop="meta.keepAlive" style="width:30%">
+        <el-form-item label="keepAlive" prop="meta.keepAlive" style="width: 30%">
           <el-select v-model="form.meta.keepAlive" placeholder="是否keepAlive缓存页面">
             <el-option :value="false" label="否" />
             <el-option :value="true" label="是" />
           </el-select>
         </el-form-item>
-        <el-form-item label="closeTab" prop="meta.closeTab" style="width:30%">
+        <el-form-item label="closeTab" prop="meta.closeTab" style="width: 30%">
           <el-select v-model="form.meta.closeTab" placeholder="是否自动关闭tab">
             <el-option :value="false" label="否" />
             <el-option :value="true" label="是" />
@@ -211,7 +211,7 @@ export default {
     },
     setMenuOptions(menuData, optionsData, disabled) {
       menuData &&
-        menuData.map(item => {
+        menuData.map((item) => {
           if (item.children && item.children.length) {
             const option = {
               title: item.meta.title,
@@ -305,7 +305,7 @@ export default {
     },
     // 添加menu
     async enterDialog() {
-      this.$refs.menuForm.validate(async valid => {
+      this.$refs.menuForm.validate(async (valid) => {
         if (valid) {
           let res
           if (this.isEdit) {

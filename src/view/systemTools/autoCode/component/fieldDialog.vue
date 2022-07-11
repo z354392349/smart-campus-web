@@ -1,13 +1,7 @@
 <template>
   <div>
-    <span style="color:red">搜索时如果条件为LIKE只支持字符串</span>
-    <el-form
-      ref="fieldDialogFrom"
-      :model="dialogMiddle"
-      label-width="120px"
-      label-position="left"
-      :rules="rules"
-    >
+    <span style="color: red">搜索时如果条件为LIKE只支持字符串</span>
+    <el-form ref="fieldDialogFrom" :model="dialogMiddle" label-width="120px" label-position="left" :rules="rules">
       <el-form-item label="Field名称" prop="fieldName">
         <el-col :span="6">
           <el-input v-model="dialogMiddle.fieldName" autocomplete="off" />
@@ -38,36 +32,16 @@
       </el-form-item>
       <el-form-item label="Field数据类型" prop="fieldType">
         <el-col :span="8">
-          <el-select
-            v-model="dialogMiddle.fieldType"
-            placeholder="请选择field数据类型"
-            clearable
-            @change="getDbfdOptions"
-          >
-            <el-option
-              v-for="item in typeOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
+          <el-select v-model="dialogMiddle.fieldType" placeholder="请选择field数据类型" clearable @change="getDbfdOptions">
+            <el-option v-for="item in typeOptions" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </el-col>
       </el-form-item>
 
       <el-form-item label="数据库字段类型" prop="dataType">
         <el-col :span="8">
-          <el-select
-            v-model="dialogMiddle.dataType"
-            :disabled="!dialogMiddle.fieldType"
-            placeholder="请选择数据库字段类型"
-            clearable
-          >
-            <el-option
-              v-for="item in dbfdOptions"
-              :key="item.label"
-              :label="item.label"
-              :value="item.label"
-            />
+          <el-select v-model="dialogMiddle.dataType" :disabled="!dialogMiddle.fieldType" placeholder="请选择数据库字段类型" clearable>
+            <el-option v-for="item in dbfdOptions" :key="item.label" :label="item.label" :value="item.label" />
           </el-select>
         </el-col>
       </el-form-item>
@@ -79,25 +53,15 @@
       <el-form-item label="Field查询条件" prop="fieldSearchType">
         <el-col :span="8">
           <el-select v-model="dialogMiddle.fieldSearchType" placeholder="请选择Field查询条件" clearable>
-            <el-option
-              v-for="item in typeSearchOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
+            <el-option v-for="item in typeSearchOptions" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </el-col>
       </el-form-item>
 
       <el-form-item label="关联字典" prop="dictType">
         <el-col :span="8">
-          <el-select v-model="dialogMiddle.dictType" :disabled="dialogMiddle.fieldType!=='int'" placeholder="请选择字典" clearable>
-            <el-option
-              v-for="item in dictOptions"
-              :key="item.type"
-              :label="`${item.type}(${item.name})`"
-              :value="item.type"
-            />
+          <el-select v-model="dialogMiddle.dictType" :disabled="dialogMiddle.fieldType !== 'int'" placeholder="请选择字典" clearable>
+            <el-option v-for="item in dictOptions" :key="item.type" :label="`${item.type}(${item.name})`" :value="item.type" />
           </el-select>
         </el-col>
       </el-form-item>
@@ -115,7 +79,7 @@ export default {
   props: {
     dialogMiddle: {
       type: Object,
-      default: function() {
+      default: function () {
         return {}
       }
     }
@@ -169,21 +133,11 @@ export default {
         }
       ],
       rules: {
-        fieldName: [
-          { required: true, message: '请输入field英文名', trigger: 'blur' }
-        ],
-        fieldDesc: [
-          { required: true, message: '请输入field中文名', trigger: 'blur' }
-        ],
-        fieldJson: [
-          { required: true, message: '请输入field格式化json', trigger: 'blur' }
-        ],
-        columnName: [
-          { required: true, message: '请输入数据库字段', trigger: 'blur' }
-        ],
-        fieldType: [
-          { required: true, message: '请选择field数据类型', trigger: 'blur' }
-        ]
+        fieldName: [{ required: true, message: '请输入field英文名', trigger: 'blur' }],
+        fieldDesc: [{ required: true, message: '请输入field中文名', trigger: 'blur' }],
+        fieldJson: [{ required: true, message: '请输入field格式化json', trigger: 'blur' }],
+        columnName: [{ required: true, message: '请输入数据库字段', trigger: 'blur' }],
+        fieldType: [{ required: true, message: '请选择field数据类型', trigger: 'blur' }]
       }
     }
   },

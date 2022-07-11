@@ -19,10 +19,7 @@
           <el-input v-model="form.userName" placeholder="请输入数据库用户名" />
         </el-form-item>
         <el-form-item label="password">
-          <el-input
-            v-model="form.password"
-            placeholder="请输入数据库密码（没有则为空）"
-          />
+          <el-input v-model="form.password" placeholder="请输入数据库密码（没有则为空）" />
         </el-form-item>
         <el-form-item label="dbName">
           <el-input v-model="form.dbName" placeholder="请输入数据库名称" />

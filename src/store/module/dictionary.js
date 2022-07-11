@@ -9,7 +9,6 @@ export const dictionary = {
     setDictionaryMap(state, dictionaryMap) {
       state.dictionaryMap = { ...state.dictionaryMap, ...dictionaryMap }
     }
-
   },
   actions: {
     // 从后台获取动态路由
@@ -21,12 +20,13 @@ export const dictionary = {
         if (res.code === 0) {
           const dictionaryMap = {}
           const dict = []
-          res.data.resysDictionary.sysDictionaryDetails && res.data.resysDictionary.sysDictionaryDetails.map(item => {
-            dict.push({
-              label: item.label,
-              value: item.value
+          res.data.resysDictionary.sysDictionaryDetails &&
+            res.data.resysDictionary.sysDictionaryDetails.map((item) => {
+              dict.push({
+                label: item.label,
+                value: item.value
+              })
             })
-          })
           dictionaryMap[res.data.resysDictionary.type] = dict
           commit('setDictionaryMap', dictionaryMap)
           return state.dictionaryMap[type]

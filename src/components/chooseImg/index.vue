@@ -1,13 +1,7 @@
 <template>
   <el-drawer title="媒体库" :visible.sync="drawer">
     <div class="media">
-      <el-image
-        v-for="(item,key) in picList"
-        :key="key"
-        class="header-img-box-list"
-        :src="(item.url && item.url.slice(0, 4) !== 'http')?path+item.url:item.url"
-        @click.native="chooseImg(item.url,target,targetKey)"
-      >
+      <el-image v-for="(item, key) in picList" :key="key" class="header-img-box-list" :src="item.url && item.url.slice(0, 4) !== 'http' ? path + item.url : item.url" @click.native="chooseImg(item.url, target, targetKey)">
         <div slot="error" class="header-img-box-list">
           <i class="el-icon-picture-outline" />
         </div>
@@ -55,9 +49,9 @@ export default {
 </script>
 
 <style lang="scss">
-.media{
-  display:flex;
-  flex-wrap:wrap;
+.media {
+  display: flex;
+  flex-wrap: wrap;
   .header-img-box-list {
     margin-top: 20px;
     width: 120px;
@@ -68,7 +62,6 @@ export default {
     text-align: center;
     line-height: 180px;
     cursor: pointer;
+  }
 }
-}
-
 </style>

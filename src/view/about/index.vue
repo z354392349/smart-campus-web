@@ -8,40 +8,24 @@
             <el-row>
               <el-col :span="8" :offset="8">
                 <a href="https://github.com/flipped-aurora/gin-vue-admin">
-                  <img
-                    class="org-img dom-center"
-                    src="@/assets/logo.png"
-                    alt="gin-vue-admin"
-                  >
+                  <img class="org-img dom-center" src="@/assets/logo.png" alt="gin-vue-admin" />
                 </a>
               </el-col>
             </el-row>
             <el-row :gutter="10">
               <el-col :span="8">
                 <a href="https://github.com/flipped-aurora/gin-vue-admin">
-                  <img
-                    class="dom-center"
-                    src="https://img.shields.io/github/watchers/flipped-aurora/gin-vue-admin.svg?label=Watch"
-                    alt=""
-                  >
+                  <img class="dom-center" src="https://img.shields.io/github/watchers/flipped-aurora/gin-vue-admin.svg?label=Watch" alt="" />
                 </a>
               </el-col>
               <el-col :span="8">
                 <a href="https://github.com/flipped-aurora/gin-vue-admin">
-                  <img
-                    class="dom-center"
-                    src="https://img.shields.io/github/stars/flipped-aurora/gin-vue-admin.svg?style=social"
-                    alt=""
-                  >
+                  <img class="dom-center" src="https://img.shields.io/github/stars/flipped-aurora/gin-vue-admin.svg?style=social" alt="" />
                 </a>
               </el-col>
               <el-col :span="8">
                 <a href="https://github.com/flipped-aurora/gin-vue-admin">
-                  <img
-                    class="dom-center"
-                    src="https://img.shields.io/github/forks/flipped-aurora/gin-vue-admin.svg?label=Fork"
-                    alt=""
-                  >
+                  <img class="dom-center" src="https://img.shields.io/github/forks/flipped-aurora/gin-vue-admin.svg?label=Fork" alt="" />
                 </a>
               </el-col>
             </el-row>
@@ -53,11 +37,7 @@
             <el-row>
               <el-col :span="8" :offset="8">
                 <a href="https://github.com/flipped-aurora">
-                  <img
-                    class="org-img dom-center"
-                    src="@/assets/flipped-aurora.png"
-                    alt="flipped-aurora"
-                  >
+                  <img class="org-img dom-center" src="@/assets/flipped-aurora.png" alt="flipped-aurora" />
                 </a>
               </el-col>
             </el-row>
@@ -65,7 +45,7 @@
               <template v-for="(item, index) in members">
                 <el-col :key="index" :span="8">
                   <a :href="item.html_url">
-                    <img class="avatar-img" :src="item.avatar_url">
+                    <img class="avatar-img" :src="item.avatar_url" />
                     <a class="author-name" style="">{{ item.login }}</a>
                   </a>
                 </el-col>
@@ -76,25 +56,11 @@
       </el-col>
       <el-col :span="12">
         <el-card>
-          <div slot="header">
-            提交记录
-          </div>
+          <div slot="header">提交记录</div>
           <div>
-            <Timeline
-              :timeline-items="dataTimeline"
-              :message-when-no-items="messageWhenNoItems"
-              :unique-timeline="true"
-              :unique-year="true"
-              :show-day-and-month="true"
-              order="desc"
-              date-locale="zh-CN"
-            />
+            <Timeline :timeline-items="dataTimeline" :message-when-no-items="messageWhenNoItems" :unique-timeline="true" :unique-year="true" :show-day-and-month="true" order="desc" date-locale="zh-CN" />
           </div>
-          <el-button
-            class="load-more"
-            type="text"
-            @click="loadMore"
-          >Load more</el-button>
+          <el-button class="load-more" type="text" @click="loadMore">Load more</el-button>
         </el-card>
       </el-col>
     </el-row>
@@ -176,8 +142,7 @@ export default {
   margin-left: 10px;
   color: darkblue;
   line-height: 100px;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .dom-center {

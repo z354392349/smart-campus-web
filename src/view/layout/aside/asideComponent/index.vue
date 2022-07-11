@@ -1,6 +1,6 @@
 <template>
   <component :is="menuComponent" v-if="!routerInfo.hidden" :router-info="routerInfo">
-    <template v-if="routerInfo.children&&routerInfo.children.length">
+    <template v-if="routerInfo.children && routerInfo.children.length">
       <AsideComponent v-for="item in routerInfo.children" :key="item.name" :router-info="item" />
     </template>
   </component>
@@ -18,7 +18,7 @@ export default {
   },
   props: {
     routerInfo: {
-      default: function() {
+      default: function () {
         return null
       },
       type: Object
@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     menuComponent() {
-      if (this.routerInfo.children && this.routerInfo.children.filter(item => !item.hidden).length) {
+      if (this.routerInfo.children && this.routerInfo.children.filter((item) => !item.hidden).length) {
         return 'AsyncSubmenu'
       } else {
         return 'MenuItem'

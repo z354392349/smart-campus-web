@@ -1,17 +1,8 @@
 <template>
   <div>
-    <el-form
-      ref="menuForm"
-      :inline="true"
-      label-width="85px"
-      label-position="top"
-    >
-      <el-form-item prop="icon" style="width:100%">
-        <i
-          class="icon"
-          :class="'el-icon-'+ meta.icon"
-          style="position: absolute; z-index: 9999; padding: 5px 10px; "
-        />
+    <el-form ref="menuForm" :inline="true" label-width="85px" label-position="top">
+      <el-form-item prop="icon" style="width: 100%">
+        <i class="icon" :class="'el-icon-' + meta.icon" style="position: absolute; z-index: 9999; padding: 5px 10px" />
         <el-select v-model="meta.icon" clearable filterable class="gva-select" placeholder="请选择">
           <el-option v-for="item in options" :key="item.key" :label="item.key" :value="item.key">
             <span class="icon" :class="item.label" />
@@ -28,7 +19,7 @@ export default {
   name: 'Icon',
   props: {
     meta: {
-      default: function() {
+      default: function () {
         return {}
       },
       type: Object
@@ -337,6 +328,6 @@ export default {
   margin-right: 10px;
 }
 .gva-select .el-input__inner {
-    padding:0 30px !important
+  padding: 0 30px !important;
 }
 </style>

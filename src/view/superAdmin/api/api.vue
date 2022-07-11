@@ -25,7 +25,7 @@
               <el-button size="mini" type="text" @click="deleteVisible = false">取消</el-button>
               <el-button size="mini" type="primary" @click="onDelete">确定</el-button>
             </div>
-            <el-button slot="reference" icon="el-icon-delete" size="mini" type="danger" style="margin-left: 10px;">批量删除</el-button>
+            <el-button slot="reference" icon="el-icon-delete" size="mini" type="danger" style="margin-left: 10px">批量删除</el-button>
           </el-popover>
         </el-form-item>
       </el-form>
@@ -53,16 +53,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      :current-page="page"
-      :page-size="pageSize"
-      :page-sizes="[10, 30, 50, 100]"
-      :style="{ float: 'right', padding: '20px' }"
-      :total="total"
-      layout="total, sizes, prev, pager, next, jumper"
-      @current-change="handleCurrentChange"
-      @size-change="handleSizeChange"
-    />
+    <el-pagination :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :style="{ float: 'right', padding: '20px' }" :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
 
     <el-dialog :before-close="closeDialog" :title="dialogTitle" :visible.sync="dialogFormVisible">
       <el-form ref="apiForm" :inline="true" :model="form" :rules="rules" label-width="80px">
@@ -123,12 +114,12 @@ export default {
   name: 'Api',
   filters: {
     methodFiletr(value) {
-      const target = methodOptions.filter(item => item.value === value)[0]
+      const target = methodOptions.filter((item) => item.value === value)[0]
       // return target && `${target.label}(${target.value})`
       return target && `${target.label}`
     },
     tagTypeFiletr(value) {
-      const target = methodOptions.filter(item => item.value === value)[0]
+      const target = methodOptions.filter((item) => item.value === value)[0]
       return target && `${target.type}`
     }
   },
@@ -165,7 +156,7 @@ export default {
       this.apis = val
     },
     async onDelete() {
-      const ids = this.apis.map(item => item.ID)
+      const ids = this.apis.map((item) => item.ID)
       const res = await deleteApisByIds({ ids })
       if (res.code === 0) {
         this.$message({
@@ -252,7 +243,7 @@ export default {
         })
     },
     async enterDialog() {
-      this.$refs.apiForm.validate(async valid => {
+      this.$refs.apiForm.validate(async (valid) => {
         if (valid) {
           switch (this.type) {
             case 'addApi':

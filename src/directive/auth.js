@@ -3,7 +3,7 @@ import { store } from '@/store'
 export const auth = (Vue) => {
   Vue.directive('auth', {
     // 当被绑定的元素插入到 DOM 中时……
-    bind: function(el, binding) {
+    bind: function (el, binding) {
       const userInfo = store.getters['user/userInfo']
       let type = ''
       switch (Object.prototype.toString.call(binding.value)) {
@@ -27,7 +27,7 @@ export const auth = (Vue) => {
         return
       }
       const waitUse = binding.value.toString().split(',')
-      let flag = waitUse.some(item => item === userInfo.authorityId)
+      let flag = waitUse.some((item) => item === userInfo.authorityId)
       if (binding.modifiers.not) {
         flag = !flag
       }

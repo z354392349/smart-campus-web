@@ -12,7 +12,7 @@ import service from '@/utils/request'
 //  page     int
 //	pageSize int
 // }
-export const getApiList = data => {
+export const getApiList = (data) => {
   return service({
     url: '/api/getApiList',
     method: 'post',
@@ -28,7 +28,7 @@ export const getApiList = data => {
 // @Param data body api.CreateApiParams true "创建api"
 // @Success 200 {string} json "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /api/createApi [post]
-export const createApi = data => {
+export const createApi = (data) => {
   return service({
     url: '/api/createApi',
     method: 'post',
@@ -44,7 +44,7 @@ export const createApi = data => {
 // @Param data body api.GetById true "根据id获取菜单"
 // @Success 200 {string} json "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /menu/getApiById [post]
-export const getApiById = data => {
+export const getApiById = (data) => {
   return service({
     url: '/api/getApiById',
     method: 'post',
@@ -60,7 +60,7 @@ export const getApiById = data => {
 // @Param data body api.CreateApiParams true "更新api"
 // @Success 200 {string} json "{"success":true,"data":{},"msg":"更新成功"}"
 // @Router /api/updateApi [post]
-export const updateApi = data => {
+export const updateApi = (data) => {
   return service({
     url: '/api/updateApi',
     method: 'post',
@@ -76,7 +76,7 @@ export const updateApi = data => {
 // @Param data body api.CreateApiParams true "更新api"
 // @Success 200 {string} json "{"success":true,"data":{},"msg":"更新成功"}"
 // @Router /api/setAuthApi [post]
-export const setAuthApi = data => {
+export const setAuthApi = (data) => {
   return service({
     url: '/api/setAuthApi',
     method: 'post',
@@ -91,7 +91,7 @@ export const setAuthApi = data => {
 // @Produce application/json
 // @Success 200 {string} json "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /api/getAllApis [post]
-export const getAllApis = data => {
+export const getAllApis = (data) => {
   return service({
     url: '/api/getAllApis',
     method: 'post',
@@ -107,7 +107,7 @@ export const getAllApis = data => {
 // @Param data body dbModel.Api true "删除api"
 // @Success 200 {string} json "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /api/deleteApi [post]
-export const deleteApi = data => {
+export const deleteApi = (data) => {
   return service({
     url: '/api/deleteApi',
     method: 'post',
@@ -123,7 +123,7 @@ export const deleteApi = data => {
 // @Param data body request.IdsReq true "ID"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /api/deleteApisByIds [delete]
-export const deleteApisByIds = data => {
+export const deleteApisByIds = (data) => {
   return service({
     url: '/api/deleteApisByIds',
     method: 'delete',

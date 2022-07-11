@@ -3,72 +3,40 @@
     <div class="login_panle">
       <div class="login_panle_form">
         <div class="login_panle_form_title">
-          <img class="login_panle_form_title_logo" :src="$GIN_VUE_ADMIN.appLogo" alt=""><p class="login_panle_form_title_p">{{ $GIN_VUE_ADMIN.appName }}</p>
+          <img class="login_panle_form_title_logo" :src="$GIN_VUE_ADMIN.appLogo" alt="" />
+          <p class="login_panle_form_title_p">{{ $GIN_VUE_ADMIN.appName }}</p>
         </div>
-        <el-form
-          ref="loginForm"
-          :model="loginForm"
-          :rules="rules"
-          @keyup.enter.native="submitForm"
-        >
+        <el-form ref="loginForm" :model="loginForm" :rules="rules" @keyup.enter.native="submitForm">
           <el-form-item prop="username">
             <el-input v-model="loginForm.username" placeholder="请输入用户名">
               <i slot="suffix" class="el-input__icon el-icon-user" />
             </el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input
-              v-model="loginForm.password"
-              :type="lock === 'lock' ? 'password' : 'text'"
-              placeholder="请输入密码"
-            >
-              <i
-                slot="suffix"
-                :class="'el-input__icon el-icon-' + lock"
-                @click="changeLock"
-              />
+            <el-input v-model="loginForm.password" :type="lock === 'lock' ? 'password' : 'text'" placeholder="请输入密码">
+              <i slot="suffix" :class="'el-input__icon el-icon-' + lock" @click="changeLock" />
             </el-input>
           </el-form-item>
           <el-form-item style="position: relative">
-            <el-input
-              v-model="loginForm.captcha"
-              name="logVerify"
-              placeholder="请输入验证码"
-              style="width: 60%"
-            />
+            <el-input v-model="loginForm.captcha" name="logVerify" placeholder="请输入验证码" style="width: 60%" />
             <div class="vPic">
-              <img
-                v-if="picPath"
-                :src="picPath"
-                width="100%"
-                height="100%"
-                alt="请输入验证码"
-                @click="loginVerify()"
-              >
+              <img v-if="picPath" :src="picPath" width="100%" height="100%" alt="请输入验证码" @click="loginVerify()" />
             </div>
           </el-form-item>
           <div />
           <el-form-item>
-            <el-button
-              type="primary"
-              style="width: 46%"
-              @click="checkInit"
-            >前往初始化</el-button>
-            <el-button
-              type="primary"
-              style="width: 46%;margin-left:8%"
-              @click="submitForm"
-            >登 录</el-button>
+            <el-button type="primary" style="width: 46%" @click="checkInit">前往初始化</el-button>
+            <el-button type="primary" style="width: 46%; margin-left: 8%" @click="submitForm">登 录</el-button>
           </el-form-item>
         </el-form>
       </div>
       <div class="login_panle_right" />
       <div class="login_panle_foot">
         <div class="links">
-          <a href="http://doc.henrongyi.top/"><img src="@/assets/docs.png" class="link-icon"></a>
-          <a href="https://www.yuque.com/flipped-aurora/"><img src="@/assets/yuque.png" class="link-icon"></a>
-          <a href="https://github.com/flipped-aurora/gin-vue-admin"><img src="@/assets/github.png" class="link-icon"></a>
-          <a href="https://space.bilibili.com/322210472"><img src="@/assets/video.png" class="link-icon"></a>
+          <a href="http://doc.henrongyi.top/"><img src="@/assets/docs.png" class="link-icon" /></a>
+          <a href="https://www.yuque.com/flipped-aurora/"><img src="@/assets/yuque.png" class="link-icon" /></a>
+          <a href="https://github.com/flipped-aurora/gin-vue-admin"><img src="@/assets/github.png" class="link-icon" /></a>
+          <a href="https://space.bilibili.com/322210472"><img src="@/assets/video.png" class="link-icon" /></a>
         </div>
         <div class="copyright">Copyright &copy; {{ curYear }} 💖 flipped-aurora</div>
       </div>
@@ -169,5 +137,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/style/newLogin.scss";
+@import '@/style/newLogin.scss';
 </style>

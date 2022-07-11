@@ -1,12 +1,7 @@
 <template>
   <div>
     <el-button type="primary" class="drawer-container" icon="el-icon-setting" @click="showSettingDrawer" />
-    <el-drawer
-      title="系统配置"
-      :visible.sync="drawer"
-      :direction="direction"
-      :before-close="handleClose"
-    >
+    <el-drawer title="系统配置" :visible.sync="drawer" :direction="direction" :before-close="handleClose">
       <div class="setting_body">
         <div class="setting_card">
           <div class="setting_title">侧边栏主题 (注：自定义请先配置背景色)</div>
@@ -14,11 +9,11 @@
             <div class="theme-box">
               <div class="item" @click="changeMode('light')">
                 <i v-if="mode === 'light'" class="el-icon-check check" />
-                <img src="https://gw.alipayobjects.com/zos/antfincdn/NQ%24zoisaD2/jpRkZQMyYRryryPNtyIC.svg">
+                <img src="https://gw.alipayobjects.com/zos/antfincdn/NQ%24zoisaD2/jpRkZQMyYRryryPNtyIC.svg" />
               </div>
               <div class="item" @click="changeMode('dark')">
                 <i v-if="mode === 'dark'" class="el-icon-check check" />
-                <img src="https://gw.alipayobjects.com/zos/antfincdn/XwFOFbLkSM/LCkqqYNmvBEbokSDscrm.svg">
+                <img src="https://gw.alipayobjects.com/zos/antfincdn/XwFOFbLkSM/LCkqqYNmvBEbokSDscrm.svg" />
               </div>
             </div>
             <div class="color-box">
@@ -39,7 +34,6 @@
         </div>
       </div>
     </el-drawer>
-
   </div>
 </template>
 
@@ -101,41 +95,40 @@ export default {
   color: #fff;
   border-radius: 4px 0 0 4px;
   cursor: pointer;
-  -webkit-box-shadow: inset 0 0 6px rgba(0 ,0 ,0, 10%);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 10%);
 }
-.setting_body{
+.setting_body {
   padding: 20px;
-  .setting_card{
+  .setting_card {
     margin-bottom: 20px;
   }
-  .setting_content{
+  .setting_content {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
-    >.theme-box{
-     display: flex;
+    > .theme-box {
+      display: flex;
     }
-    >.color-box{
-      div{
+    > .color-box {
+      div {
         display: flex;
         flex-direction: column;
       }
     }
-    .item{
+    .item {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      .check{
+      .check {
         position: absolute;
         font-size: 20px;
         color: #00afff;
       }
-      img{
+      img {
         margin-right: 20px;
       }
     }
   }
 }
-
 </style>

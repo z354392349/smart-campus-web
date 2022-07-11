@@ -22,17 +22,10 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table
-      ref="multipleTable"
-      :data="tableData"
-      border
-      stripe
-      style="width: 100%"
-      tooltip-effect="dark"
-    >
+    <el-table ref="multipleTable" :data="tableData" border stripe style="width: 100%" tooltip-effect="dark">
       <el-table-column type="selection" width="55" />
       <el-table-column label="日期" width="180">
-        <template slot-scope="scope">{{ scope.row.CreatedAt|formatDate }}</template>
+        <template slot-scope="scope">{{ scope.row.CreatedAt | formatDate }}</template>
       </el-table-column>
 
       <el-table-column label="展示值" prop="label" width="120" />
@@ -40,7 +33,7 @@
       <el-table-column label="字典值" prop="value" width="120" />
 
       <el-table-column label="启用状态" prop="status" width="120">
-        <template slot-scope="scope">{{ scope.row.status|formatBoolean }}</template>
+        <template slot-scope="scope">{{ scope.row.status | formatBoolean }}</template>
       </el-table-column>
 
       <el-table-column label="排序标记" prop="sort" width="120" />
@@ -60,36 +53,15 @@
       </el-table-column>
     </el-table>
 
-    <el-pagination
-      :current-page="page"
-      :page-size="pageSize"
-      :page-sizes="[10, 30, 50, 100]"
-      :style="{float:'right',padding:'20px'}"
-      :total="total"
-      layout="total, sizes, prev, pager, next, jumper"
-      @current-change="handleCurrentChange"
-      @size-change="handleSizeChange"
-    />
+    <el-pagination :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :style="{ float: 'right', padding: '20px' }" :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
 
     <el-dialog :before-close="closeDialog" :visible.sync="dialogFormVisible" title="弹窗操作">
       <el-form ref="elForm" :model="formData" :rules="rules" size="medium" label-width="110px">
         <el-form-item label="展示值" prop="label">
-          <el-input
-            v-model="formData.label"
-            placeholder="请输入展示值"
-            clearable
-            :style="{width: '100%'}"
-          />
+          <el-input v-model="formData.label" placeholder="请输入展示值" clearable :style="{ width: '100%' }" />
         </el-form-item>
         <el-form-item label="字典值" prop="value">
-          <el-input-number
-            v-model.number="formData.value"
-            step-strictly
-            :step="1"
-            placeholder="请输入字典值"
-            clearable
-            :style="{width: '100%'}"
-          />
+          <el-input-number v-model.number="formData.value" step-strictly :step="1" placeholder="请输入字典值" clearable :style="{ width: '100%' }" />
         </el-form-item>
         <el-form-item label="启用状态" prop="status" required>
           <el-switch v-model="formData.status" active-text="开启" inactive-text="停用" />
@@ -107,20 +79,14 @@
 </template>
 
 <script>
-import {
-  createSysDictionaryDetail,
-  deleteSysDictionaryDetail,
-  updateSysDictionaryDetail,
-  findSysDictionaryDetail,
-  getSysDictionaryDetailList
-} from '@/api/sysDictionaryDetail' //  此处请自行替换地址
+import { createSysDictionaryDetail, deleteSysDictionaryDetail, updateSysDictionaryDetail, findSysDictionaryDetail, getSysDictionaryDetailList } from '@/api/sysDictionaryDetail' //  此处请自行替换地址
 import { formatTimeToStr } from '@/utils/date'
 import infoList from '@/mixins/infoList'
 
 export default {
   name: 'SysDictionaryDetail',
   filters: {
-    formatDate: function(time) {
+    formatDate: function (time) {
       if (time !== null && time !== '') {
         var date = new Date(time)
         return formatTimeToStr(date, 'yyyy-MM-dd hh:mm:ss')
@@ -128,7 +94,7 @@ export default {
         return ''
       }
     },
-    formatBoolean: function(bool) {
+    formatBoolean: function (bool) {
       if (bool !== null) {
         return bool ? '是' : '否'
       } else {
@@ -221,7 +187,7 @@ export default {
     },
     async enterDialog() {
       this.formData.sysDictionaryID = Number(this.$route.params.id)
-      this.$refs['elForm'].validate(async valid => {
+      this.$refs['elForm'].validate(async (valid) => {
         if (!valid) return
         let res
         switch (this.type) {
@@ -253,5 +219,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>

@@ -1,14 +1,5 @@
 <template>
-  <uploader
-    :options="options"
-    :file-status-text="statusText"
-    :auto-start="false"
-    class="uploader-example"
-    @file-added="fileAdded"
-    @file-progress="onFileProgress"
-    @file-success="onFileSuccess"
-    @file-error="onFileError"
-  >
+  <uploader :options="options" :file-status-text="statusText" :auto-start="false" class="uploader-example" @file-added="fileAdded" @file-progress="onFileProgress" @file-success="onFileSuccess" @file-error="onFileError">
     <uploader-unsupport />
     <uploader-drop>
       <p>拖拽文件至此或点击</p>
@@ -58,19 +49,13 @@ export default {
             return true // return true 会忽略当前文件，不会再发送给后台
           } else {
             // 根据已经上传过的切片来进行忽略
-            return (
-              notUploadedChunks &&
-                notUploadedChunks.some(
-                  item => item.chunkNumber === chunk.offset + 1
-                )
-            )
+            return notUploadedChunks && notUploadedChunks.some((item) => item.chunkNumber === chunk.offset + 1)
           }
         }
       }
     }
   },
   methods: {
-
     // 上传单个文件
     fileAdded(file) {
       this.computeMD5(file) // 生成MD5
@@ -86,11 +71,9 @@ export default {
       file.pause()
 
       fileReader.readAsArrayBuffer(file.file)
-      fileReader.onload = async function(e) {
+      fileReader.onload = async function (e) {
         if (file.size !== e.target.result.byteLength) {
-          this.error(
-            'Browser reported success but could not read the file until the end.'
-          )
+          this.error('Browser reported success but could not read the file until the end.')
           return false
         }
         md5 = SparkMD5.ArrayBuffer.hash(e.target.result, false)
@@ -118,10 +101,8 @@ export default {
           }
         }
       }
-      fileReader.onerror = function() {
-        this.error(
-          'generater md5 时FileReader异步读取文件出错了，FileReader onerror was triggered, maybe the browser aborted due to high memory usage.'
-        )
+      fileReader.onerror = function () {
+        this.error('generater md5 时FileReader异步读取文件出错了，FileReader onerror was triggered, maybe the browser aborted due to high memory usage.')
         return false
       }
     },

@@ -23,17 +23,10 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table
-      ref="multipleTable"
-      :data="tableData"
-      border
-      stripe
-      style="width: 100%"
-      tooltip-effect="dark"
-    >
+    <el-table ref="multipleTable" :data="tableData" border stripe style="width: 100%" tooltip-effect="dark">
       <el-table-column type="selection" width="55" />
       <el-table-column label="日期" width="180">
-        <template slot-scope="scope">{{ scope.row.CreatedAt|formatDate }}</template>
+        <template slot-scope="scope">{{ scope.row.CreatedAt | formatDate }}</template>
       </el-table-column>
 
       <el-table-column label="字典名（中）" prop="name" width="120" />
@@ -41,7 +34,7 @@
       <el-table-column label="字典名（英）" prop="type" width="120" />
 
       <el-table-column label="状态" prop="status" width="120">
-        <template slot-scope="scope">{{ scope.row.status|formatBoolean }}</template>
+        <template slot-scope="scope">{{ scope.row.status | formatBoolean }}</template>
       </el-table-column>
 
       <el-table-column label="描述" prop="desc" width="280" />
@@ -56,46 +49,27 @@
               <el-button size="mini" type="text" @click="scope.row.visible = false">取消</el-button>
               <el-button type="primary" size="mini" @click="deleteSysDictionary(scope.row)">确定</el-button>
             </div>
-            <el-button slot="reference" type="danger" icon="el-icon-delete" size="mini" style="margin-left:10px">删除</el-button>
+            <el-button slot="reference" type="danger" icon="el-icon-delete" size="mini" style="margin-left: 10px">删除</el-button>
           </el-popover>
         </template>
       </el-table-column>
     </el-table>
 
-    <el-pagination
-      :current-page="page"
-      :page-size="pageSize"
-      :page-sizes="[10, 30, 50, 100]"
-      :style="{float:'right',padding:'20px'}"
-      :total="total"
-      layout="total, sizes, prev, pager, next, jumper"
-      @current-change="handleCurrentChange"
-      @size-change="handleSizeChange"
-    />
+    <el-pagination :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :style="{ float: 'right', padding: '20px' }" :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
 
     <el-dialog :before-close="closeDialog" :visible.sync="dialogFormVisible" title="弹窗操作">
       <el-form ref="elForm" :model="formData" :rules="rules" size="medium" label-width="110px">
         <el-form-item label="字典名（中）" prop="name">
-          <el-input
-            v-model="formData.name"
-            placeholder="请输入字典名（中）"
-            clearable
-            :style="{width: '100%'}"
-          />
+          <el-input v-model="formData.name" placeholder="请输入字典名（中）" clearable :style="{ width: '100%' }" />
         </el-form-item>
         <el-form-item label="字典名（英）" prop="type">
-          <el-input
-            v-model="formData.type"
-            placeholder="请输入字典名（英）"
-            clearable
-            :style="{width: '100%'}"
-          />
+          <el-input v-model="formData.type" placeholder="请输入字典名（英）" clearable :style="{ width: '100%' }" />
         </el-form-item>
         <el-form-item label="状态" prop="status" required>
           <el-switch v-model="formData.status" active-text="开启" inactive-text="停用" />
         </el-form-item>
         <el-form-item label="描述" prop="desc">
-          <el-input v-model="formData.desc" placeholder="请输入描述" clearable :style="{width: '100%'}" />
+          <el-input v-model="formData.desc" placeholder="请输入描述" clearable :style="{ width: '100%' }" />
         </el-form-item>
       </el-form>
 
@@ -105,24 +79,18 @@
       </div>
     </el-dialog>
 
-    <div style="margin-top:40px;color:red">获取字典且缓存方法已在前端utils/dictionary 已经封装完成 不必自己书写 使用方法查看文件内注释</div>
+    <div style="margin-top: 40px; color: red">获取字典且缓存方法已在前端utils/dictionary 已经封装完成 不必自己书写 使用方法查看文件内注释</div>
   </div>
 </template>
 
 <script>
-import {
-  createSysDictionary,
-  deleteSysDictionary,
-  updateSysDictionary,
-  findSysDictionary,
-  getSysDictionaryList
-} from '@/api/sysDictionary' //  此处请自行替换地址
+import { createSysDictionary, deleteSysDictionary, updateSysDictionary, findSysDictionary, getSysDictionaryList } from '@/api/sysDictionary' //  此处请自行替换地址
 import { formatTimeToStr } from '@/utils/date'
 import infoList from '@/mixins/infoList'
 export default {
   name: 'SysDictionary',
   filters: {
-    formatDate: function(time) {
+    formatDate: function (time) {
       if (time !== null && time !== '') {
         var date = new Date(time)
         return formatTimeToStr(date, 'yyyy-MM-dd hh:mm:ss')
@@ -130,7 +98,7 @@ export default {
         return ''
       }
     },
-    formatBoolean: function(bool) {
+    formatBoolean: function (bool) {
       if (bool !== null) {
         return bool ? '是' : '否'
       } else {
@@ -228,7 +196,7 @@ export default {
       }
     },
     async enterDialog() {
-      this.$refs['elForm'].validate(async valid => {
+      this.$refs['elForm'].validate(async (valid) => {
         if (!valid) return
         let res
         switch (this.type) {
@@ -256,5 +224,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>

@@ -41,9 +41,7 @@ export const user = {
       window.location.reload()
     },
     ResetUserInfo(state, userInfo = {}) {
-      state.userInfo = { ...state.userInfo,
-        ...userInfo
-      }
+      state.userInfo = { ...state.userInfo, ...userInfo }
     },
     ChangeActiveColor: async (state, val) => {
       state.userInfo.activeColor = val
@@ -145,6 +143,5 @@ export const user = {
       }
       return state.userInfo.activeColor
     }
-
   }
 }

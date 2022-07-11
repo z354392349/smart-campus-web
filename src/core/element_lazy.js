@@ -7,60 +7,7 @@
 
 import Vue from 'vue'
 //  按需引入element
-import {
-  Button,
-  Select,
-  Dialog,
-  Form,
-  Input,
-  FormItem,
-  Option,
-  Loading,
-  Message,
-  Container,
-  Card,
-  Dropdown,
-  DropdownMenu,
-  DropdownItem,
-  Row,
-  Col,
-  Menu,
-  Submenu,
-  MenuItem,
-  Aside,
-  Main,
-  Badge,
-  Header,
-  Tabs,
-  Breadcrumb,
-  BreadcrumbItem,
-  Scrollbar,
-  Avatar,
-  TabPane,
-  Divider,
-  Table,
-  TableColumn,
-  Cascader,
-  Checkbox,
-  CheckboxGroup,
-  Pagination,
-  Tag,
-  Drawer,
-  Tree,
-  Popover,
-  Switch,
-  Collapse,
-  CollapseItem,
-  Tooltip,
-  DatePicker,
-  InputNumber,
-  Steps,
-  Upload,
-  Progress,
-  MessageBox,
-  Image,
-  ColorPicker
-} from 'element-ui'
+import { Button, Select, Dialog, Form, Input, FormItem, Option, Loading, Message, Container, Card, Dropdown, DropdownMenu, DropdownItem, Row, Col, Menu, Submenu, MenuItem, Aside, Main, Badge, Header, Tabs, Breadcrumb, BreadcrumbItem, Scrollbar, Avatar, TabPane, Divider, Table, TableColumn, Cascader, Checkbox, CheckboxGroup, Pagination, Tag, Drawer, Tree, Popover, Switch, Collapse, CollapseItem, Tooltip, DatePicker, InputNumber, Radio, Steps, Upload, Progress, MessageBox, Image, ColorPicker } from 'element-ui'
 
 Vue.use(Button)
 Vue.use(Select)
@@ -100,6 +47,7 @@ Vue.use(Tree)
 Vue.use(CheckboxGroup)
 Vue.use(Popover)
 Vue.use(InputNumber)
+Vue.use(Radio)
 Vue.use(Switch)
 Vue.use(Collapse)
 Vue.use(CollapseItem)
@@ -116,5 +64,3 @@ Vue.prototype.$loading = Loading.service
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
 Dialog.props.closeOnClickModal.default = false
-
-console.warn('[GIN-VUE-ADMIN]--按需加载elementUI成功,如出现element-ui组件无法使用问题，请至/src/core/element_lazy 下引入对应组件即可')

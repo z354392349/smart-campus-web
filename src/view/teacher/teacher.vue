@@ -33,13 +33,24 @@
       @size-change="handleSizeChange"
     />
 
+    <!-- { name: '张三', sex: 1, birthday: 1657468800, telephone: '13651196456', description: '' } -->
     <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :width="$conf.minDialogWidth">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="年级名称" prop="name">
-          <el-input v-model="form.name" autocomplete="off" placeholder="请输入年级名称" />
+        <el-form-item label="姓名" prop="name">
+          <el-input v-model="form.name" autocomplete="off" placeholder="请输入教师姓名" />
+        </el-form-item>
+        <el-form-item label="性别" prop="sex">
+          <el-radio v-model="form.sex" :label="1">男</el-radio>
+          <el-radio v-model="form.sex" :label="2">女</el-radio>
+        </el-form-item>
+        <el-form-item label="生日" prop="birthday">
+          <el-date-picker v-model="form.birthday" type="date" value-format="timestamp" placeholder="请选择生日" />
+        </el-form-item>
+        <el-form-item label="手机号码" prop="telephone">
+          <el-input v-model="form.telephone" autocomplete="off" placeholder="请输入手机号码" />
         </el-form-item>
         <el-form-item label="描述">
-          <el-input v-model="form.description" autocomplete="off" placeholder="请选择输入描述" />
+          <el-input v-model="form.description" autocomplete="off" placeholder="请输入描述" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -51,10 +62,9 @@
 </template>
 
 <script>
-// 获取列表内容封装在mixins内部  getTableData方法 初始化已封装完成 条件搜索时候 请把条件安好后台定制的结构体字段 放到 this.searchInfo 中即可实现条件搜索
-
-import { getGradeList, createGrade, upGrade, deleteGrade } from '@/api/grade'
-import { createtTeacher } from '@/api/teacher'
+import moment from 'moment'
+import { createGrade, upGrade, deleteGrade } from '@/api/grade'
+import { createtTeacher, getTeacherList } from '@/api/teacher'
 import infoList from '@/mixins/infoList'
 
 export default {
@@ -63,22 +73,28 @@ export default {
   mixins: [infoList],
   data() {
     return {
-      listApi: getGradeList,
-      dialogFormVisible: false,
-      dialogTitle: '新增年级',
+      listApi: getTeacherList,
+      dialogFormVisible: true,
+      dialogTitle: '新增教师',
       form: {
         name: '',
-        description: ''
+        description: '',
+        sex: 1,
+        birthday: parseInt(moment().startOf('day').unix() * 1000),
+        telephone: ''
       },
       type: '',
       rules: {
-        name: [{ required: true, message: '请输入年级名称', trigger: 'blur' }]
+        name: [{ required: true, message: '请输入教师名称', trigger: 'blur' }],
+        sex: [{ required: true, message: '请选择性别', trigger: 'blur' }],
+        birthday: [{ required: true, message: '请选择生日', trigger: 'blur' }],
+        telephone: [{ required: true, message: '请输入手机号码', trigger: 'blur' }]
       }
     }
   },
   created() {
     this.getTableData()
-    createtTeacher({ name: '张三', sex: 1, birthday: '2022-07-10', telephone: '13651196456', description: '' })
+    createtTeacher({ name: '张三', sex: 1, birthday: 1657468800, telephone: '13651196456', description: '' })
   },
   methods: {
     // // 条件搜索前端看此方法
@@ -123,7 +139,7 @@ export default {
     },
 
     async enterDialog() {
-      this.$refs.form.validate(async valid => {
+      this.$refs.form.validate(async (valid) => {
         if (valid) {
           if (this.type === 'add') {
             const res = await createGrade(this.form)

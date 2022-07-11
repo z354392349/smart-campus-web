@@ -4,10 +4,11 @@
       <el-col :span="6">
         <div class="fl-left avatar-box">
           <div class="user-card">
-            <div class="user-headpic-update" :style="{ 'background-image': `url(${(userInfo.headerImg && userInfo.headerImg.slice(0, 4) !== 'http')?path+userInfo.headerImg:userInfo.headerImg})`,'background-repeat':'no-repeat','background-size':'cover' }">
+            <div class="user-headpic-update" :style="{ 'background-image': `url(${userInfo.headerImg && userInfo.headerImg.slice(0, 4) !== 'http' ? path + userInfo.headerImg : userInfo.headerImg})`, 'background-repeat': 'no-repeat', 'background-size': 'cover' }">
               <span class="update" @click="openChooseImg">
                 <i class="el-icon-edit" />
-                重新上传</span>
+                重新上传
+              </span>
             </div>
             <div class="user-personality">
               <p class="nickname">{{ userInfo.nickName }}</p>
@@ -16,22 +17,25 @@
             <div class="user-information">
               <ul>
                 <li>
-                  <i class="el-icon-user" />{{ userInfo.nickName }}
+                  <i class="el-icon-user" />
+                  {{ userInfo.nickName }}
                 </li>
                 <el-tooltip class="item" effect="light" content="北京反转极光科技有限公司-技术部-前端事业群" placement="top">
                   <li>
-                    <i class="el-icon-data-analysis" />北京反转极光科技有限公司-技术部-前端事业群
+                    <i class="el-icon-data-analysis" />
+                    北京反转极光科技有限公司-技术部-前端事业群
                   </li>
                 </el-tooltip>
                 <li>
-                  <i class="el-icon-video-camera-solid" />中国·北京市·朝阳区
+                  <i class="el-icon-video-camera-solid" />
+                  中国·北京市·朝阳区
                 </li>
                 <el-tooltip class="item" effect="light" content="goLang/JavaScript/Vue/Gorm" placement="top">
                   <li>
-                    <i class="el-icon-medal-1" />goLang/JavaScript/Vue/Gorm
+                    <i class="el-icon-medal-1" />
+                    goLang/JavaScript/Vue/Gorm
                   </li>
                 </el-tooltip>
-
               </ul>
             </div>
           </div>
@@ -67,7 +71,7 @@
                   <p class="title">修改密码</p>
                   <p class="desc">
                     修改个人密码
-                    <a href="#" @click="showPassword=true">修改密码</a>
+                    <a href="#" @click="showPassword = true">修改密码</a>
                   </p>
                 </li>
               </ul>
@@ -92,7 +96,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="showPassword=false">取 消</el-button>
+        <el-button @click="showPassword = false">取 消</el-button>
         <el-button type="primary" @click="savePassword">确 定</el-button>
       </div>
     </el-dialog>
@@ -148,7 +152,7 @@ export default {
   methods: {
     ...mapMutations('user', ['ResetUserInfo']),
     savePassword() {
-      this.$refs.modifyPwdForm.validate(valid => {
+      this.$refs.modifyPwdForm.validate((valid) => {
         if (valid) {
           changePassword({
             username: this.userInfo.userName,
@@ -237,10 +241,10 @@ export default {
       .nickname {
         font-size: 26px;
       }
-      .person-info{
+      .person-info {
         margin-top: 6px;
         font-size: 14px;
-        color:#999
+        color: #999;
       }
     }
     .user-information {
@@ -253,7 +257,7 @@ export default {
         width: 100%;
         li {
           width: 100%;
-          white-space:nowrap;
+          white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
           i {
@@ -289,27 +293,27 @@ export default {
     }
   }
 }
-.user-headpic-update{
-    width: 120px;
-    height: 120px;
-    line-height: 120px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    border-radius: 20px;
-     &:hover{
+.user-headpic-update {
+  width: 120px;
+  height: 120px;
+  line-height: 120px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  border-radius: 20px;
+  &:hover {
+    color: #fff;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, rgba(0, 0, 0, 0.15) 100%), radial-gradient(at top center, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.4) 120%) #989898;
+    background-blend-mode: multiply, multiply;
+    .update {
       color: #fff;
-      background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898;
-      background-blend-mode: multiply,multiply;
-      .update{
-        color:#fff ;
-      }
-    }
-    .update{
-      height: 120px;
-      width: 120px;
-      text-align: center;
-      color:transparent;
     }
   }
+  .update {
+    height: 120px;
+    width: 120px;
+    text-align: center;
+    color: transparent;
+  }
+}
 </style>

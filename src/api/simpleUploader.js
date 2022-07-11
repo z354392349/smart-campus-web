@@ -1,4 +1,3 @@
-
 import service from '@/utils/request'
 
 // @Tags SimpleUploader
@@ -31,4 +30,3 @@ export const mergeFileMd5 = (params) => {
     params
   })
 }
-

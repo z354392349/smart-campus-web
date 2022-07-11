@@ -5,11 +5,11 @@
       <el-avatar v-else :size="30" :src="require('@/assets/noBody.png')" />
     </template>
     <template v-if="picType === 'img'">
-      <img v-if="userInfo.headerImg" :src="avatar" class="avatar">
-      <img v-else :src="require('@/assets/noBody.png')" class="avatar">
+      <img v-if="userInfo.headerImg" :src="avatar" class="avatar" />
+      <img v-else :src="require('@/assets/noBody.png')" class="avatar" />
     </template>
     <template v-if="picType === 'file'">
-      <img :src="file" class="file">
+      <img :src="file" class="file" />
     </template>
   </span>
 </template>
@@ -62,14 +62,14 @@ export default {
 </script>
 
 <style scoped>
-.headerAvatar{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.headerAvatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.file{
-    width: 80px;
-    height: 80px;
-    position: relative;
+.file {
+  width: 80px;
+  height: 80px;
+  position: relative;
 }
 </style>

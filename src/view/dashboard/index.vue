@@ -8,7 +8,7 @@
               <div>
                 <el-col :xs="4" :md="3" :lg="3">
                   <span class="card-img">
-                    <img :src="userInfo.headerImg" alt="">
+                    <img :src="userInfo.headerImg" alt="" />
                   </span>
                 </el-col>
                 <el-col :xs="20" :lg="12" :md="12">
@@ -30,7 +30,7 @@
               <el-col :span="8">
                 <div class="car-item">
                   <span class="flow"><i class="el-icon-s-grid" /></span>
-                  <span>今日流量 </span>
+                  <span>今日流量</span>
                   <b>13260</b>
                 </div>
               </el-col>
@@ -39,7 +39,7 @@
                   <span class="user-number">
                     <i class="el-icon-s-custom" />
                   </span>
-                  <span>总用户 </span>
+                  <span>总用户</span>
                   <b>48286</b>
                 </div>
               </el-col>
@@ -48,7 +48,7 @@
                   <span class="feedback">
                     <i class="el-icon-star-on" />
                   </span>
-                  <span>好评率 </span>
+                  <span>好评率</span>
                   <b>98%</b>
                 </div>
               </el-col>
@@ -60,24 +60,20 @@
     <el-row>
       <el-card shadow="hover">
         <h2>
-          使用教学：<a style="color:#409EFF" target="view_window" href="https://www.bilibili.com/video/BV1fV411y7dT/">https://www.bilibili.com/video/BV1fV411y7dT/</a>
+          使用教学：
+          <a style="color: #409eff" target="view_window" href="https://www.bilibili.com/video/BV1fV411y7dT/">https://www.bilibili.com/video/BV1fV411y7dT/</a>
         </h2>
-        <br>
+        <br />
         <h2>
-          工作流教学：<a style="color:#409EFF" target="view_window" href="https://www.bilibili.com/video/BV1Ka411F7Ji/">https://www.bilibili.com/video/BV1Ka411F7Ji/</a>
+          工作流教学：
+          <a style="color: #409eff" target="view_window" href="https://www.bilibili.com/video/BV1Ka411F7Ji/">https://www.bilibili.com/video/BV1Ka411F7Ji/</a>
         </h2>
         <div />
       </el-card>
     </el-row>
     <div class="shadow">
       <el-row :gutter="20">
-        <el-col
-          v-for="(card, key) in toolCards"
-          :key="key"
-          :span="4"
-          :xs="8"
-          @click.native="toTarget(card.name)"
-        >
+        <el-col v-for="(card, key) in toolCards" :key="key" :span="4" :xs="8" @click.native="toTarget(card.name)">
           <el-card shadow="hover" class="grid-content">
             <i :class="card.icon" :style="{ color: card.color }" />
             <p>{{ card.label }}</p>

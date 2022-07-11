@@ -50,16 +50,16 @@ module.exports = {
       .rule('vue')
       .use('vue-loader')
       .loader('vue-loader')
-      .tap(options => {
+      .tap((options) => {
         options.compilerOptions.preserveWhitespace = true
         return options
       })
       .end()
     config
       // https://webpack.js.org/configuration/devtool/#development
-      .when(process.env.NODE_ENV === 'development', config => config.devtool('cheap-source-map'))
+      .when(process.env.NODE_ENV === 'development', (config) => config.devtool('cheap-source-map'))
 
-    config.when(process.env.NODE_ENV !== 'development', config => {
+    config.when(process.env.NODE_ENV !== 'development', (config) => {
       // 不打包 begin
       // 1.目前已经测试通过[vue,axios,echarts]可以cdn引用，其它组件测试通过后可继续添加
       // 2.此处添加不打包后，需在public/index.html head中添加相应cdn资源链接
@@ -72,12 +72,12 @@ module.exports = {
       )
       // 不打包 end
 
-      config.plugin('html').tap(args => {
+      config.plugin('html').tap((args) => {
         if (buildConf.title) {
           args[0].title = buildConf.title
         }
         if (buildConf.cdns.length > 0) {
-          args[0].cdns = buildConf.cdns.map(conf => {
+          args[0].cdns = buildConf.cdns.map((conf) => {
             if (conf.path) {
               conf.js = `${buildConf.baseCdnUrl}${conf.path}`
             } else {

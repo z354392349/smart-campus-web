@@ -1,16 +1,7 @@
-
 <template>
   <div>
-    <el-upload
-      class="image-uploader"
-      :action="`${path}/fileUploadAndDownload/upload`"
-      :headers="{ 'x-token': token }"
-      :show-file-list="false"
-      :on-success="handleImageSuccess"
-      :before-upload="beforeImageUpload"
-      :multiple="false"
-    >
-      <img v-if="imageUrl" :src="showImageUrl" class="image">
+    <el-upload class="image-uploader" :action="`${path}/fileUploadAndDownload/upload`" :headers="{ 'x-token': token }" :show-file-list="false" :on-success="handleImageSuccess" :before-upload="beforeImageUpload" :multiple="false">
+      <img v-if="imageUrl" :src="showImageUrl" class="image" />
       <i v-else class="el-icon-plus image-uploader-icon" />
     </el-upload>
   </div>
@@ -48,7 +39,7 @@ export default {
   computed: {
     ...mapGetters('user', ['userInfo', 'token']),
     showImageUrl() {
-      return (this.imageUrl && this.imageUrl.slice(0, 4) !== 'http') ? path + this.imageUrl : this.imageUrl
+      return this.imageUrl && this.imageUrl.slice(0, 4) !== 'http' ? path + this.imageUrl : this.imageUrl
     }
   },
   methods: {

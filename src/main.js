@@ -16,7 +16,7 @@ import conf from '@/conf/conf.js'
 Vue.use(conf)
 
 export default new Vue({
-  render: h => h(App),
+  render: (h) => h(App),
   router,
   store
 }).$mount('#app')

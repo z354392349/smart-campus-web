@@ -31,7 +31,7 @@ export default {
   div {
     display: flex;
     justify-content: center;
-    span{
+    span {
       margin: 0 3px;
     }
   }

@@ -1,21 +1,18 @@
 <template>
   <el-container class="layout-cont">
-    <el-container :class="[isSider?'openside':'hideside',isMobile ? 'mobile': '']">
-      <el-row :class="[isShadowBg?'shadowBg':'']" @click.native="changeShadow()" />
+    <el-container :class="[isSider ? 'openside' : 'hideside', isMobile ? 'mobile' : '']">
+      <el-row :class="[isShadowBg ? 'shadowBg' : '']" @click.native="changeShadow()" />
       <el-aside class="main-cont main-left">
-        <div class="tilte" :style="{background: backgroundColor}">
-          <img alt class="logoimg" :src="$GIN_VUE_ADMIN.appLogo">
-          <h2 v-if="isSider" class="tit-text" :style="{color:textColor}">{{ $GIN_VUE_ADMIN.appName }}</h2>
+        <div class="tilte" :style="{ background: backgroundColor }">
+          <img alt class="logoimg" :src="$GIN_VUE_ADMIN.appLogo" />
+          <h2 v-if="isSider" class="tit-text" :style="{ color: textColor }">{{ $GIN_VUE_ADMIN.appName }}</h2>
         </div>
         <Aside class="aside" />
       </el-aside>
       <!-- 分块滑动功能 -->
       <el-main class="main-cont main-right">
         <transition :duration="{ enter: 800, leave: 100 }" mode="out-in" name="el-fade-in-linear">
-          <div
-            :style="{width: `calc(100% - ${isMobile?'0px':isCollapse?'54px':'220px'})`}"
-            class="topfix"
-          >
+          <div :style="{ width: `calc(100% - ${isMobile ? '0px' : isCollapse ? '54px' : '220px'})` }" class="topfix">
             <el-row>
               <!-- :xs="8" :sm="6" :md="4" :lg="3" :xl="1" -->
               <el-header class="header-cont">
@@ -27,16 +24,13 @@
                 </el-col>
                 <el-col :xs="10" :lg="14" :md="14" :sm="9" :xl="14">
                   <el-breadcrumb class="breadcrumb" separator-class="el-icon-arrow-right">
-                    <el-breadcrumb-item
-                      v-for="item in matched.slice(1,matched.length)"
-                      :key="item.path"
-                    >{{ item.meta.title }}</el-breadcrumb-item>
+                    <el-breadcrumb-item v-for="item in matched.slice(1, matched.length)" :key="item.path">{{ item.meta.title }}</el-breadcrumb-item>
                   </el-breadcrumb>
                 </el-col>
                 <el-col :xs="12" :lg="9" :md="9" :sm="14" :xl="9">
                   <div class="fl-right right-box">
                     <Search />
-                    <Screenfull class="screenfull" :style="{cursor:'pointer'}" />
+                    <Screenfull class="screenfull" :style="{ cursor: 'pointer' }" />
                     <el-dropdown>
                       <span class="header-avatar" style="cursor: pointer">
                         <CustomPic />
@@ -56,7 +50,6 @@
                     </el-dropdown>
                   </div>
                 </el-col>
-
               </el-header>
             </el-row>
             <!-- 当前面包屑用路由自动生成可根据需求修改 -->
@@ -77,7 +70,6 @@
         <setting />
       </el-main>
     </el-container>
-
   </el-container>
 </template>
 
@@ -214,11 +206,11 @@ export default {
 <style lang="scss">
 @import '@/style/mobile.scss';
 
-.dark{
+.dark {
   background-color: #191a23 !important;
   color: #fff !important;
 }
-.light{
+.light {
   background-color: #fff !important;
   color: #000 !important;
 }

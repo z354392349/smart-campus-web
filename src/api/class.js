@@ -1,7 +1,7 @@
 import service from '@/utils/request'
 
 // 获取年级列表
-export const getGradeList = data => {
+export const getGradeList = (data) => {
   return service({
     url: '/grade/getGradeList',
     method: 'get',
@@ -10,7 +10,7 @@ export const getGradeList = data => {
 }
 
 // 创建班级
-export const createClass = data => {
+export const createClass = (data) => {
   return service({
     url: '/grade/createGrade',
     method: 'post',
@@ -19,7 +19,7 @@ export const createClass = data => {
 }
 
 // 更新年级
-export const upGrade = data => {
+export const upGrade = (data) => {
   return service({
     url: '/grade/upGrade',
     method: 'put',
@@ -28,7 +28,7 @@ export const upGrade = data => {
 }
 
 // 删除年级
-export const deleteGrade = data => {
+export const deleteGrade = (data) => {
   return service({
     url: '/grade/deleteGrade',
     method: 'delete',

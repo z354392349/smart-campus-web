@@ -1,7 +1,7 @@
 <template>
   <div class="init_page">
     <div class="init_page_panle">
-      <div v-if="hello < 2" id="hello" :class="[hello < 1 ? 'slide-in-fwd-top' : 'slide-out-right']" class="hello  ">
+      <div v-if="hello < 2" id="hello" :class="[hello < 1 ? 'slide-in-fwd-top' : 'slide-out-right']" class="hello">
         <div>
           <div class="hello_title">GIN-VUE-ADMIN</div>
           <p class="in-two a-fadeinT">初始化须知</p>
@@ -10,16 +10,12 @@
           <p class="init_p">3.请您确认是否了解后续的配置流程</p>
           <p class="init_p">注：开发组不为文档中书写过的内容提供无偿服务</p>
           <p class="init_btn">
-            <el-button type="primary" @click="goDoc">
-              阅读文档
-            </el-button>
-            <el-button type="primary" @click="showNext">
-              我已确认
-            </el-button>
+            <el-button type="primary" @click="goDoc">阅读文档</el-button>
+            <el-button type="primary" @click="showNext">我已确认</el-button>
           </p>
         </div>
       </div>
-      <div v-if="hello > 0 " :class="[(hello > 0 && !out)? 'slide-in-left' : '' , out ? 'slide-out-right' : '']" class=" form">
+      <div v-if="hello > 0" :class="[hello > 0 && !out ? 'slide-in-left' : '', out ? 'slide-out-right' : '']" class="form">
         <el-form ref="form" :model="form" label-width="100px">
           <el-form-item label="数据库类型">
             <el-select v-model="form.sqlType" disabled placeholder="请选择">
@@ -36,10 +32,7 @@
             <el-input v-model="form.userName" placeholder="请输入数据库用户名" />
           </el-form-item>
           <el-form-item label="password">
-            <el-input
-              v-model="form.password"
-              placeholder="请输入数据库密码（没有则为空）"
-            />
+            <el-input v-model="form.password" placeholder="请输入数据库密码（没有则为空）" />
           </el-form-item>
           <el-form-item label="dbName">
             <el-input v-model="form.dbName" placeholder="请输入数据库名称" />
@@ -114,27 +107,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.init_page{
+.init_page {
   margin: 0;
   padding: 0;
-  background-image: url("~@/assets/login_background.svg");
+  background-image: url('~@/assets/login_background.svg');
   background-size: cover;
   width: 100%;
   height: 100%;
   position: relative;
-  .init_page_panle{
+  .init_page_panle {
     position: absolute;
     top: 3vh;
     left: 2vw;
     width: 96vw;
     height: 94vh;
-    background-color: rgba(255,255,255,.8);
+    background-color: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(5px);
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    .hello{
+    .hello {
       position: absolute;
       z-index: 2;
       text-align: center;
@@ -144,22 +137,22 @@ export default {
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      .hello_title{
+      .hello_title {
         font-size: 32px;
         line-height: 98px;
       }
-      .in-two{
+      .in-two {
         font-size: 22px;
       }
-      .init_p{
+      .init_p {
         margin-top: 20px;
         color: #777777;
       }
-      .init_btn{
+      .init_btn {
         margin-top: 20px;
       }
     }
-    .form{
+    .form {
       position: absolute;
       z-index: 3;
       margin-top: 60px;
@@ -172,16 +165,16 @@ export default {
 }
 
 .slide-in-fwd-top {
-  -webkit-animation: slide-in-fwd-top 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-  animation: slide-in-fwd-top 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  -webkit-animation: slide-in-fwd-top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: slide-in-fwd-top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 .slide-out-right {
-  -webkit-animation: slide-out-right 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
-  animation: slide-out-right 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+  -webkit-animation: slide-out-right 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+  animation: slide-out-right 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
 }
 .slide-in-left {
-  -webkit-animation: slide-in-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-  animation: slide-in-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  -webkit-animation: slide-in-left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: slide-in-left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 @-webkit-keyframes slide-in-fwd-top {
   0% {
@@ -256,10 +249,9 @@ export default {
   }
 }
 @media (max-width: 750px) {
-  .form{
+  .form {
     width: 94vw !important;
     padding: 0;
   }
 }
-
 </style>

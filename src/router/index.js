@@ -7,7 +7,7 @@ Vue.use(Router)
 const originalPush = Router.prototype.push
 // 修改原型对象中的push方法
 Router.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch(err => err)
+  return originalPush.call(this, location).catch((err) => err)
 }
 
 const baseRouters = [
@@ -29,9 +29,10 @@ const baseRouters = [
 
 // 需要通过后台数据来生成的组件
 
-const createRouter = () => new Router({
-  routes: baseRouters
-})
+const createRouter = () =>
+  new Router({
+    routes: baseRouters
+  })
 
 const router = createRouter()
 

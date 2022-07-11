@@ -4,7 +4,7 @@
     <form id="fromCont" method="post">
       <div class="fileUpload" @click="inputChange">
         选择文件
-        <input v-show="false" id="file" ref="Input" multiple="multiple" type="file" @change="choseFile">
+        <input v-show="false" id="file" ref="Input" multiple="multiple" type="file" @change="choseFile" />
       </div>
     </form>
     <el-button :disabled="limitFileSize" type="primary" size="mini" class="uploadBtn" @click="getFile">上传文件</el-button>
@@ -29,11 +29,7 @@
 <script>
 import SparkMD5 from 'spark-md5'
 import axios from 'axios'
-import {
-  findFile,
-  breakpointContinueFinish,
-  removeChunk
-} from '@/api/breakpoint'
+import { findFile, breakpointContinueFinish, removeChunk } from '@/api/breakpoint'
 export default {
   name: 'HelloWorld',
   data() {
@@ -59,7 +55,7 @@ export default {
       this.percentage = 0
       if (file.size < maxSize) {
         fileR.readAsArrayBuffer(file) // 把文件读成ArrayBuffer  主要为了保持跟后端的流一致
-        fileR.onload = async e => {
+        fileR.onload = async (e) => {
           // 读成arrayBuffer的回调 e 为方法自带参数 相当于 dom的e 流存在e.target.result 中
           const blob = e.target.result
           const spark = new SparkMD5.ArrayBuffer() // 创建md5制造工具 （md5用于检测文件一致性 这里不懂就打电话问我）
@@ -94,11 +90,8 @@ export default {
           const IsFinish = res.data.file.IsFinish // 是否是同文件不同命 （文件md5相同 文件名不同 则默认是同一个文件但是不同文件名 此时后台数据库只需要拷贝一下数据库文件即可 不需要上传文件 即秒传功能）
           if (!IsFinish) {
             // 当是断点续传时候
-            this.waitUpLoad = this.formDataList.filter(all => {
-              return !(
-                finishList &&
-              finishList.some(fi => fi.FileChunkNumber === all.key)
-              ) // 找出需要上传的切片
+            this.waitUpLoad = this.formDataList.filter((all) => {
+              return !(finishList && finishList.some((fi) => fi.FileChunkNumber === all.key)) // 找出需要上传的切片
             })
           } else {
             this.waitUpLoad = [] // 秒传则没有需要上传的切片
@@ -124,13 +117,13 @@ export default {
     },
     sliceFile() {
       this.waitUpLoad &&
-        this.waitUpLoad.map(item => {
+        this.waitUpLoad.map((item) => {
           // 需要上传的切片
           item.formData.append('chunkTotal', this.formDataList.length) // 切片总数携带给后台 总有用的
           const fileR = new FileReader() // 功能同上
           const file = item.formData.get('file')
           fileR.readAsArrayBuffer(file)
-          fileR.onload = e => {
+          fileR.onload = (e) => {
             const spark = new SparkMD5.ArrayBuffer()
             spark.append(e.target.result)
             item.formData.append('chunkMd5', spark.end()) // 获取当前切片md5 后端用于验证切片完整性
@@ -167,7 +160,7 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 h3 {
   margin: 40px 0 0;
 }
@@ -182,65 +175,66 @@ li {
 a {
   color: #42b983;
 }
-#fromCont{
+#fromCont {
   display: inline-block;
 }
-.fileUpload{
-    padding: 3px 10px;
-    font-size: 12px;
-    height: 20px;
-    line-height: 20px;
-    position: relative;
+.fileUpload {
+  padding: 3px 10px;
+  font-size: 12px;
+  height: 20px;
+  line-height: 20px;
+  position: relative;
+  cursor: pointer;
+  color: #000;
+  border: 1px solid #c1c1c1;
+  border-radius: 4px;
+  overflow: hidden;
+  display: inline-block;
+  input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
     cursor: pointer;
-    color: #000;
-    border: 1px solid #c1c1c1;
-    border-radius: 4px;
-    overflow: hidden;
-    display: inline-block;
-    input{
-      position: absolute;
-      font-size: 100px;
-      right: 0;
-      top: 0;
-      opacity: 0;
-      cursor: pointer;
-    }
+  }
 }
- .fileName{
-    display: inline-block;
-    vertical-align: top;
-    margin: 6px 15px 0 15px;
-  }
-  .uploadBtn{
-    position: relative;
-    top: -10px;
-    margin-left: 15px;
-  }
-  .tips{
-    margin-top: 30px;
-    font-size: 14px;
-    font-weight: 400;
-    color: #606266;
-  }
-  .el-divider{
-    margin: 0 0 30px 0;
-  }
+.fileName {
+  display: inline-block;
+  vertical-align: top;
+  margin: 6px 15px 0 15px;
+}
+.uploadBtn {
+  position: relative;
+  top: -10px;
+  margin-left: 15px;
+}
+.tips {
+  margin-top: 30px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #606266;
+}
+.el-divider {
+  margin: 0 0 30px 0;
+}
 
- .list{
-   margin-top:15px;
- }
- .list-item {
+.list {
+  margin-top: 15px;
+}
+.list-item {
   display: block;
   margin-right: 10px;
   color: #606266;
   line-height: 25px;
   margin-bottom: 5px;
   width: 40%;
-   .percentage{
-          float: right;
-        }
+  .percentage {
+    float: right;
+  }
 }
-.list-enter-active, .list-leave-active {
+.list-enter-active,
+.list-leave-active {
   transition: all 1s;
 }
 .list-enter, .list-leave-to

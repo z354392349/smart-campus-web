@@ -302,9 +302,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.icon-list{
+.icon-list {
   -webkit-tap-highlight-color: transparent;
-  font-family: icomoon!important;
+  font-family: icomoon !important;
   font-style: normal;
   font-weight: 400;
   font-variant: normal;
@@ -312,15 +312,15 @@ export default {
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
   list-style: none;
-  padding: 0!important;
+  padding: 0 !important;
   border: 1px solid #eaeefb;
   border-radius: 4px;
   font-size: 14px;
   color: #5e6d82;
   line-height: 2em;
-  li{
+  li {
     -webkit-tap-highlight-color: transparent;
-    font-family: icomoon!important;
+    font-family: icomoon !important;
     font-style: normal;
     font-weight: 400;
     font-variant: normal;
@@ -338,7 +338,7 @@ export default {
     border-bottom: 1px solid #eee;
     margin-right: -1px;
     margin-bottom: -1px;
-    span{
+    span {
       -webkit-tap-highlight-color: transparent;
       font-style: normal;
       font-weight: 400;
@@ -351,14 +351,14 @@ export default {
       display: inline-block;
       vertical-align: middle;
       line-height: normal;
-      font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
+      font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
       color: #99a9bf;
-      transition: color .15s linear;
-      i{
+      transition: color 0.15s linear;
+      i {
         -webkit-tap-highlight-color: transparent;
         list-style: none;
         text-align: center;
-        font-family: element-icons!important;
+        font-family: element-icons !important;
         font-style: normal;
         font-weight: 400;
         font-variant: normal;
@@ -370,10 +370,9 @@ export default {
         font-size: 32px;
         margin-bottom: 15px;
         color: #606266;
-        transition: color .15s linear;
+        transition: color 0.15s linear;
       }
     }
   }
 }
-
 </style>

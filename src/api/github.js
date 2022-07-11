@@ -9,13 +9,16 @@ service.interceptors.request.use((config) => {
   return config
 })
 
-service.interceptors.response.use((resp) => {
-  loadingInstance.close()
-  return resp
-}, (error) => {
-  loadingInstance.close()
-  return error
-})
+service.interceptors.response.use(
+  (resp) => {
+    loadingInstance.close()
+    return resp
+  },
+  (error) => {
+    loadingInstance.close()
+    return error
+  }
+)
 
 export function Commits(page) {
   return service({

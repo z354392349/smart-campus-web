@@ -7,17 +7,10 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table
-      ref="multipleTable"
-      :data="tableData"
-      border
-      stripe
-      style="width: 100%"
-      tooltip-effect="dark"
-    >
+    <el-table ref="multipleTable" :data="tableData" border stripe style="width: 100%" tooltip-effect="dark">
       <el-table-column type="selection" width="55" />
       <el-table-column label="接入日期" width="180">
-        <template slot-scope="scope">{{ scope.row.CreatedAt|formatDate }}</template>
+        <template slot-scope="scope">{{ scope.row.CreatedAt | formatDate }}</template>
       </el-table-column>
       <el-table-column label="姓名" prop="customerName" width="120" />
       <el-table-column label="电话" prop="customerPhoneData" width="120" />
@@ -37,16 +30,7 @@
       </el-table-column>
     </el-table>
 
-    <el-pagination
-      :current-page="page"
-      :page-size="pageSize"
-      :page-sizes="[10, 30, 50, 100]"
-      :style="{float:'right',padding:'20px'}"
-      :total="total"
-      layout="total, sizes, prev, pager, next, jumper"
-      @current-change="handleCurrentChange"
-      @size-change="handleSizeChange"
-    />
+    <el-pagination :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :style="{ float: 'right', padding: '20px' }" :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
 
     <el-dialog :before-close="closeDialog" :visible.sync="dialogFormVisible" title="客户">
       <el-form :inline="true" :model="form" label-width="80px">
@@ -67,20 +51,14 @@
 </template>
 
 <script>
-import {
-  createExaCustomer,
-  updateExaCustomer,
-  deleteExaCustomer,
-  getExaCustomer,
-  getExaCustomerList
-} from '@/api/customer'
+import { createExaCustomer, updateExaCustomer, deleteExaCustomer, getExaCustomer, getExaCustomerList } from '@/api/customer'
 import { formatTimeToStr } from '@/utils/date'
 import infoList from '@/mixins/infoList'
 
 export default {
   name: 'Customer',
   filters: {
-    formatDate: function(time) {
+    formatDate: function (time) {
       if (time !== null && time !== '') {
         var date = new Date(time)
         return formatTimeToStr(date, 'yyyy-MM-dd hh:mm:ss')
@@ -161,5 +139,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>

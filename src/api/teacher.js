@@ -1,16 +1,16 @@
 import service from '@/utils/request'
 
-// 获取年级列表
-export const getGradeList = data => {
+// 获取教师列表
+export const getTeacherList = (data) => {
   return service({
-    url: '/grade/getGradeList',
+    url: '/teacher/getTeacherList',
     method: 'get',
     params: data
   })
 }
 
-// 创建老师
-export const createtTeacher = data => {
+// 创建教师
+export const createtTeacher = (data) => {
   return service({
     url: '/teacher/createTeacher',
     method: 'post',
@@ -19,7 +19,7 @@ export const createtTeacher = data => {
 }
 
 // 更新年级
-export const upGrade = data => {
+export const upGrade = (data) => {
   return service({
     url: '/grade/upGrade',
     method: 'put',
@@ -28,7 +28,7 @@ export const upGrade = data => {
 }
 
 // 删除年级
-export const deleteGrade = data => {
+export const deleteGrade = (data) => {
   return service({
     url: '/grade/deleteGrade',
     method: 'delete',

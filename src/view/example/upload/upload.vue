@@ -3,14 +3,7 @@
     <div class="upload">
       <el-row>
         <el-col :span="12">
-          <el-upload
-            :action="`${path}/fileUploadAndDownload/upload`"
-            :before-upload="checkFile"
-            :headers="{ 'x-token': token }"
-            :on-error="uploadError"
-            :on-success="uploadSuccess"
-            :show-file-list="false"
-          >
+          <el-upload :action="`${path}/fileUploadAndDownload/upload`" :before-upload="checkFile" :headers="{ 'x-token': token }" :on-error="uploadError" :on-success="uploadSuccess" :show-file-list="false">
             <el-button size="small" type="primary">点击上传</el-button>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
           </el-upload>
@@ -37,10 +30,7 @@
         <el-table-column label="链接" prop="url" min-width="300" />
         <el-table-column label="标签" prop="tag" width="100">
           <template slot-scope="scope">
-            <el-tag
-              :type="scope.row.tag === 'jpg' ? 'primary' : 'success'"
-              disable-transitions
-            >{{ scope.row.tag }}</el-tag>
+            <el-tag :type="scope.row.tag === 'jpg' ? 'primary' : 'success'" disable-transitions>{{ scope.row.tag }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="160">
@@ -50,16 +40,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination
-        :current-page="page"
-        :page-size="pageSize"
-        :page-sizes="[10, 30, 50, 100]"
-        :style="{ float: 'right', padding: '20px' }"
-        :total="total"
-        layout="total, sizes, prev, pager, next, jumper"
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-      />
+      <el-pagination :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :style="{ float: 'right', padding: '20px' }" :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
     </div>
   </div>
 </template>
@@ -80,7 +61,7 @@ export default {
     UploadImage
   },
   filters: {
-    formatDate: function(time) {
+    formatDate: function (time) {
       if (time !== null && time !== '') {
         var date = new Date(time)
         return formatTimeToStr(date, 'yyyy-MM-dd hh:mm:ss')

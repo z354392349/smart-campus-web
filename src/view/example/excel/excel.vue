@@ -1,13 +1,7 @@
 <template>
   <div class="upload">
     <div class="btn-list">
-      <el-upload
-        class="excel-btn"
-        :action="`${path}/excel/importExcel`"
-        :headers="{'x-token':token}"
-        :on-success="loadExcel"
-        :show-file-list="false"
-      >
+      <el-upload class="excel-btn" :action="`${path}/excel/importExcel`" :headers="{ 'x-token': token }" :on-success="loadExcel" :show-file-list="false">
         <el-button size="small" type="primary" icon="el-icon-upload2">导入</el-button>
       </el-upload>
       <el-button class="excel-btn" size="small" type="primary" icon="el-icon-download" @click="handleExcelExport('ExcelExport.xlsx')">导出</el-button>
@@ -19,7 +13,7 @@
       <el-table-column label="路由Path" min-width="160" prop="path" />
       <el-table-column label="是否隐藏" min-width="100" prop="hidden">
         <template slot-scope="scope">
-          <span>{{ scope.row.hidden?"隐藏":"显示" }}</span>
+          <span>{{ scope.row.hidden ? '隐藏' : '显示' }}</span>
         </template>
       </el-table-column>
       <el-table-column label="父节点" min-width="90" prop="parentId" />
@@ -70,10 +64,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.btn-list{
+.btn-list {
   display: flex;
   margin-bottom: 12px;
-  .excel-btn+.excel-btn{
+  .excel-btn + .excel-btn {
     margin-left: 12px;
   }
 }

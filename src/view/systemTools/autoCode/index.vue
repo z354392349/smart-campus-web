@@ -4,7 +4,7 @@
     <el-collapse v-model="activeNames">
       <el-collapse-item name="1">
         <template slot="title">
-          <div :style="{fontSize:'16px',paddingLeft:'20px'}">
+          <div :style="{ fontSize: '16px', paddingLeft: '20px' }">
             点这里从现有数据库创建代码
             <i class="header-icon el-icon-thumb" />
           </div>
@@ -12,27 +12,12 @@
         <el-form ref="getTableForm" :inline="true" :model="dbform" label-width="120px">
           <el-form-item label="数据库名" prop="structName">
             <el-select v-model="dbform.dbName" filterable placeholder="请选择数据库" @change="getTable">
-              <el-option
-                v-for="item in dbOptions"
-                :key="item.database"
-                :label="item.database"
-                :value="item.database"
-              />
+              <el-option v-for="item in dbOptions" :key="item.database" :label="item.database" :value="item.database" />
             </el-select>
           </el-form-item>
           <el-form-item label="表名" prop="structName">
-            <el-select
-              v-model="dbform.tableName"
-              :disabled="!dbform.dbName"
-              filterable
-              placeholder="请选择表"
-            >
-              <el-option
-                v-for="item in tableOptions"
-                :key="item.tableName"
-                :label="item.tableName"
-                :value="item.tableName"
-              />
+            <el-select v-model="dbform.tableName" :disabled="!dbform.dbName" filterable placeholder="请选择表">
+              <el-option v-for="item in tableOptions" :key="item.tableName" :label="item.tableName" :value="item.tableName" />
             </el-select>
           </el-form-item>
           <el-form-item>
@@ -63,7 +48,7 @@
       <el-form-item>
         <template slot="label">
           <el-tooltip content="注：把自动生成的API注册进数据库" placement="bottom" effect="light">
-            <div> 自动创建API </div>
+            <div>自动创建API</div>
           </el-tooltip>
         </template>
         <el-checkbox v-model="form.autoCreateApiToSql" />
@@ -71,7 +56,7 @@
       <el-form-item>
         <template slot="label">
           <el-tooltip content="注：自动迁移生成的文件到ymal配置的对应位置" placement="bottom" effect="light">
-            <div> 自动移动文件 </div>
+            <div>自动移动文件</div>
           </el-tooltip>
         </template>
         <el-checkbox v-model="form.autoMoveFile" />
@@ -95,24 +80,9 @@
       <el-table-column prop="dictType" label="字典" width="130" />
       <el-table-column label="操作" width="300">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="primary"
-            icon="el-icon-edit"
-            @click="editAndAddField(scope.row)"
-          >编辑</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            :disabled="scope.$index === 0"
-            @click="moveUpField(scope.$index)"
-          >上移</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            :disabled="(scope.$index + 1) === form.fields.length"
-            @click="moveDownField(scope.$index)"
-          >下移</el-button>
+          <el-button size="mini" type="primary" icon="el-icon-edit" @click="editAndAddField(scope.row)">编辑</el-button>
+          <el-button size="mini" type="text" :disabled="scope.$index === 0" @click="moveUpField(scope.$index)">上移</el-button>
+          <el-button size="mini" type="text" :disabled="scope.$index + 1 === form.fields.length" @click="moveDownField(scope.$index)">下移</el-button>
           <el-popover v-model="scope.row.visible" placement="top">
             <p>确定删除吗？</p>
             <div style="text-align: right; margin: 0">
@@ -197,15 +167,9 @@ export default {
         fields: []
       },
       rules: {
-        structName: [
-          { required: true, message: '请输入结构体名称', trigger: 'blur' }
-        ],
-        abbreviation: [
-          { required: true, message: '请输入结构体简称', trigger: 'blur' }
-        ],
-        description: [
-          { required: true, message: '请输入结构体描述', trigger: 'blur' }
-        ],
+        structName: [{ required: true, message: '请输入结构体名称', trigger: 'blur' }],
+        abbreviation: [{ required: true, message: '请输入结构体简称', trigger: 'blur' }],
+        description: [{ required: true, message: '请输入结构体描述', trigger: 'blur' }],
         packageName: [
           {
             required: true,
@@ -254,11 +218,9 @@ export default {
       this.form.fields.splice(index, 0, oldDownField)
     },
     enterDialog() {
-      this.$refs.fieldDialog.$refs.fieldDialogFrom.validate(valid => {
+      this.$refs.fieldDialog.$refs.fieldDialogFrom.validate((valid) => {
         if (valid) {
-          this.dialogMiddle.fieldName = toUpperCase(
-            this.dialogMiddle.fieldName
-          )
+          this.dialogMiddle.fieldName = toUpperCase(this.dialogMiddle.fieldName)
           if (this.addFlag === 'add') {
             this.form.fields.push(this.dialogMiddle)
           }
@@ -285,16 +247,14 @@ export default {
         })
         return false
       }
-      if (
-        this.form.fields.some(item => item.fieldName === this.form.structName)
-      ) {
+      if (this.form.fields.some((item) => item.fieldName === this.form.structName)) {
         this.$message({
           type: 'error',
           message: '存在与结构体同名的字段'
         })
         return false
       }
-      this.$refs.autoCodeForm.validate(async valid => {
+      this.$refs.autoCodeForm.validate(async (valid) => {
         if (valid) {
           this.form.structName = toUpperCase(this.form.structName)
           if (this.form.structName === this.form.abbreviation) {
@@ -369,8 +329,8 @@ export default {
         this.form.autoCreateApiToSql = true
         this.form.fields = []
         res.data.columns &&
-          res.data.columns.map(item => {
-            if (!gormModelList.some(gormfd => gormfd === item.columnName)) {
+          res.data.columns.map((item) => {
+            if (!gormModelList.some((gormfd) => gormfd === item.columnName)) {
               const fbHump = toHump(item.columnName)
               this.form.fields.push({
                 fieldName: toUpperCase(fbHump),
@@ -390,11 +350,12 @@ export default {
     },
     async setFdMap() {
       const fdTypes = ['string', 'int', 'bool', 'float64', 'time.Time']
-      fdTypes.map(async fdtype => {
+      fdTypes.map(async (fdtype) => {
         const res = await getDict(fdtype)
-        res && res.map(item => {
-          this.fdMap[item.label] = fdtype
-        })
+        res &&
+          res.map((item) => {
+            this.fdMap[item.label] = fdtype
+          })
       })
     }
   }

@@ -6,7 +6,7 @@
     <el-table :data="tableData" border stripe>
       <el-table-column label="头像" min-width="50">
         <template slot-scope="scope">
-          <div :style="{'textAlign':'center'}">
+          <div :style="{ textAlign: 'center' }">
             <CustomPic :pic-src="scope.row.headerImg" />
           </div>
         </template>
@@ -16,14 +16,7 @@
       <el-table-column label="昵称" min-width="150" prop="nickName" />
       <el-table-column label="用户角色" min-width="150">
         <template slot-scope="scope">
-          <el-cascader
-            v-model="scope.row.authority.authorityId"
-            :options="authOptions"
-            :show-all-levels="false"
-            :props="{ checkStrictly: true,label:'authorityName',value:'authorityId',disabled:'disabled',emitPath:false}"
-            filterable
-            @change="changeAuthority(scope.row)"
-          />
+          <el-cascader v-model="scope.row.authority.authorityId" :options="authOptions" :show-all-levels="false" :props="{ checkStrictly: true, label: 'authorityName', value: 'authorityId', disabled: 'disabled', emitPath: false }" filterable @change="changeAuthority(scope.row)" />
         </template>
       </el-table-column>
       <el-table-column label="操作" min-width="150">
@@ -39,16 +32,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      :current-page="page"
-      :page-size="pageSize"
-      :page-sizes="[10, 30, 50, 100]"
-      :style="{float:'right',padding:'20px'}"
-      :total="total"
-      layout="total, sizes, prev, pager, next, jumper"
-      @current-change="handleCurrentChange"
-      @size-change="handleSizeChange"
-    />
+    <el-pagination :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :style="{ float: 'right', padding: '20px' }" :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
 
     <el-dialog :visible.sync="addUserDialog" custom-class="user-dialog" title="新增用户">
       <el-form ref="userForm" :rules="rules" :model="userInfo">
@@ -62,19 +46,13 @@
           <el-input v-model="userInfo.nickName" />
         </el-form-item>
         <el-form-item label="头像" label-width="80px">
-          <div style="display:inline-block" @click="openHeaderChange">
-            <img v-if="userInfo.headerImg" class="header-img-box" :src="userInfo.headerImg">
+          <div style="display: inline-block" @click="openHeaderChange">
+            <img v-if="userInfo.headerImg" class="header-img-box" :src="userInfo.headerImg" />
             <div v-else class="header-img-box">从媒体库选择</div>
           </div>
         </el-form-item>
         <el-form-item label="用户角色" label-width="80px" prop="authorityId">
-          <el-cascader
-            v-model="userInfo.authorityId"
-            :options="authOptions"
-            :show-all-levels="false"
-            :props="{ checkStrictly: true,label:'authorityName',value:'authorityId',disabled:'disabled',emitPath:false}"
-            filterable
-          />
+          <el-cascader v-model="userInfo.authorityId" :options="authOptions" :show-all-levels="false" :props="{ checkStrictly: true, label: 'authorityName', value: 'authorityId', disabled: 'disabled', emitPath: false }" filterable />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -89,12 +67,7 @@
 <script>
 // 获取列表内容封装在mixins内部  getTableData方法 初始化已封装完成
 const path = process.env.VUE_APP_BASE_API
-import {
-  getUserList,
-  setUserAuthority,
-  register,
-  deleteUser
-} from '@/api/user'
+import { getUserList, setUserAuthority, register, deleteUser } from '@/api/user'
 import { getAuthorityList } from '@/api/authority'
 import infoList from '@/mixins/infoList'
 import { mapGetters } from 'vuex'
@@ -126,12 +99,8 @@ export default {
           { required: true, message: '请输入用户密码', trigger: 'blur' },
           { min: 6, message: '最低6位字符', trigger: 'blur' }
         ],
-        nickName: [
-          { required: true, message: '请输入用户昵称', trigger: 'blur' }
-        ],
-        authorityId: [
-          { required: true, message: '请选择用户角色', trigger: 'blur' }
-        ]
+        nickName: [{ required: true, message: '请输入用户昵称', trigger: 'blur' }],
+        authorityId: [{ required: true, message: '请选择用户角色', trigger: 'blur' }]
       }
     }
   },
@@ -153,7 +122,7 @@ export default {
     },
     setAuthorityOptions(AuthorityData, optionsData) {
       AuthorityData &&
-        AuthorityData.map(item => {
+        AuthorityData.map((item) => {
           if (item.children && item.children.length) {
             const option = {
               authorityId: item.authorityId,
@@ -179,7 +148,7 @@ export default {
       }
     },
     async enterAddUserDialog() {
-      this.$refs.userForm.validate(async valid => {
+      this.$refs.userForm.validate(async (valid) => {
         if (valid) {
           const res = await register(this.userInfo)
           if (res.code === 0) {
@@ -223,14 +192,14 @@ export default {
 
 .user-dialog {
   .header-img-box {
-  width: 200px;
-  height: 200px;
-  border: 1px dashed #ccc;
-  border-radius: 20px;
-  text-align: center;
-  line-height: 200px;
-  cursor: pointer;
-}
+    width: 200px;
+    height: 200px;
+    border: 1px dashed #ccc;
+    border-radius: 20px;
+    text-align: center;
+    line-height: 200px;
+    cursor: pointer;
+  }
   .avatar-uploader .el-upload:hover {
     border-color: #409eff;
   }

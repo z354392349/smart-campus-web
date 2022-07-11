@@ -3,28 +3,12 @@
     <div class="clearflex">
       <el-button class="fl-right" size="small" type="primary" @click="relation">确 定</el-button>
     </div>
-    <el-tree
-      ref="menuTree"
-      :data="menuTreeData"
-      :default-checked-keys="menuTreeIds"
-      :props="menuDefaultProps"
-      default-expand-all
-      highlight-current
-      node-key="ID"
-      show-checkbox
-      @check="nodeChange"
-    >
-      <span slot-scope="{ node , data }" class="custom-tree-node">
+    <el-tree ref="menuTree" :data="menuTreeData" :default-checked-keys="menuTreeIds" :props="menuDefaultProps" default-expand-all highlight-current node-key="ID" show-checkbox @check="nodeChange">
+      <span slot-scope="{ node, data }" class="custom-tree-node">
         <span>{{ node.label }}</span>
         <span>
-          <el-button
-            type="text"
-            size="mini"
-            :style="{color:row.defaultRouter === data.name?'#E6A23C':'#85ce61'}"
-            :disabled="!node.checked"
-            @click="() => setDefault(data)"
-          >
-            {{ row.defaultRouter === data.name?"首页":"设为首页" }}
+          <el-button type="text" size="mini" :style="{ color: row.defaultRouter === data.name ? '#E6A23C' : '#85ce61' }" :disabled="!node.checked" @click="() => setDefault(data)">
+            {{ row.defaultRouter === data.name ? '首页' : '设为首页' }}
           </el-button>
         </span>
       </span>
@@ -34,14 +18,12 @@
 
 <script>
 import { getBaseMenuTree, getMenuAuthority, addMenuAuthority } from '@/api/menu'
-import {
-  updateAuthority
-} from '@/api/authority'
+import { updateAuthority } from '@/api/authority'
 export default {
   name: 'Menus',
   props: {
     row: {
-      default: function() {
+      default: function () {
         return {}
       },
       type: Object
@@ -54,7 +36,7 @@ export default {
       needConfirm: false,
       menuDefaultProps: {
         children: 'children',
-        label: function(data) {
+        label: function (data) {
           return data.meta.title
         }
       }
@@ -68,9 +50,9 @@ export default {
     const res1 = await getMenuAuthority({ authorityId: this.row.authorityId })
     const menus = res1.data.menus
     const arr = []
-    menus.map(item => {
+    menus.map((item) => {
       // 防止直接选中父级造成全选
-      if (!menus.some(same => same.parentId === item.menuId)) {
+      if (!menus.some((same) => same.parentId === item.menuId)) {
         arr.push(Number(item.menuId))
       }
     })

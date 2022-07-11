@@ -1,27 +1,16 @@
 ﻿<template>
   <div class="router-history">
-    <el-tabs
-      v-model="activeValue"
-      :closable="!(historys.length===1&&this.$route.name===defaultRouter)"
-      type="card"
-      @contextmenu.prevent.native="openContextMenu($event)"
-      @tab-click="changeTab"
-      @tab-remove="removeTab"
-    >
-      <el-tab-pane
-        v-for="item in historys"
-        :key="name(item)"
-        :label="item.meta.title"
-        :name="name(item)"
-        :tab="item"
-        class="gva-tab"
-      >
-        <span slot="label" :style="{color: activeValue===name(item)?activeColor:'#333'}"><i class="dot" :style="{backgroundColor:activeValue===name(item)?activeColor:'#ddd'}" /> {{ item.meta.title }}</span>
+    <el-tabs v-model="activeValue" :closable="!(historys.length === 1 && this.$route.name === defaultRouter)" type="card" @contextmenu.prevent.native="openContextMenu($event)" @tab-click="changeTab" @tab-remove="removeTab">
+      <el-tab-pane v-for="item in historys" :key="name(item)" :label="item.meta.title" :name="name(item)" :tab="item" class="gva-tab">
+        <span slot="label" :style="{ color: activeValue === name(item) ? activeColor : '#333' }">
+          <i class="dot" :style="{ backgroundColor: activeValue === name(item) ? activeColor : '#ddd' }" />
+          {{ item.meta.title }}
+        </span>
       </el-tab-pane>
     </el-tabs>
 
     <!--自定义右键菜单html代码-->
-    <ul v-show="contextMenuVisible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
+    <ul v-show="contextMenuVisible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
       <li @click="closeAll">关闭所有</li>
       <li @click="closeLeft">关闭左侧</li>
       <li @click="closeRight">关闭右侧</li>
@@ -33,9 +22,7 @@
 <script>
 import { mapGetters } from 'vuex'
 const getFmtString = (item) => {
-  return item.name +
-      JSON.stringify(item.query) +
-      JSON.stringify(item.params)
+  return item.name + JSON.stringify(item.query) + JSON.stringify(item.params)
 }
 export default {
   name: 'HistoryComponent',
@@ -70,7 +57,7 @@ export default {
       }
     },
     $route(to, now) {
-      this.historys = this.historys.filter(item => !item.meta.closeTab)
+      this.historys = this.historys.filter((item) => !item.meta.closeTab)
       this.setTab(to)
       sessionStorage.setItem('historys', JSON.stringify(this.historys))
       this.activeValue = window.sessionStorage.getItem('activeValue')
@@ -80,10 +67,10 @@ export default {
     }
   },
   created() {
-    this.$bus.on('mobile', isMobile => {
+    this.$bus.on('mobile', (isMobile) => {
       this.isMobile = isMobile
     })
-    this.$bus.on('collapse', isCollapse => {
+    this.$bus.on('collapse', (isCollapse) => {
       this.isCollapse = isCollapse
     })
     const initHistorys = [
@@ -96,8 +83,7 @@ export default {
         params: {}
       }
     ]
-    this.historys =
-      JSON.parse(sessionStorage.getItem('historys')) || initHistorys
+    this.historys = JSON.parse(sessionStorage.getItem('historys')) || initHistorys
     if (!window.sessionStorage.getItem('activeValue')) {
       this.activeValue = getFmtString(this.$route)
     } else {
@@ -158,17 +144,13 @@ export default {
     },
     closeLeft() {
       let right
-      const rightIndex = this.historys.findIndex(item => {
+      const rightIndex = this.historys.findIndex((item) => {
         if (getFmtString(item) === this.rightActive) {
           right = item
         }
-        return (
-          getFmtString(item) === this.rightActive
-        )
+        return getFmtString(item) === this.rightActive
       })
-      const activeIndex = this.historys.findIndex(
-        item => getFmtString(item) === this.activeValue
-      )
+      const activeIndex = this.historys.findIndex((item) => getFmtString(item) === this.activeValue)
       this.historys.splice(0, rightIndex)
       if (rightIndex > activeIndex) {
         this.$router.push(right)
@@ -177,15 +159,13 @@ export default {
     },
     closeRight() {
       let right
-      const leftIndex = this.historys.findIndex(item => {
+      const leftIndex = this.historys.findIndex((item) => {
         if (getFmtString(item) === this.rightActive) {
           right = item
         }
-        return (getFmtString(item) === this.rightActive)
+        return getFmtString(item) === this.rightActive
       })
-      const activeIndex = this.historys.findIndex(
-        item => getFmtString(item) === this.activeValue
-      )
+      const activeIndex = this.historys.findIndex((item) => getFmtString(item) === this.activeValue)
       this.historys.splice(leftIndex + 1, this.historys.length)
       if (leftIndex < activeIndex) {
         this.$router.push(right)
@@ -194,13 +174,11 @@ export default {
     },
     closeOther() {
       let right
-      this.historys = this.historys.filter(item => {
-        if (getFmtString(item) === this.rightActive
-        ) {
+      this.historys = this.historys.filter((item) => {
+        if (getFmtString(item) === this.rightActive) {
           right = item
         }
-        return (getFmtString(item) === this.rightActive
-        )
+        return getFmtString(item) === this.rightActive
       })
       this.$router.push(right)
       sessionStorage.setItem('historys', JSON.stringify(this.historys))
@@ -222,7 +200,7 @@ export default {
       return true
     },
     setTab(route) {
-      if (!this.historys.some(item => this.isSame(item, route))) {
+      if (!this.historys.some((item) => this.isSame(item, route))) {
         const obj = {}
         obj.name = route.name
         obj.meta = route.meta
@@ -230,10 +208,7 @@ export default {
         obj.params = route.params
         this.historys.push(obj)
       }
-      window.sessionStorage.setItem(
-        'activeValue',
-        getFmtString(this.$route)
-      )
+      window.sessionStorage.setItem('activeValue', getFmtString(this.$route))
     },
     changeTab(component) {
       const tab = component.$attrs.tab
@@ -244,12 +219,8 @@ export default {
       })
     },
     removeTab(tab) {
-      const index = this.historys.findIndex(
-        item => getFmtString(item) === tab
-      )
-      if (
-        getFmtString(this.$route) === tab
-      ) {
+      const index = this.historys.findIndex((item) => getFmtString(item) === tab)
+      if (getFmtString(this.$route) === tab) {
         if (this.historys.length === 1) {
           this.$router.push({ name: this.defaultRouter })
         } else {
@@ -289,17 +260,17 @@ export default {
   color: #333;
   box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.2);
 }
-.el-tabs__item .el-icon-close{
+.el-tabs__item .el-icon-close {
   color: initial !important;
 }
 .el-tabs__item .dot {
-  content: "";
+  content: '';
   width: 9px;
   height: 9px;
   margin-right: 8px;
   display: inline-block;
   border-radius: 50%;
-  transition: background-color .2s;
+  transition: background-color 0.2s;
 }
 
 .contextmenu li {
