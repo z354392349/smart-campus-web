@@ -27,5 +27,6 @@ npm run test
 ### Lints and fixes files
 
 ```
+git config --global core.autocrlf false
 npm run lint --fix
 ```

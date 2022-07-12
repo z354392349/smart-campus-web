@@ -18,7 +18,7 @@
       <el-table-column label="生日" prop="birthday" />
       <el-table-column label="电话号码" prop="telephone" />
       <el-table-column label="年龄">
-        <template slot-scope="scope">{{ a(scope.row.birthday ), }},</template>
+        <template v-slot="scope">{{ unixTimeToAge(scope.row.birthday) }}</template>
       </el-table-column>
       <el-table-column label="描述" prop="description" />
       <el-table-column label="操作">
@@ -71,7 +71,7 @@
 import moment from 'moment'
 import { createtTeacher, upTeacher, getTeacherList, deleteTeacher } from '@/api/teacher'
 import infoList from '@/mixins/infoList'
-import { copyObj } from '@/utils/tool.js'
+import { copyObj, unixTimeToAge } from '@/utils/tool.js'
 import { telephoneRE } from '@/utils/regexp.js'
 
 export default {
@@ -108,9 +108,12 @@ export default {
   },
   methods: {
     moment,
-    a(birthday) {
-      return moment().diff(moment(birthday), 'years')
+    unixTimeToAge,
+    // 根据时间戳计算年龄
+    countAge(birthday) {
+      return moment().diff(moment.unix(birthday), 'years')
     },
+
     initForm() {
       this.$refs.form.resetFields()
       this.form = {

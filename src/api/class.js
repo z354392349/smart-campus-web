@@ -1,9 +1,9 @@
 import service from '@/utils/request'
 
-// 获取年级列表
-export const getGradeList = (data) => {
+// 获取班级列表
+export const getClassList = (data) => {
   return service({
-    url: '/grade/getGradeList',
+    url: '/class/getClassList',
     method: 'get',
     params: data
   })
@@ -12,7 +12,7 @@ export const getGradeList = (data) => {
 // 创建班级
 export const createClass = (data) => {
   return service({
-    url: '/grade/createGrade',
+    url: '/class/createClass',
     method: 'post',
     data
   })
