@@ -2,8 +2,8 @@
   <div>
     <div class="search-term">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
-        <el-form-item label="班级">
-          <el-input v-model="searchInfo.name" placeholder="请输入班级名称" />
+        <el-form-item label="课程">
+          <el-input v-model="searchInfo.name" placeholder="请输入课程名称" />
         </el-form-item>
         <el-form-item>
           <!-- @click="onSubmit" -->
@@ -13,14 +13,12 @@
       </el-form>
     </div>
     <el-table :data="tableData" border :stripe="true">
-      <el-table-column label="年级" prop="grade.name" />
-      <el-table-column label="班级" prop="name" />
-      <el-table-column label="班主任" prop="teacher.name" />
+      <el-table-column label="姓名" prop="name" />
       <el-table-column label="描述" prop="description" />
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="small" type="primary" icon="el-icon-edit" @click="editClass(scope.row)">编辑</el-button>
-          <el-button size="small" type="danger" icon="el-icon-delete" @click="deleteClass(scope.row)">删除</el-button>
+          <el-button size="small" type="primary" icon="el-icon-edit" @click="editCourse(scope.row)">编辑</el-button>
+          <el-button size="small" type="danger" icon="el-icon-delete" @click="deleteCourse(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -36,19 +34,9 @@
     />
 
     <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :width="$conf.minDialogWidth">
-      <el-form ref="form" class="dialog-form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="年级名称" prop="name">
-          <el-select v-model="form.gradeID" placeholder="请选择年级">
-            <el-option v-for="n in gradeList" :key="n.ID" :label="n.name" :value="n.ID" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="班级名称" prop="name">
-          <el-input v-model="form.name" autocomplete="off" placeholder="请输入班级名称" />
-        </el-form-item>
-        <el-form-item label="班主任" prop="name">
-          <el-select v-model="form.teacherID" placeholder="请选择年级">
-            <el-option v-for="n in teacherList" :key="n.ID" :label="n.name" :value="n.ID" />
-          </el-select>
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="课程名称" prop="name">
+          <el-input v-model="form.name" autocomplete="off" placeholder="请输入课程名称" />
         </el-form-item>
         <el-form-item label="描述">
           <el-input v-model="form.description" autocomplete="off" placeholder="请选择输入描述" />
@@ -63,80 +51,50 @@
 </template>
 
 <script>
-import { getGradeList } from '@/api/grade'
-import { getTeacherList } from '@/api/teacher'
-import { getClassList, createClass, upClass, deleteClass } from '@/api/class'
+import { getCourseList, createCourse, upCourse, deleteCourse } from '@/api/course'
 import infoList from '@/mixins/infoList'
 
 export default {
-  name: 'Grade',
+  name: 'Course',
 
   mixins: [infoList],
   data() {
     return {
-      listApi: getClassList,
+      listApi: getCourseList,
       dialogFormVisible: false,
-      dialogTitle: '新增班级',
+      dialogTitle: '新增课程',
       form: {
         name: '',
-        gradeID: '',
-        teacherID: '',
         description: ''
       },
       type: '',
       rules: {
-        name: [{ required: true, message: '请输入年级名称', trigger: 'blur' }]
-      },
-      gradeList: [],
-      teacherList: []
+        name: [{ required: true, message: '请输入课程名称', trigger: 'blur' }]
+      }
     }
   },
   created() {
     this.getTableData()
-    // this.getGradeList()
-    // let p = { name: '一班', gradeID: 1, teacherID: 1, description: '123' }
-    // createClass(p)
-    // getClassList()
-    // upClass({ id: 1, name: '一R班', gradeID: 10, teacherID: 1, description: '123' })
-    deleteClass({ id: 1 })
-    this.getGradeList()
-    this.getTeacherList()
   },
   methods: {
-    // 获取年级列表
-    async getGradeList() {
-      const res = await getGradeList()
-      this.gradeList = res.data.list
-    },
-
-    // 获取班级列表
-    async getTeacherList() {
-      const res = await getTeacherList()
-      this.teacherList = res.data.list
-    },
-
     initForm() {
       this.$refs.form.resetFields()
       this.form = {
         name: '',
-        gradeID: '',
-        teacherID: '',
         description: ''
       }
     },
-
     closeDialog() {
       this.initForm()
       this.dialogFormVisible = false
     },
-
     openDialog(type) {
       switch (type) {
         case 'add':
-          this.dialogTitle = '新增班级'
+          this.dialogTitle = '新增课程'
           break
         case 'edit':
-          this.dialogTitle = '编辑班级'
+          this.dialogTitle = '编辑课程'
           break
         default:
           break
@@ -144,29 +102,28 @@ export default {
       this.type = type
       this.dialogFormVisible = true
     },
-    async editClass(row) {
-      for (const key in this.form) {
-        this.form[key] = row[key]
-      }
-      console.log(this.form)
+    async editCourse(row) {
       this.form.id = row.ID
+      this.form.name = row.name
+      this.form.description = row.description
+
       this.openDialog('edit')
     },
-    async deleteClass(row) {
-      this.deleteTableData(row.name, deleteClass, { id: row.ID })
+    async deleteCourse(row) {
+      this.deleteTableData(row.name, deleteCourse, { id: row.ID })
     },
 
     async enterDialog() {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
           if (this.type === 'add') {
-            const res = await createClass(this.form)
+            const res = await createCourse(this.form)
             if (res.code === 0) {
               this.$message.success('添加成功')
               this.getTableData()
             }
           } else {
-            const res = await upClass(this.form)
+            const res = await upCourse(this.form)
             if (res.code === 0) {
               this.$message.success('编辑成功')
               this.getTableData()
