@@ -64,7 +64,7 @@
 // 获取列表内容封装在mixins内部  getTableData方法 初始化已封装完成 条件搜索时候 请把条件安好后台定制的结构体字段 放到 this.searchInfo 中即可实现条件搜索
 
 import { getGradeList, createGrade, upGrade, deleteGrade } from '@/api/grade'
-import { getClassList, createClass } from '@/api/class'
+import { getClassList, createClass, upClass, deleteClass } from '@/api/class'
 import infoList from '@/mixins/infoList'
 
 export default {
@@ -93,7 +93,9 @@ export default {
     // this.getGradeList()
     // let p = { name: '一班', gradeID: 1, teacherID: 1, description: '123' }
     // createClass(p)
-    getClassList()
+    // getClassList()
+    // upClass({ id: 1, name: '一R班', gradeID: 10, teacherID: 1, description: '123' })
+    deleteClass({ id: 1 })
   },
   methods: {
     async getGradeList() {

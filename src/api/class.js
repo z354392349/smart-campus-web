@@ -18,19 +18,19 @@ export const createClass = (data) => {
   })
 }
 
-// 更新年级
-export const upGrade = (data) => {
+// 更新班级
+export const upClass = (data) => {
   return service({
-    url: '/grade/upGrade',
+    url: '/class/upClass',
     method: 'put',
     data
   })
 }
 
-// 删除年级
-export const deleteGrade = (data) => {
+// 删除班级
+export const deleteClass = (data) => {
   return service({
-    url: '/grade/deleteGrade',
+    url: '/class/deleteClass',
     method: 'delete',
     data
   })
