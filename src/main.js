@@ -8,6 +8,7 @@ import '@/permission'
 import { store } from '@/store'
 Vue.config.productionTip = false
 
+// TODO: 感觉没啥用，后期可以删掉
 import { auth } from '@/directive/auth'
 // 按钮权限指令
 auth(Vue)

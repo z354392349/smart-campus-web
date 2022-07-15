@@ -22,8 +22,8 @@ export const auth = (Vue) => {
       }
       if (type === '') {
         /* eslint-disable */
-            console.error("v-auth必须是Array,Number,String属性,暂不支持其他属性")
-            /* eslint-enable */
+        console.error('v-auth必须是Array,Number,String属性,暂不支持其他属性')
+        /* eslint-enable */
         return
       }
       const waitUse = binding.value.toString().split(',')
