@@ -14,12 +14,17 @@
     </div>
     <el-table :data="tableData" border :stripe="true">
       <el-table-column label="年级名称" prop="name" />
-      <el-table-column label="性别" prop="sex" />
-      <el-table-column label="生日" prop="birthday" />
-      <el-table-column label="电话号码" prop="telephone" />
+      <el-table-column label="性别" prop="sex">
+        <template v-slot="scope">{{ scope.row.sex == 1 ? '男' : '女' }}</template>
+      </el-table-column>
+      <el-table-column label="生日" prop="birthday">
+        <template v-slot="scope">{{ unixTimeFormat(scope.row.birthday) }}</template>
+      </el-table-column>
       <el-table-column label="年龄">
         <template v-slot="scope">{{ unixTimeToAge(scope.row.birthday) }}</template>
       </el-table-column>
+      <el-table-column label="手机号码" prop="telephone" />
+
       <el-table-column label="描述" prop="description" />
       <el-table-column label="操作">
         <template slot-scope="scope">
@@ -71,7 +76,7 @@
 import moment from 'moment'
 import { createtTeacher, upTeacher, getTeacherList, deleteTeacher } from '@/api/teacher'
 import infoList from '@/mixins/infoList'
-import { copyObj, unixTimeToAge } from '@/utils/tool.js'
+import { copyObj, unixTimeToAge, unixTimeFormat } from '@/utils/tool.js'
 import { telephoneRE } from '@/utils/regexp.js'
 
 export default {
@@ -88,7 +93,7 @@ export default {
         name: '',
         description: '',
         sex: 1,
-        birthday: parseInt(moment().startOf('day').unix() * 1000),
+        birthday: '',
         telephone: ''
       },
       type: '',
@@ -98,7 +103,7 @@ export default {
         birthday: [{ required: true, message: '请选择生日', trigger: 'blur' }],
         telephone: [
           { required: true, message: '请输入手机号码', trigger: 'blur' },
-          { pattern: telephoneRE, message: '手机号格式不对', trigger: 'blur' }
+          { pattern: telephoneRE, message: '手机号格式不正确', trigger: 'blur' }
         ]
       }
     }
@@ -107,8 +112,8 @@ export default {
     this.getTableData()
   },
   methods: {
-    moment,
     unixTimeToAge,
+    unixTimeFormat,
     // 根据时间戳计算年龄
     countAge(birthday) {
       return moment().diff(moment.unix(birthday), 'years')
@@ -121,7 +126,7 @@ export default {
         name: '',
         description: '',
         sex: 1,
-        birthday: parseInt(moment().startOf('day').unix() * 1000),
+        birthday: '',
         telephone: ''
       }
     },

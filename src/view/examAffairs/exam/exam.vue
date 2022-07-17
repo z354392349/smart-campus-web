@@ -28,8 +28,8 @@
       <el-table-column label="描述" prop="description" />
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="small" type="primary" icon="el-icon-edit" @click="editStudent(scope.row)">编辑</el-button>
-          <el-button size="small" type="danger" icon="el-icon-delete" @click="deleteStudent(scope.row)">删除</el-button>
+          <el-button size="small" type="primary" icon="el-icon-edit" @click="editExam(scope.row)">编辑</el-button>
+          <el-button size="small" type="danger" icon="el-icon-delete" @click="deleteExam(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -74,7 +74,7 @@
 
 <script>
 import moment from 'moment'
-import { createtStudent, upStudent, getStudentList, deleteStudent } from '@/api/student'
+import { createtExam, upExam, getExamList, deleteExam } from '@/api/exam'
 import infoList from '@/mixins/infoList'
 import { copyObj, unixTimeToAge, unixTimeFormat } from '@/utils/tool.js'
 import { telephoneRE } from '@/utils/regexp.js'
@@ -85,9 +85,9 @@ export default {
   mixins: [infoList],
   data() {
     return {
-      listApi: getStudentList,
+      listApi: getExamList,
       dialogFormVisible: false,
-      dialogTitle: '新增学生',
+      dialogTitle: '发布考试',
       form: {
         id: '',
         name: '',
@@ -110,11 +110,29 @@ export default {
   },
   created() {
     this.getTableData()
-    let pa = { id: 500000, name: '张1三', birthday: 1657814400, sex: 1, telephone: 13651196456, nation: '汉族', gradeID: 1, ClassID: 1 }
+    let examItem = [
+      {
+        endTime: 1658031181,
+        startTime: 1658023981,
+        courseID: 1
+      },
+      {
+        endTime: 1658021181,
+        startTime: 1658323981,
+        courseID: 2
+      }
+    ]
+    // let eamItem = {
+    //   endTime: 1658031181,
+    //   startTime: 1658023981,
+    //   courseID: 1
+    // }
+    // let pa = { name: '1231', gradeID: '1,2,3,4', eamItem: JSON.stringify(eamItem), description: 12 }
+    let pa = { name: '1231', gradeID: '1,2,3,4', examItem, description: 12 }
 
-    // upStudent(pa)
-    deleteStudent(pa)
-    // createtStudent(pa)
+    // upExam(pa)
+    // deleteExam(pa)
+    createtExam(pa)
   },
   methods: {
     unixTimeToAge,
@@ -142,10 +160,10 @@ export default {
     openDialog(type) {
       switch (type) {
         case 'add':
-          this.dialogTitle = '新增学生'
+          this.dialogTitle = '发布考试'
           break
         case 'edit':
-          this.dialogTitle = '编辑学生'
+          this.dialogTitle = '编辑考试'
           break
         default:
           break
@@ -154,7 +172,7 @@ export default {
       this.dialogFormVisible = true
     },
 
-    async editStudent(row) {
+    async editExam(row) {
       row = copyObj(row)
       for (const key in this.form) {
         if (key == 'birthday') row[key] = row[key] * 1000
@@ -164,8 +182,8 @@ export default {
       this.openDialog('edit')
     },
 
-    async deleteStudent(row) {
-      this.deleteTableData(row.name, deleteStudent, { id: row.ID })
+    async deleteExam(row) {
+      this.deleteTableData(row.name, deleteExam, { id: row.ID })
     },
 
     async enterDialog() {
@@ -175,14 +193,14 @@ export default {
           form.birthday = parseInt(form.birthday / 1000)
           if (this.type === 'add') {
             delete form.id
-            const res = await createtStudent(form)
+            const res = await createtExam(form)
 
             if (res.code === 0) {
               this.$message.success('添加成功')
               this.getTableData()
             }
           } else {
-            const res = await upStudent(form)
+            const res = await upExam(form)
             if (res.code === 0) {
               this.$message.success('编辑成功')
               this.getTableData()

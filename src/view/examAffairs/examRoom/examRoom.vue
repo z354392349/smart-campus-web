@@ -3,7 +3,7 @@
     <div class="search-term">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
         <el-form-item label="年级">
-          <el-input v-model="searchInfo.name" placeholder="请输入年级名称" />
+          <el-input v-model="searchInfo.name" placeholder="请输入考场名称" />
         </el-form-item>
         <el-form-item>
           <!-- @click="onSubmit" -->
@@ -13,7 +13,7 @@
       </el-form>
     </div>
     <el-table :data="tableData" border :stripe="true">
-      <el-table-column label="姓名" prop="name" />
+      <el-table-column label="考场名称" prop="name" />
       <el-table-column label="描述" prop="description" />
       <el-table-column label="操作">
         <template slot-scope="scope">
@@ -35,8 +35,8 @@
 
     <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :width="$conf.minDialogWidth">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="年级名称" prop="name">
-          <el-input v-model="form.name" autocomplete="off" placeholder="请输入年级名称" />
+        <el-form-item label="考场名称" prop="name">
+          <el-input v-model="form.name" autocomplete="off" placeholder="请输入考场名称" />
         </el-form-item>
         <el-form-item label="描述">
           <el-input v-model="form.description" autocomplete="off" placeholder="请选择输入描述" />
@@ -62,14 +62,14 @@ export default {
     return {
       listApi: getExamRoomList,
       dialogFormVisible: false,
-      dialogTitle: '新增年级',
+      dialogTitle: '新增考场',
       form: {
         name: '',
         description: ''
       },
       type: '',
       rules: {
-        name: [{ required: true, message: '请输入年级名称', trigger: 'blur' }]
+        name: [{ required: true, message: '请输入考场名称', trigger: 'blur' }]
       }
     }
   },
@@ -95,10 +95,10 @@ export default {
     openDialog(type) {
       switch (type) {
         case 'add':
-          this.dialogTitle = '新增年级'
+          this.dialogTitle = '新增考场'
           break
         case 'edit':
-          this.dialogTitle = '编辑年级'
+          this.dialogTitle = '编辑考场'
           break
         default:
           break
@@ -109,6 +109,7 @@ export default {
     async editExamRoom(row) {
       this.form.id = row.ID
       this.form.name = row.name
+      this.form.description = row.description
 
       this.openDialog('edit')
     },
