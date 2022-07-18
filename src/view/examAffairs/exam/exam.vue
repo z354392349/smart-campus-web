@@ -8,7 +8,7 @@
         <el-form-item>
           <!-- @click="onSubmit" -->
           <el-button size="mini" type="primary" icon="el-icon-search" @click="getTableData()">查询</el-button>
-          <el-button size="mini" type="primary" icon="el-icon-plus" @click="openDialog('add')">新增</el-button>
+          <el-button size="mini" type="primary" icon="el-icon-plus" @click="openDialog('add')">发布考试</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -112,27 +112,23 @@ export default {
     this.getTableData()
     let examItem = [
       {
-        endTime: 1658031181,
-        startTime: 1658023981,
+        endTime: 22,
+        startTime: 22,
         courseID: 1
       },
       {
-        endTime: 1658021181,
-        startTime: 1658323981,
+        // ID: 2,
+        endTime: 11,
+        startTime: 11,
         courseID: 2
       }
     ]
-    // let eamItem = {
-    //   endTime: 1658031181,
-    //   startTime: 1658023981,
-    //   courseID: 1
-    // }
-    // let pa = { name: '1231', gradeID: '1,2,3,4', eamItem: JSON.stringify(eamItem), description: 12 }
-    let pa = { name: '1231', gradeID: '1,2,3,4', examItem, description: 12 }
-
+    // let pa = { name: 'xx1123', gradeID: '1,2,3,4', examItem, description: 12 }
+    // let pa = { id: 1, name: 'xx11111123', gradeID: '1,2,3,4', examItem, description: 121 }
+    // createtExam(pa)
     // upExam(pa)
-    // deleteExam(pa)
-    createtExam(pa)
+    // deleteExam({})
+    // deleteExam({ id: 1 })
   },
   methods: {
     unixTimeToAge,
