@@ -161,6 +161,7 @@ export default {
         this.form[key] = row[key]
       }
       this.form.id = row.ID
+      this.form.sysUserID = row.sysUserID
       this.openDialog('edit')
     },
 

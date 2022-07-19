@@ -20,7 +20,7 @@
       <el-table-column label="生日" prop="birthday">
         <template v-slot="scope">{{ unixTimeFormat(scope.row.birthday) }}</template>
       </el-table-column>
-      <el-table-column label="年龄">
+      <el-table-column label="年龄（周岁）">
         <template v-slot="scope">{{ unixTimeToAge(scope.row.birthday) }}</template>
       </el-table-column>
       <el-table-column label="手机号码" prop="telephone" />
@@ -156,10 +156,12 @@ export default {
         this.form[key] = row[key]
       }
       this.form.id = row.ID
+      this.form.sysUserID = row.sysUserID
       this.openDialog('edit')
     },
 
     async deleteTeacher(row) {
+      //  row.ID
       this.deleteTableData(row.name, deleteTeacher, { id: row.ID })
     },
 
