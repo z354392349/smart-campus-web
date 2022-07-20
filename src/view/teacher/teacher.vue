@@ -9,6 +9,7 @@
           <!-- @click="onSubmit" -->
           <el-button size="mini" type="primary" icon="el-icon-search" @click="getTableData()">查询</el-button>
           <el-button size="mini" type="primary" icon="el-icon-plus" @click="openDialog('add')">新增</el-button>
+          <el-button size="mini" type="primary" icon="el-icon-plus" @click="createDate">测试数据</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -78,6 +79,7 @@ import { createtTeacher, upTeacher, getTeacherList, deleteTeacher } from '@/api/
 import infoList from '@/mixins/infoList'
 import { copyObj, unixTimeToAge, unixTimeFormat } from '@/utils/tool.js'
 import { telephoneRE } from '@/utils/regexp.js'
+import { mockTeacherList } from '@/mock/mock.js'
 
 export default {
   name: 'Grade',
@@ -110,6 +112,7 @@ export default {
   },
   created() {
     this.getTableData()
+    this.createDate()
   },
   methods: {
     unixTimeToAge,
@@ -189,6 +192,11 @@ export default {
           this.getTableData()
         }
       })
+    },
+
+    createDate() {
+      let data = mockTeacherList(1)
+      createtTeacher(data[0])
     }
   }
 }

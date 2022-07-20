@@ -2,7 +2,7 @@
   <div>
     <div class="search-term">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
-        <el-form-item label="年级">
+        <el-form-item label="考场">
           <el-input v-model="searchInfo.name" placeholder="请输入考场名称" />
         </el-form-item>
         <el-form-item>
@@ -14,6 +14,7 @@
     </div>
     <el-table :data="tableData" border :stripe="true">
       <el-table-column label="考场名称" prop="name" />
+      <el-table-column label="考场地址" prop="address" />
       <el-table-column label="描述" prop="description" />
       <el-table-column label="操作">
         <template slot-scope="scope">
@@ -37,6 +38,9 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="考场名称" prop="name">
           <el-input v-model="form.name" autocomplete="off" placeholder="请输入考场名称" />
+        </el-form-item>
+        <el-form-item label="考场地址" prop="address">
+          <el-input v-model="form.address" autocomplete="off" placeholder="请输入考场地址" />
         </el-form-item>
         <el-form-item label="描述">
           <el-input v-model="form.description" autocomplete="off" placeholder="请选择输入描述" />
@@ -65,11 +69,13 @@ export default {
       dialogTitle: '新增考场',
       form: {
         name: '',
+        address: '',
         description: ''
       },
       type: '',
       rules: {
-        name: [{ required: true, message: '请输入考场名称', trigger: 'blur' }]
+        name: [{ required: true, message: '请输入考场名称', trigger: 'blur' }],
+        address: [{ required: true, message: '请输入考场地址', trigger: 'blur' }]
       }
     }
   },
@@ -85,6 +91,7 @@ export default {
       this.$refs.form.resetFields()
       this.form = {
         name: '',
+        address: '',
         description: ''
       }
     },
@@ -109,6 +116,7 @@ export default {
     async editExamRoom(row) {
       this.form.id = row.ID
       this.form.name = row.name
+      this.form.address = row.address
       this.form.description = row.description
 
       this.openDialog('edit')

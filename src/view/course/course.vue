@@ -13,7 +13,7 @@
       </el-form>
     </div>
     <el-table :data="tableData" border :stripe="true">
-      <el-table-column label="姓名" prop="name" />
+      <el-table-column label="课程名称" prop="name" />
       <el-table-column label="描述" prop="description" />
       <el-table-column label="操作">
         <template slot-scope="scope">
@@ -84,10 +84,12 @@ export default {
         description: ''
       }
     },
+
     closeDialog() {
       this.initForm()
       this.dialogFormVisible = false
     },
+
     openDialog(type) {
       switch (type) {
         case 'add':

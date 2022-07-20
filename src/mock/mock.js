@@ -17,11 +17,7 @@ let getMockTelNum = () => {
     prefix = prefix + Math.floor(Math.random() * 10)
   }
 
-  let x = document.getElementsByName('mobile_tel')
-  for (let i = 0; i < x.length; i++) {
-    let o = x[i]
-    o.value = prefix
-  }
+  return prefix
 }
 
 // Name        string  `json:"name" form:"name" gorm:"comment:字典名（中）"`
@@ -39,7 +35,16 @@ export const mockTeacher = () => {
     name: Mock.mock('@cname'),
     birthday: getMockBirthdayUnix(315504000, 820252800),
     sex: rand(1, 2),
-    subject: rand(1, 10),
-    Telephone: getMockTelNum()
+    subject: rand(1, 8),
+    telephone: getMockTelNum()
   }
+}
+
+// 教师年龄在 1980 - 1995
+export const mockTeacherList = (num) => {
+  let arr = []
+  for (let i = 0; i < num; i++) {
+    arr.push(mockTeacher())
+  }
+  return arr
 }
