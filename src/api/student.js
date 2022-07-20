@@ -35,3 +35,13 @@ export const deleteStudent = (data) => {
     data
   })
 }
+
+// 批量修改学习年级班级
+// 更新学生
+export const setStudentsGradeAndClass = (data) => {
+  return service({
+    url: '/student/setStudentsGradeAndClass',
+    method: 'put',
+    data
+  })
+}

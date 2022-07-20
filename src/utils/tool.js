@@ -14,3 +14,8 @@ export const unixTimeFormat = (timeStamp, format) => {
   format = format || 'YYYY-MM-DD'
   return moment.unix(timeStamp).format(format)
 }
+
+// 获取随机数
+export const rand = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
