@@ -25,7 +25,7 @@
       </el-table-column>
       <el-table-column label="手机号码" prop="telephone" />
 
-      <el-table-column label="描述" prop="description" />
+      <el-table-column label="备注" prop="description" />
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="small" type="primary" icon="el-icon-edit" @click="editExam(scope.row)">编辑</el-button>
@@ -60,8 +60,8 @@
         <el-form-item label="手机号码" prop="telephone">
           <el-input v-model="form.telephone" autocomplete="off" placeholder="请输入家长手机号码" />
         </el-form-item>
-        <el-form-item label="描述">
-          <el-input v-model="form.description" autocomplete="off" placeholder="请输入描述" />
+        <el-form-item label="备注">
+          <el-input v-model="form.description" autocomplete="off" placeholder="请输入备注" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -110,19 +110,19 @@ export default {
   },
   created() {
     this.getTableData()
-    let examItem = [
-      {
-        endTime: 22,
-        startTime: 22,
-        courseID: 1
-      },
-      {
-        // ID: 2,
-        endTime: 11,
-        startTime: 11,
-        courseID: 2
-      }
-    ]
+    // let examItem = [
+    //   {
+    //     endTime: 22,
+    //     startTime: 22,
+    //     courseID: 1
+    //   },
+    //   {
+    //     // ID: 2,
+    //     endTime: 11,
+    //     startTime: 11,
+    //     courseID: 2
+    //   }
+    // ]
     // let pa = { name: 'xx1123', gradeID: '1,2,3,4', examItem, description: 12 }
     // let pa = { id: 1, name: 'xx11111123', gradeID: '1,2,3,4', examItem, description: 121 }
     // createtExam(pa)

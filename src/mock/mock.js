@@ -20,14 +20,15 @@ let getMockTelNum = () => {
   return prefix
 }
 
-// Name        string  `json:"name" form:"name" gorm:"comment:字典名（中）"`
-// Birthday    int     `json:"birthday" form:"birthday" gorm:"comment:出生日期"`
-// Sex         int     `json:"sex" form:"sex" gorm:";comment:性别 1表示男，2表示女。"`
-// SubjectID   uint    `json:"subjectID" form:"subjectID" gorm:"comment:科目id"`
-// Subject     *Course `json:"subject" gorm:"foreignKey:SubjectID;"`
-// Telephone   string  `json:"telephone" form:"telephone" gorm:"comment:电话"`
-// Description string  `json:"description" form:"description" gorm:"comment:描述"`
-// SysUserID   uint    `json:"sysUserID" form:"sysUserID" gorm:"comment:用户UUID"`
+// 	Name        string  `json:"name" form:"name" gorm:"comment:字典名（中）"`
+// 	Birthday    int     `json:"birthday" form:"birthday" gorm:"comment:出生日期"`
+// 	Sex         int     `json:"sex" form:"sex" gorm:";comment:性别 1表示男，2表示女。"`
+// 	CourseID    uint    `json:"courseID" form:"courseID" gorm:"comment:课程id"`
+// 	Course      *Course `json:"course"   form:"course" gorm:"foreignKey:CourseID;"`
+// 	Telephone   string  `json:"telephone" form:"telephone" gorm:"comment:电话"`
+// 	Description string  `json:"description" form:"description" gorm:"comment:备注"`
+// 	SysUserID   uint    `json:"sysUserID" form:"sysUserID" gorm:"comment:用户UUID"`
+// }
 
 // 教师年龄在 1980 - 1995
 export const mockTeacher = () => {
@@ -35,7 +36,7 @@ export const mockTeacher = () => {
     name: Mock.mock('@cname'),
     birthday: getMockBirthdayUnix(315504000, 820252800),
     sex: rand(1, 2),
-    subject: rand(1, 8),
+    courseID: rand(1, 8),
     telephone: getMockTelNum()
   }
 }

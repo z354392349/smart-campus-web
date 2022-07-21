@@ -16,7 +16,7 @@
       <el-table-column label="年级" prop="grade.name" />
       <el-table-column label="班级" prop="name" />
       <el-table-column label="班主任" prop="teacher.name" />
-      <el-table-column label="描述" prop="description" />
+      <el-table-column label="备注" prop="description" />
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="small" type="primary" icon="el-icon-edit" @click="editClass(scope.row)">编辑</el-button>
@@ -50,8 +50,8 @@
             <el-option v-for="n in teacherList" :key="n.ID" :label="n.name" :value="n.ID" />
           </el-select>
         </el-form-item>
-        <el-form-item label="描述">
-          <el-input v-model="form.description" autocomplete="off" placeholder="请选择输入描述" />
+        <el-form-item label="备注">
+          <el-input v-model="form.description" autocomplete="off" placeholder="请选择输入备注" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

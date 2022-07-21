@@ -5,8 +5,8 @@
         <el-form-item label="路径">
           <el-input v-model="searchInfo.path" placeholder="路径" />
         </el-form-item>
-        <el-form-item label="描述">
-          <el-input v-model="searchInfo.description" placeholder="描述" />
+        <el-form-item label="备注">
+          <el-input v-model="searchInfo.description" placeholder="备注" />
         </el-form-item>
         <el-form-item label="api组">
           <el-input v-model="searchInfo.apiGroup" placeholder="api组" />

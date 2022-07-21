@@ -40,7 +40,7 @@
         <el-input v-model="form.abbreviation" placeholder="简称会作为入参对象名和路由group" />
       </el-form-item>
       <el-form-item label="Struct中文名称" prop="description">
-        <el-input v-model="form.description" placeholder="中文描述作为自动api描述" />
+        <el-input v-model="form.description" placeholder="中文备注作为自动api备注" />
       </el-form-item>
       <el-form-item label="文件名称" prop="packageName">
         <el-input v-model="form.packageName" placeholder="生成文件的默认名称(建议为驼峰格式,首字母小写,如sysXxxXxxx)" />
@@ -75,7 +75,7 @@
       <el-table-column prop="dataType" label="数据库字段类型" width="130" />
       <el-table-column prop="dataTypeLong" label="数据库字段长度" width="130" />
       <el-table-column prop="columnName" label="数据库字段" width="130" />
-      <el-table-column prop="comment" label="数据库字段描述" width="130" />
+      <el-table-column prop="comment" label="数据库字段备注" width="130" />
       <el-table-column prop="fieldSearchType" label="搜索条件" width="130" />
       <el-table-column prop="dictType" label="字典" width="130" />
       <el-table-column label="操作" width="300">
@@ -169,7 +169,7 @@ export default {
       rules: {
         structName: [{ required: true, message: '请输入结构体名称', trigger: 'blur' }],
         abbreviation: [{ required: true, message: '请输入结构体简称', trigger: 'blur' }],
-        description: [{ required: true, message: '请输入结构体描述', trigger: 'blur' }],
+        description: [{ required: true, message: '请输入结构体备注', trigger: 'blur' }],
         packageName: [
           {
             required: true,

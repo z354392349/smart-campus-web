@@ -1,6 +1,6 @@
 import service from '@/utils/request'
 
-// 获取课程列表
+// 获取科目列表
 export const getCourseList = (data) => {
   return service({
     url: '/course/getCourseList',
@@ -9,7 +9,7 @@ export const getCourseList = (data) => {
   })
 }
 
-// 创建课程
+// 创建科目
 export const createCourse = (data) => {
   return service({
     url: '/course/createCourse',
@@ -18,7 +18,7 @@ export const createCourse = (data) => {
   })
 }
 
-// 更新课程
+// 更新科目
 export const upCourse = (data) => {
   return service({
     url: '/course/upCourse',
@@ -27,7 +27,7 @@ export const upCourse = (data) => {
   })
 }
 
-// 删除课程
+// 删除科目
 export const deleteCourse = (data) => {
   return service({
     url: '/course/deleteCourse',

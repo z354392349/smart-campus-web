@@ -25,7 +25,7 @@
       </el-table-column>
       <el-table-column label="手机号码" prop="telephone" />
 
-      <el-table-column label="描述" prop="description" />
+      <el-table-column label="备注" prop="description" />
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="small" type="primary" icon="el-icon-edit" @click="editExam(scope.row)">编辑</el-button>
@@ -60,8 +60,8 @@
         <el-form-item label="手机号码" prop="telephone">
           <el-input v-model="form.telephone" autocomplete="off" placeholder="请输入家长手机号码" />
         </el-form-item>
-        <el-form-item label="描述">
-          <el-input v-model="form.description" autocomplete="off" placeholder="请输入描述" />
+        <el-form-item label="备注">
+          <el-input v-model="form.description" autocomplete="off" placeholder="请输入备注" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

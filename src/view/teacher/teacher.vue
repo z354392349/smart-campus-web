@@ -9,12 +9,12 @@
           <!-- @click="onSubmit" -->
           <el-button size="mini" type="primary" icon="el-icon-search" @click="getTableData()">查询</el-button>
           <el-button size="mini" type="primary" icon="el-icon-plus" @click="openDialog('add')">新增</el-button>
-          <el-button size="mini" type="primary" icon="el-icon-plus" @click="createDate">测试数据</el-button>
+          <!-- <el-button size="mini" type="primary" icon="el-icon-plus" @click="createDate()">测试数据</el-button> -->
         </el-form-item>
       </el-form>
     </div>
     <el-table :data="tableData" border :stripe="true">
-      <el-table-column label="年级名称" prop="name" />
+      <el-table-column label="教师名称" prop="name" />
       <el-table-column label="性别" prop="sex">
         <template v-slot="scope">{{ scope.row.sex == 1 ? '男' : '女' }}</template>
       </el-table-column>
@@ -24,9 +24,10 @@
       <el-table-column label="年龄（周岁）">
         <template v-slot="scope">{{ unixTimeToAge(scope.row.birthday) }}</template>
       </el-table-column>
+      <el-table-column label="主讲科目" prop="course.name" />
       <el-table-column label="手机号码" prop="telephone" />
 
-      <el-table-column label="描述" prop="description" />
+      <el-table-column label="备注" prop="description" />
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="small" type="primary" icon="el-icon-edit" @click="editTeacher(scope.row)">编辑</el-button>
@@ -45,7 +46,6 @@
       @size-change="handleSizeChange"
     />
 
-    <!-- { name: '张三', sex: 1, birthday: 1657468800, telephone: '13651196456', description: '' } -->
     <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :width="$conf.minDialogWidth">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px" class="dialog-form">
         <el-form-item label="姓名" prop="name">
@@ -55,14 +55,19 @@
           <el-radio v-model="form.sex" :label="1">男</el-radio>
           <el-radio v-model="form.sex" :label="2">女</el-radio>
         </el-form-item>
+        <el-form-item label="主讲科目" prop="courseID">
+          <el-select v-model="form.courseID" placeholder="请选择科目">
+            <el-option v-for="item in courseList" :key="item.ID" :label="item.name" :value="item.ID"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="生日" prop="birthday">
           <el-date-picker v-model="form.birthday" type="date" value-format="timestamp" placeholder="请选择生日" />
         </el-form-item>
         <el-form-item label="手机号码" prop="telephone">
           <el-input v-model="form.telephone" autocomplete="off" placeholder="请输入手机号码" />
         </el-form-item>
-        <el-form-item label="描述">
-          <el-input v-model="form.description" autocomplete="off" placeholder="请输入描述" />
+        <el-form-item label="备注">
+          <el-input v-model="form.description" autocomplete="off" placeholder="请输入备注" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -76,10 +81,11 @@
 <script>
 import moment from 'moment'
 import { createtTeacher, upTeacher, getTeacherList, deleteTeacher } from '@/api/teacher'
-import infoList from '@/mixins/infoList'
+import { getCourseList } from '@/api/course'
 import { copyObj, unixTimeToAge, unixTimeFormat } from '@/utils/tool.js'
 import { telephoneRE } from '@/utils/regexp.js'
 import { mockTeacherList } from '@/mock/mock.js'
+import infoList from '@/mixins/infoList'
 
 export default {
   name: 'Grade',
@@ -95,14 +101,17 @@ export default {
         name: '',
         description: '',
         sex: 1,
+        courseID: '',
         birthday: '',
         telephone: ''
       },
       type: '',
+      courseList: [],
       rules: {
         name: [{ required: true, message: '请输入教师名称', trigger: 'blur' }],
         sex: [{ required: true, message: '请选择性别', trigger: 'blur' }],
         birthday: [{ required: true, message: '请选择生日', trigger: 'blur' }],
+        courseID: [{ required: true, message: '请选择科目', trigger: 'change' }],
         telephone: [
           { required: true, message: '请输入手机号码', trigger: 'blur' },
           { pattern: telephoneRE, message: '手机号格式不正确', trigger: 'blur' }
@@ -113,6 +122,7 @@ export default {
   created() {
     this.getTableData()
     this.createDate()
+    this.getCourseList()
   },
   methods: {
     unixTimeToAge,
@@ -192,6 +202,13 @@ export default {
           this.getTableData()
         }
       })
+    },
+
+    // 获取课程列表
+    async getCourseList() {
+      let res = await getCourseList()
+      this.courseList = res.data.list
+      console.log(res)
     },
 
     createDate() {

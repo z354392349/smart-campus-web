@@ -25,7 +25,7 @@
           <el-input v-model="dialogMiddle.columnName" autocomplete="off" />
         </el-col>
       </el-form-item>
-      <el-form-item label="数据库字段描述" prop="comment">
+      <el-form-item label="数据库字段备注" prop="comment">
         <el-col :span="6">
           <el-input v-model="dialogMiddle.comment" autocomplete="off" />
         </el-col>

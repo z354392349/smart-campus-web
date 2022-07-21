@@ -15,7 +15,7 @@
     <el-table :data="tableData" border :stripe="true">
       <el-table-column label="考场名称" prop="name" />
       <el-table-column label="考场地址" prop="address" />
-      <el-table-column label="描述" prop="description" />
+      <el-table-column label="备注" prop="description" />
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="small" type="primary" icon="el-icon-edit" @click="editExamRoom(scope.row)">编辑</el-button>
@@ -42,8 +42,8 @@
         <el-form-item label="考场地址" prop="address">
           <el-input v-model="form.address" autocomplete="off" placeholder="请输入考场地址" />
         </el-form-item>
-        <el-form-item label="描述">
-          <el-input v-model="form.description" autocomplete="off" placeholder="请选择输入描述" />
+        <el-form-item label="备注">
+          <el-input v-model="form.description" autocomplete="off" placeholder="请选择输入备注" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

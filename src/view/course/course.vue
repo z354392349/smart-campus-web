@@ -2,8 +2,8 @@
   <div>
     <div class="search-term">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
-        <el-form-item label="课程">
-          <el-input v-model="searchInfo.name" placeholder="请输入课程名称" />
+        <el-form-item label="科目">
+          <el-input v-model="searchInfo.name" placeholder="请输入科目名称" />
         </el-form-item>
         <el-form-item>
           <!-- @click="onSubmit" -->
@@ -13,8 +13,8 @@
       </el-form>
     </div>
     <el-table :data="tableData" border :stripe="true">
-      <el-table-column label="课程名称" prop="name" />
-      <el-table-column label="描述" prop="description" />
+      <el-table-column label="科目名称" prop="name" />
+      <el-table-column label="备注" prop="description" />
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="small" type="primary" icon="el-icon-edit" @click="editCourse(scope.row)">编辑</el-button>
@@ -35,11 +35,11 @@
 
     <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :width="$conf.minDialogWidth">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="课程名称" prop="name">
-          <el-input v-model="form.name" autocomplete="off" placeholder="请输入课程名称" />
+        <el-form-item label="科目名称" prop="name">
+          <el-input v-model="form.name" autocomplete="off" placeholder="请输入科目名称" />
         </el-form-item>
-        <el-form-item label="描述">
-          <el-input v-model="form.description" autocomplete="off" placeholder="请选择输入描述" />
+        <el-form-item label="备注">
+          <el-input v-model="form.description" autocomplete="off" placeholder="请选择输入备注" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -62,14 +62,14 @@ export default {
     return {
       listApi: getCourseList,
       dialogFormVisible: false,
-      dialogTitle: '新增课程',
+      dialogTitle: '新增科目',
       form: {
         name: '',
         description: ''
       },
       type: '',
       rules: {
-        name: [{ required: true, message: '请输入课程名称', trigger: 'blur' }]
+        name: [{ required: true, message: '请输入科目名称', trigger: 'blur' }]
       }
     }
   },
@@ -93,10 +93,10 @@ export default {
     openDialog(type) {
       switch (type) {
         case 'add':
-          this.dialogTitle = '新增课程'
+          this.dialogTitle = '新增科目'
           break
         case 'edit':
-          this.dialogTitle = '编辑课程'
+          this.dialogTitle = '编辑科目'
           break
         default:
           break
