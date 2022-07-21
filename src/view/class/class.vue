@@ -2,7 +2,11 @@
   <div>
     <div class="search-term">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
-        <!-- TODO: 年级 筛选条件 -->
+        <el-form-item label="年级">
+          <el-select v-model="searchInfo.gradeID" placeholder="请选择年级">
+            <el-option v-for="n in gradeList" :key="n.ID" :label="n.name" :value="n.ID" />
+          </el-select>
+        </el-form-item>
         <el-form-item label="班级">
           <el-input v-model="searchInfo.name" placeholder="请输入班级名称" />
         </el-form-item>
@@ -77,6 +81,7 @@ export default {
       listApi: getClassList,
       dialogFormVisible: false,
       dialogTitle: '新增班级',
+
       form: {
         name: '',
         gradeID: '',
@@ -93,12 +98,6 @@ export default {
   },
   created() {
     this.getTableData()
-    // this.getGradeList()
-    // let p = { name: '一班', gradeID: 1, teacherID: 1, description: '123' }
-    // createClass(p)
-    // getClassList()
-    // upClass({ id: 1, name: '一R班', gradeID: 10, teacherID: 1, description: '123' })
-    deleteClass({ id: 1 })
     this.getGradeList()
     this.getTeacherList()
   },

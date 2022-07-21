@@ -3,7 +3,7 @@
     <div class="search-term">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
         <el-form-item label="年级">
-          <el-input v-model="searchInfo.name" placeholder="请输入年级名称" />
+          <el-input v-model="searchInfo.name" @keyup.enter.native="getTableData()" placeholder="请输入年级名称" />
         </el-form-item>
         <el-form-item>
           <el-button size="mini" type="primary" icon="el-icon-search" @click="getTableData()">查询</el-button>

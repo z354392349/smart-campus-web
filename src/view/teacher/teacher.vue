@@ -3,7 +3,7 @@
     <div class="search-term">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
         <el-form-item label="教师">
-          <el-input v-model="searchInfo.name" placeholder="请输入教师姓名" />
+          <el-input v-model="searchInfo.name" @keyup.enter.native="getTableData()" placeholder="请输入教师姓名" />
         </el-form-item>
         <el-form-item>
           <el-button size="mini" type="primary" icon="el-icon-search" @click="getTableData()">查询</el-button>
@@ -20,7 +20,7 @@
       <el-table-column label="生日" prop="birthday">
         <template v-slot="scope">{{ unixTimeFormat(scope.row.birthday) }}</template>
       </el-table-column>
-      <el-table-column label="年龄（周岁）">
+      <el-table-column label="年龄(周岁)">
         <template v-slot="scope">{{ unixTimeToAge(scope.row.birthday) }}</template>
       </el-table-column>
       <el-table-column label="主讲科目" prop="course.name" />
@@ -206,7 +206,6 @@ export default {
     async getCourseList() {
       let res = await getCourseList()
       this.courseList = res.data.list
-      console.log(res)
     },
 
     // 创建虚拟数据
