@@ -6,10 +6,9 @@
           <el-input v-model="searchInfo.name" placeholder="请输入教师姓名" />
         </el-form-item>
         <el-form-item>
-          <!-- @click="onSubmit" -->
           <el-button size="mini" type="primary" icon="el-icon-search" @click="getTableData()">查询</el-button>
           <el-button size="mini" type="primary" icon="el-icon-plus" @click="openDialog('add')">新增</el-button>
-          <!-- <el-button size="mini" type="primary" icon="el-icon-plus" @click="createDate()">测试数据</el-button> -->
+          <!-- <el-button size="mini" type="primary" icon="el-icon-plus" @click="createMockDate()">测试数据</el-button> -->
         </el-form-item>
       </el-form>
     </div>
@@ -121,7 +120,6 @@ export default {
   },
   created() {
     this.getTableData()
-    this.createDate()
     this.getCourseList()
   },
   methods: {
@@ -211,9 +209,11 @@ export default {
       console.log(res)
     },
 
-    createDate() {
+    // 创建虚拟数据
+    async createMockDate() {
       let data = mockTeacherList(1)
-      createtTeacher(data[0])
+      await createtTeacher(data[0])
+      this.getTableData()
     }
   }
 }

@@ -2,11 +2,11 @@
   <div>
     <div class="search-term">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
+        <!-- TODO: 年级 筛选条件 -->
         <el-form-item label="班级">
           <el-input v-model="searchInfo.name" placeholder="请输入班级名称" />
         </el-form-item>
         <el-form-item>
-          <!-- @click="onSubmit" -->
           <el-button size="mini" type="primary" icon="el-icon-search" @click="getTableData()">查询</el-button>
           <el-button size="mini" type="primary" icon="el-icon-plus" @click="openDialog('add')">新增</el-button>
         </el-form-item>

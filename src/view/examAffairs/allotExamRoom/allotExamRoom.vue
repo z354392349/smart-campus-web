@@ -6,7 +6,6 @@
           <el-input v-model="searchInfo.name" placeholder="请输入学生姓名" />
         </el-form-item>
         <el-form-item>
-          <!-- @click="onSubmit" -->
           <el-button size="mini" type="primary" icon="el-icon-search" @click="getTableData()">查询</el-button>
           <el-button size="mini" type="primary" icon="el-icon-plus" @click="openDialog('add')">发布考试</el-button>
         </el-form-item>

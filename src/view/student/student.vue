@@ -2,18 +2,30 @@
   <div>
     <div class="search-term">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
-        <el-form-item label="教师">
-          <el-input v-model="searchInfo.name" placeholder="请输入学生姓名" />
+        <el-form-item label="学生">
+          <el-input v-model="searchInfo.name" @keyup.enter.native="getTableData" placeholder="请输入学生姓名" />
+        </el-form-item>
+        <el-form-item label="年级">
+          <el-select v-model="searchInfo.gradeID" placeholder="请选择年级" @change="gradeChane">
+            <el-option v-for="n in gradeList" :key="n.ID" :label="n.name" :value="n.ID" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="班级">
+          <el-select v-model="searchInfo.classID" placeholder="请选择班级">
+            <el-option v-for="n in classList" :key="n.ID" :label="n.name" :value="n.ID" />
+          </el-select>
         </el-form-item>
         <el-form-item>
-          <!-- @click="onSubmit" -->
           <el-button size="mini" type="primary" icon="el-icon-search" @click="getTableData()">查询</el-button>
           <el-button size="mini" type="primary" icon="el-icon-plus" @click="openDialog('add')">新增</el-button>
+          <el-button size="mini" type="primary" icon="el-icon-plus" @click="createMockDate()">测试数据</el-button>
         </el-form-item>
       </el-form>
     </div>
     <el-table :data="tableData" border :stripe="true">
       <el-table-column label="学生姓名" prop="name" />
+      <el-table-column label="年级" prop="grade.name" />
+      <el-table-column label="班级" prop="class.name" />
       <el-table-column label="性别" prop="sex">
         <template v-slot="scope">{{ scope.row.sex == 1 ? '男' : '女' }}</template>
       </el-table-column>
@@ -75,10 +87,12 @@
 <script>
 import moment from 'moment'
 import { createtStudent, upStudent, getStudentList, deleteStudent, setStudentsGradeAndClass } from '@/api/student'
+import { getClassList } from '@/api/class'
+import { getGradeList } from '@/api/grade'
 import infoList from '@/mixins/infoList'
 import { copyObj, unixTimeToAge, unixTimeFormat } from '@/utils/tool.js'
 import { telephoneRE } from '@/utils/regexp.js'
-
+import { mockStudentList } from '@/mock/mock.js'
 export default {
   name: 'Grade',
 
@@ -88,6 +102,10 @@ export default {
       listApi: getStudentList,
       dialogFormVisible: false,
       dialogTitle: '新增学生',
+      searchInfo: {
+        gradeID: 0,
+        classID: 0
+      },
       form: {
         id: '',
         name: '',
@@ -96,6 +114,9 @@ export default {
         birthday: '',
         telephone: ''
       },
+      classListAll: [],
+      classList: [], // 班级列表
+      gradeList: [], // 年级列表
       type: '',
       rules: {
         name: [{ required: true, message: '请输入学生姓名', trigger: 'blur' }],
@@ -110,14 +131,8 @@ export default {
   },
   created() {
     this.getTableData()
-
-    let pa = { studentsID: [1, 2], gradeID: 1, classID: 1 }
-    setStudentsGradeAndClass(pa)
-    // let pa = { id: 500000, name: '张1三', birthday: 1657814400, sex: 1, telephone: 13651196456, nation: '汉族', gradeID: 1, ClassID: 1 }
-
-    // upStudent(pa)
-    // deleteStudent(pa)
-    // createtStudent(pa)
+    this.getClassList()
+    this.getGradeList()
   },
   methods: {
     unixTimeToAge,
@@ -196,6 +211,48 @@ export default {
           this.getTableData()
         }
       })
+    },
+
+    // 获取班级列表
+    async getClassList() {
+      let res = await getClassList()
+      let list = res.data.list
+      this.classListAll = list
+      this.classList = [{ ID: 0, name: '全部' }]
+      this.searchInfo.classID = 0
+    },
+
+    // 获取年级列表
+    async getGradeList() {
+      let res = await getGradeList()
+      let list = res.data.list
+      list.unshift({ ID: 0, name: '全部' })
+      this.gradeList = list
+      this.searchInfo.gradeID = 0
+    },
+
+    // 年级改变
+    gradeChane(val) {
+      let classList = []
+      if (val !== 0) classList = this.classListAll.filter((n) => n.gradeID === val)
+      classList.unshift({ ID: 0, name: '全部' })
+      this.classList = classList
+      this.searchInfo.classID = 0
+    },
+
+    // 创建虚拟数据
+    async createMockDate() {
+      let params = {
+        gradeID: 1,
+        classID: 1,
+        type: 7
+      }
+      let data = mockStudentList(5, params)
+      console.log(data)
+      for (let i = 0; i < data.length; i++) {
+        await createtStudent(data[i])
+      }
+      this.getTableData()
     }
   }
 }

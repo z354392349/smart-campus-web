@@ -41,11 +41,62 @@ export const mockTeacher = () => {
   }
 }
 
-// 教师年龄在 1980 - 1995
 export const mockTeacherList = (num) => {
   let arr = []
   for (let i = 0; i < num; i++) {
     arr.push(mockTeacher())
+  }
+  return arr
+}
+
+// Name        string `json:"name" form:"name" gorm:"comment:学生名称"`
+// Birthday    int    `json:"birthday" form:"birthday" gorm:"comment:出生日期"`
+// Sex         int    `json:"sex" form:"sex" gorm:"comment:性别 1表示男，2表示女。"`
+// Telephone   string `json:"telephone" form:"telephone" gorm:"comment:家长电话"`
+// GradeID     uint   `json:"gradeID" form:"gradeID" gorm:"comment:外键年级ID;" `
+// Grade       *Grade `gorm:"foreignKey:GradeID;"`
+// ClassID     uint   `json:"classID" form:"classID" gorm:"comment:外键班级ID;" `
+// Class       *Class `gorm:"foreignKey:ClassID;"`
+// SysUserID   uint   `json:"sysUserID" form:"sysUserID" gorm:"comment:用户UUID"`
+// Description string `json:"description" form:"description" gorm:"comment:描述"`
+// 教师年龄在 1980 - 1995
+
+// data -> gradeID、classID、 type-> 7,8,9
+// 学生年龄在 2008- 2010年底  13-16
+// 1262275200 ，1293638400 2010-
+// 1293811200 1325174400 2011 -
+// 1325347200 1356796800 2012-
+// 十二周岁上初一,十三周岁上初二,十四周岁上初三,
+
+export const mockStudent = (data) => {
+  let birthday
+  switch (data.type) {
+    case 7:
+      birthday = getMockBirthdayUnix(1230739200, 1262102400) // 2009
+      break
+    case 8:
+      birthday = getMockBirthdayUnix(1199116800, 1230566400) // 2008
+      break
+    case 9:
+      birthday = getMockBirthdayUnix(1167580800, 1198944000) // 2007
+      break
+    default:
+      break
+  }
+  return {
+    name: Mock.mock('@cname'),
+    birthday: birthday,
+    sex: rand(1, 2),
+    courseID: rand(1, 8),
+    telephone: getMockTelNum(),
+    ...data
+  }
+}
+
+export const mockStudentList = (num, data) => {
+  let arr = []
+  for (let i = 0; i < num; i++) {
+    arr.push(mockStudent(data))
   }
   return arr
 }
