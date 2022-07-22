@@ -45,3 +45,13 @@ export const setStudentsGradeAndClass = (data) => {
     data
   })
 }
+
+// 批量修改学习年级班级
+// 更新学生
+export const setClassMonitor = (data) => {
+  return service({
+    url: '/student/setClassMonitor',
+    method: 'put',
+    data
+  })
+}

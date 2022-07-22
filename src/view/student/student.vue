@@ -117,7 +117,7 @@
 
 <script>
 import moment from 'moment'
-import { createtStudent, upStudent, getStudentList, deleteStudent, setStudentsGradeAndClass } from '@/api/student'
+import { createtStudent, upStudent, getStudentList, deleteStudent, setStudentsGradeAndClass, setClassMonitor } from '@/api/student'
 import { getClassList } from '@/api/class'
 import { getGradeList } from '@/api/grade'
 import infoList from '@/mixins/infoList'
@@ -176,6 +176,7 @@ export default {
     this.getTableData()
     this.getClassList()
     this.getGradeList()
+    this.setClassMonitor({ classID: 1, studentID: 1 })
   },
   methods: {
     unixTimeToAge,
