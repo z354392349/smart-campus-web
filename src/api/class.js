@@ -35,3 +35,21 @@ export const deleteClass = (data) => {
     data
   })
 }
+
+// 设置班长
+export const setClassMonitor = (data) => {
+  return service({
+    url: '/class/setClassMonitor',
+    method: 'put',
+    data
+  })
+}
+
+// 设置班主任
+export const setClassTeacher = (data) => {
+  return service({
+    url: '/class/setClassTeacher',
+    method: 'put',
+    data
+  })
+}

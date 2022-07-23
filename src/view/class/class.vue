@@ -19,7 +19,16 @@
     <el-table :data="tableData" border :stripe="true">
       <el-table-column label="年级" prop="grade.name" />
       <el-table-column label="班级" prop="name" />
-      <el-table-column label="班主任" prop="teacher.name" />
+      <el-table-column label="班主任" prop="teacher.name">
+        <template v-slot="scope">
+          <span @click="showTeacherDawer(scope.row)" class="change-btn">{{ scope.row.teacher.name || '选择班主任' }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="班长" prop="student.name">
+        <template v-slot="scope">
+          <span @click="showClassDawer(scope.row)" class="change-btn">{{ scope.row.student ? scope.row.student.name : '选择班长' }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="备注" prop="description" />
       <el-table-column label="操作">
         <template slot-scope="scope">
@@ -41,7 +50,7 @@
 
     <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :width="$conf.minDialogWidth">
       <el-form ref="form" class="dialog-form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="年级名称" prop="name">
+        <el-form-item label="年级名称" prop="gradeID">
           <el-select v-model="form.gradeID" placeholder="请选择年级">
             <el-option v-for="n in gradeList" :key="n.ID" :label="n.name" :value="n.ID" />
           </el-select>
@@ -49,11 +58,11 @@
         <el-form-item label="班级名称" prop="name">
           <el-input v-model="form.name" autocomplete="off" placeholder="请输入班级名称" />
         </el-form-item>
-        <el-form-item label="班主任" prop="name">
+        <!-- <el-form-item label="班主任" prop="name">
           <el-select v-model="form.teacherID" placeholder="请选择年级">
             <el-option v-for="n in teacherList" :key="n.ID" :label="n.name" :value="n.ID" />
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="备注">
           <el-input v-model="form.description" autocomplete="off" placeholder="请选择输入备注" />
         </el-form-item>
@@ -63,6 +72,8 @@
         <el-button type="primary" @click="enterDialog">确 定</el-button>
       </div>
     </el-dialog>
+    <TeacherDawer ref="TeacherDawer" :row="row" />
+    <StudentDawer ref="StudentDawer" :row="row" />
   </div>
 </template>
 
@@ -70,6 +81,8 @@
 import { getGradeList } from '@/api/grade'
 import { getTeacherList } from '@/api/teacher'
 import { getClassList, createClass, upClass, deleteClass } from '@/api/class'
+import TeacherDawer from './components/TeacherDawer.vue'
+import StudentDawer from './components/StudentDawer.vue'
 import infoList from '@/mixins/infoList'
 
 export default {
@@ -90,10 +103,12 @@ export default {
       },
       type: '',
       rules: {
+        gradeID: [{ required: true, message: '请选择年级', trigger: 'change' }],
         name: [{ required: true, message: '请输入年级名称', trigger: 'blur' }]
       },
       gradeList: [],
-      teacherList: []
+      teacherList: [],
+      row: null // 选择的行
     }
   },
   created() {
@@ -101,6 +116,7 @@ export default {
     this.getGradeList()
     this.getTeacherList()
   },
+  components: { TeacherDawer, StudentDawer },
   methods: {
     // 获取年级列表
     async getGradeList() {
@@ -174,6 +190,18 @@ export default {
           this.closeDialog()
         }
       })
+    },
+
+    // 显示教师抽屉
+    showTeacherDawer(row) {
+      this.row = row
+      this.$refs.TeacherDawer.drawer = true
+    },
+
+    // 显示班级抽屉
+    showClassDawer(row) {
+      this.row = row
+      this.$refs.StudentDawer.drawer = true
     }
   }
 }
@@ -191,5 +219,9 @@ export default {
 }
 .warning {
   color: #dc143c;
+}
+.change-btn {
+  color: #409eff;
+  cursor: pointer;
 }
 </style>

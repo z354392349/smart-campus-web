@@ -36,21 +36,11 @@ export const deleteStudent = (data) => {
   })
 }
 
-// 批量修改学习年级班级
-// 更新学生
+// 批量修改学生年级班级
+
 export const setStudentsGradeAndClass = (data) => {
   return service({
     url: '/student/setStudentsGradeAndClass',
-    method: 'put',
-    data
-  })
-}
-
-// 批量修改学习年级班级
-// 更新学生
-export const setClassMonitor = (data) => {
-  return service({
-    url: '/student/setClassMonitor',
     method: 'put',
     data
   })

@@ -26,8 +26,8 @@
     <el-table :data="tableData" border :stripe="true" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column label="学生姓名" prop="name" />
-      <el-table-column label="年级" prop="grade.name" />
-      <el-table-column label="班级" prop="class.name" />
+      <el-table-column label="年级" prop="gradeName" />
+      <el-table-column label="班级" prop="className" />
       <el-table-column label="性别" prop="sex">
         <template v-slot="scope">{{ scope.row.sex == 1 ? '男' : '女' }}</template>
       </el-table-column>
@@ -117,7 +117,7 @@
 
 <script>
 import moment from 'moment'
-import { createtStudent, upStudent, getStudentList, deleteStudent, setStudentsGradeAndClass, setClassMonitor } from '@/api/student'
+import { createtStudent, upStudent, getStudentList, deleteStudent, setStudentsGradeAndClass } from '@/api/student'
 import { getClassList } from '@/api/class'
 import { getGradeList } from '@/api/grade'
 import infoList from '@/mixins/infoList'
@@ -176,7 +176,6 @@ export default {
     this.getTableData()
     this.getClassList()
     this.getGradeList()
-    this.setClassMonitor({ classID: 1, studentID: 1 })
   },
   methods: {
     unixTimeToAge,
