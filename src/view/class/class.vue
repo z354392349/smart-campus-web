@@ -131,13 +131,15 @@ export default {
     },
 
     initForm() {
-      this.$refs.form.resetFields()
       this.form = {
         name: '',
         gradeID: '',
         teacherID: '',
         description: ''
       }
+      this.$nextTick(() => {
+        this.$refs.form.clearValidate()
+      })
     },
 
     closeDialog() {

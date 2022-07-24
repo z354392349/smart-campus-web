@@ -186,7 +186,6 @@ export default {
     },
 
     initForm() {
-      this.$refs.form.resetFields()
       this.form = {
         id: '',
         name: '',
@@ -197,6 +196,9 @@ export default {
         telephone: '',
         description: ''
       }
+      this.$nextTick(() => {
+        this.$refs.form.clearValidate()
+      })
     },
     closeDialog() {
       this.initForm()

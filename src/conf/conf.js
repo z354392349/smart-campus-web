@@ -3,8 +3,8 @@ export default {
     // 4. 添加实例方法
     Vue.prototype.$conf = {
       minDialogWidth: '500px',
-      mediumDialogWidth: '500px',
-      maxDialogWidth: '800px'
+      mediumDialogWidth: '700px',
+      maxDialogWidth: '900px'
     }
   }
 }

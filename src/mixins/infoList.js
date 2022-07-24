@@ -36,6 +36,7 @@ export default {
         this.pageSize = table.data.pageSize
       }
     },
+
     deleteTableData(name, api, params) {
       this.$confirm(`此操作将永久删除 ${name} , 是否继续?`, '提示', {
         confirmButtonText: '确定',

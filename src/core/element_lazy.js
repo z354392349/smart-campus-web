@@ -60,7 +60,9 @@ import {
   Progress,
   MessageBox,
   Image,
-  ColorPicker
+  ColorPicker,
+  TimePicker,
+  TimeSelect
 } from 'element-ui'
 
 Vue.use(Button)
@@ -114,6 +116,8 @@ Vue.use(Scrollbar)
 Vue.use(Loading.directive)
 Vue.use(Image)
 Vue.use(ColorPicker)
+Vue.use(TimePicker)
+Vue.use(TimeSelect)
 Vue.prototype.$loading = Loading.service
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

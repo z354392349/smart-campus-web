@@ -77,11 +77,13 @@ export default {
   },
   methods: {
     initForm() {
-      this.$refs.form.resetFields()
       this.form = {
         name: '',
         description: ''
       }
+      this.$nextTick(() => {
+        this.$refs.form.clearValidate()
+      })
     },
     closeDialog() {
       this.initForm()

@@ -37,7 +37,6 @@ export const deleteStudent = (data) => {
 }
 
 // 批量修改学生年级班级
-
 export const setStudentsGradeAndClass = (data) => {
   return service({
     url: '/student/setStudentsGradeAndClass',

@@ -2,8 +2,8 @@
   <div>
     <div class="search-term">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
-        <el-form-item label="教师">
-          <el-input v-model="searchInfo.name" placeholder="请输入学生姓名" />
+        <el-form-item label="考试考试名称">
+          <el-input v-model="searchInfo.name" placeholder="请输入考试名称" />
         </el-form-item>
         <el-form-item>
           <el-button size="mini" type="primary" icon="el-icon-search" @click="getTableData()">查询</el-button>
@@ -12,22 +12,18 @@
       </el-form>
     </div>
     <el-table :data="tableData" border :stripe="true">
-      <el-table-column label="学生姓名" prop="name" />
-      <el-table-column label="性别" prop="sex">
-        <template v-slot="scope">{{ scope.row.sex == 1 ? '男' : '女' }}</template>
+      <el-table-column label="考试名称" prop="name" />
+      <el-table-column label="年级" prop="grade.name" />
+      <el-table-column label="科目">
+        <template v-slot="scope">{{ scope.row.examItem.map((n) => n.courseName).join(',') }}</template>
       </el-table-column>
-      <el-table-column label="生日" prop="birthday">
-        <template v-slot="scope">{{ unixTimeFormat(scope.row.birthday) }}</template>
-      </el-table-column>
-      <el-table-column label="年龄">
-        <template v-slot="scope">{{ unixTimeToAge(scope.row.birthday) }}</template>
-      </el-table-column>
-      <el-table-column label="手机号码" prop="telephone" />
-
+      <el-table-column label="未分配考场" prop="description" />
       <el-table-column label="备注" prop="description" />
-      <el-table-column label="操作">
+      <el-table-column label="操作" width="340px">
         <template slot-scope="scope">
           <el-button size="small" type="primary" icon="el-icon-edit" @click="editExam(scope.row)">编辑</el-button>
+          <el-button size="small" type="primary" icon="el-icon-house" @click="showAffairsDialog(scope.row)">分配考场</el-button>
+          <el-button size="small" type="primary" icon="el-icon-tickets" @click="editExam(scope.row)">详情</el-button>
           <el-button size="small" type="danger" icon="el-icon-delete" @click="deleteExam(scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -43,22 +39,26 @@
       @size-change="handleSizeChange"
     />
 
-    <!-- { name: '张三', sex: 1, birthday: 1657468800, telephone: '13651196456', description: '' } -->
-    <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :width="$conf.minDialogWidth">
+    <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :width="$conf.mediumDialogWidth">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px" class="dialog-form">
-        <el-form-item label="姓名" prop="name">
-          <el-input v-model="form.name" autocomplete="off" placeholder="请输入学生姓名" />
+        <el-form-item label="考试名称" prop="name">
+          <el-input v-model="form.name" autocomplete="off" placeholder="请输入考试名称" />
         </el-form-item>
-        <el-form-item label="性别" prop="sex">
-          <el-radio v-model="form.sex" :label="1">男</el-radio>
-          <el-radio v-model="form.sex" :label="2">女</el-radio>
+        <el-form-item label="年级" prop="gradeID">
+          <el-select v-model="form.gradeID" placeholder="请选择年级">
+            <el-option v-for="n in gradeList" :key="n.ID" :label="n.name" :value="n.ID" />
+          </el-select>
         </el-form-item>
-        <el-form-item label="生日" prop="birthday">
-          <el-date-picker v-model="form.birthday" type="date" value-format="timestamp" placeholder="请选择生日" />
+
+        <el-form-item label="科目">
+          <div class="examItem" v-for="(n, i) in form.examItem" :key="'q' + i">
+            <el-checkbox class="examItem__checkbox" v-model="n.check">{{ n.courseName }}</el-checkbox>
+            <el-date-picker class="examItem__date" v-model="n.date" value-format="timestamp" type="date" placeholder="选择日期"></el-date-picker>
+            <el-time-select class="examItem__time" placeholder="起始时间" v-model="n.startTime" :picker-options="{ start: '08:00', step: '00:15', end: '20:00' }"></el-time-select>
+            <el-time-select class="examItem__time" placeholder="结束时间" v-model="n.endTime" :picker-options="{ start: '08:00', step: '00:15', end: '20:00', minTime: n.startTime }"></el-time-select>
+          </div>
         </el-form-item>
-        <el-form-item label="手机号码" prop="telephone">
-          <el-input v-model="form.telephone" autocomplete="off" placeholder="请输入家长手机号码" />
-        </el-form-item>
+
         <el-form-item label="备注">
           <el-input v-model="form.description" autocomplete="off" placeholder="请输入备注" />
         </el-form-item>
@@ -68,90 +68,85 @@
         <el-button type="primary" @click="enterDialog">确 定</el-button>
       </div>
     </el-dialog>
+
+    <AffairsDialog :row="row" ref="AffairsDialog" />
   </div>
 </template>
 
 <script>
 import moment from 'moment'
 import { createtExam, upExam, getExamList, deleteExam } from '@/api/exam'
+import { getGradeList } from '@/api/grade'
+import { getCourseList } from '@/api/course'
 import infoList from '@/mixins/infoList'
 import { copyObj, unixTimeToAge, unixTimeFormat } from '@/utils/tool.js'
-import { telephoneRE } from '@/utils/regexp.js'
-
+import AffairsDialog from './components/affairsDialog'
 export default {
   name: 'Grade',
-
   mixins: [infoList],
+
   data() {
     return {
+      checked: '',
+      value1: 1,
+      startTime: '',
+      endTime: '',
       listApi: getExamList,
       dialogFormVisible: false,
       dialogTitle: '发布考试',
       form: {
         id: '',
         name: '',
+        gradeID: '',
         description: '',
-        sex: 1,
-        birthday: '',
-        telephone: ''
+        examItem: []
       },
       type: '',
       rules: {
-        name: [{ required: true, message: '请输入学生姓名', trigger: 'blur' }],
-        sex: [{ required: true, message: '请选择性别', trigger: 'blur' }],
-        birthday: [{ required: true, message: '请选择生日', trigger: 'blur' }],
-        telephone: [
-          { required: true, message: '请输入家长手机号码', trigger: 'blur' },
-          { pattern: telephoneRE, message: '手机号格式不正确', trigger: 'blur' }
-        ]
-      }
+        name: [{ required: true, message: '请输入考试名称', trigger: 'blur' }],
+        gradeID: [{ required: true, message: '请选择年级', trigger: 'change' }]
+      },
+      gradeList: [],
+      courseList: [],
+      examItem: [], // 这个是备份的，未修改的
+      row: null
     }
   },
-  created() {
-    this.getTableData()
-    // let examItem = [
-    //   {
-    //     endTime: 22,
-    //     startTime: 22,
-    //     courseID: 1
-    //   },
-    //   {
-    //     // ID: 2,
-    //     endTime: 11,
-    //     startTime: 11,
-    //     courseID: 2
-    //   }
-    // ]
-    // let pa = { name: 'xx1123', gradeID: '1,2,3,4', examItem, description: 12 }
-    // let pa = { id: 1, name: 'xx11111123', gradeID: '1,2,3,4', examItem, description: 121 }
-    // createtExam(pa)
-    // upExam(pa)
-    // deleteExam({})
-    // deleteExam({ id: 1 })
-  },
+
   methods: {
     unixTimeToAge,
     unixTimeFormat,
+
     // 根据时间戳计算年龄
     countAge(birthday) {
       return moment().diff(moment.unix(birthday), 'years')
     },
 
+    // 初始化 form
     initForm() {
-      this.$refs.form.resetFields()
-      this.form = {
+      let form = {
         id: '',
         name: '',
+        gradeID: '',
         description: '',
-        sex: 1,
-        birthday: '',
-        telephone: ''
+        examItem: copyObj(this.examItem)
       }
+
+      this.form = form
+      this.$nextTick(() => {
+        this.$refs.form.clearValidate()
+      })
+      console.log('zx', this.form)
+      console.log('this.examItem', this.examItem)
     },
+
+    // 关闭弹窗
     closeDialog() {
       this.initForm()
       this.dialogFormVisible = false
     },
+
+    //  打开 考试创建,编辑弹窗
     openDialog(type) {
       switch (type) {
         case 'add':
@@ -167,45 +162,142 @@ export default {
       this.dialogFormVisible = true
     },
 
+    // 编辑考试
     async editExam(row) {
       row = copyObj(row)
+      let examItem = row.examItem
       for (const key in this.form) {
-        if (key == 'birthday') row[key] = row[key] * 1000
-        this.form[key] = row[key]
+        if (key != 'examItem') {
+          this.form[key] = row[key]
+        }
       }
+      examItem.forEach((n) => {
+        let findI = this.form.examItem.findIndex((x) => x.courseID == n.courseID)
+        this.form.examItem[findI].ID = n.ID
+        this.form.examItem[findI].check = true
+        this.form.examItem[findI].date = moment.unix(n.startTime).valueOf()
+        this.form.examItem[findI].startTime = unixTimeFormat(n.startTime, 'HH:mm')
+        this.form.examItem[findI].endTime = unixTimeFormat(n.endTime, 'HH:mm')
+      })
       this.form.id = row.ID
       this.openDialog('edit')
     },
 
+    // 删除考试
     async deleteExam(row) {
       this.deleteTableData(row.name, deleteExam, { id: row.ID })
     },
 
+    // 将前台格式整理为 服务器端 格式
+    formatFormToServe() {
+      let form = copyObj(this.form)
+      console.log(form)
+      let examItem = []
+      form.examItem.forEach((n) => {
+        if (n.check) {
+          n.startTime = moment(n.date).set('hour', n.startTime.split(':')[0]).set('minute', n.startTime.split(':')[1]).unix()
+          n.endTime = moment(n.date).set('hour', n.endTime.split(':')[0]).set('minute', n.endTime.split(':')[1]).unix()
+          examItem.push(n)
+        }
+      })
+      form.examItem = examItem
+      return form
+    },
+
+    // 检查考试项填写是否规范
+    checkExamItem() {
+      let form = copyObj(this.form)
+      let examItem = form.examItem
+      let checkFail, checkFailName
+      examItem = examItem.filter((n) => n.check)
+      if (examItem.length == 0) {
+        this.$message.warning('请至少选择一个科目')
+        return false
+      }
+
+      checkFail = examItem.filter((n) => n.date == '' || n.startTime == 0 || n.endTime == 0)
+      if (checkFail.length !== 0) {
+        checkFailName = checkFail.map((n) => n.courseName)
+        this.$message.warning(checkFailName.join(',') + '信息填写不完整')
+        return false
+      }
+
+      checkFail = examItem.filter((n) => n.startTime > n.endTime)
+      if (checkFail.length !== 0) {
+        checkFailName = checkFail.map((n) => n.courseName)
+        this.$message.warning(checkFailName.join(',') + '时间填写不正确')
+        return false
+      }
+
+      return true
+    },
+
+    // 提交表单
     async enterDialog() {
       this.$refs.form.validate(async (valid) => {
-        if (valid) {
-          let form = copyObj(this.form)
-          form.birthday = parseInt(form.birthday / 1000)
+        if (valid && this.checkExamItem()) {
+          let form = this.formatFormToServe()
+          console.log(form)
           if (this.type === 'add') {
             delete form.id
             const res = await createtExam(form)
 
             if (res.code === 0) {
               this.$message.success('添加成功')
-              this.getTableData()
             }
           } else {
             const res = await upExam(form)
             if (res.code === 0) {
               this.$message.success('编辑成功')
-              this.getTableData()
             }
           }
           this.closeDialog()
           this.getTableData()
         }
       })
+    },
+
+    // 获取年级列表
+    async getGradeList() {
+      let res = await getGradeList()
+      let list = res.data.list
+      this.gradeList = list
+    },
+
+    // 获取课程列表
+    async getCourseList() {
+      let res = await getCourseList()
+      let list = res.data.list
+      let examItem = []
+      this.courseList = list
+
+      list.forEach((n) => {
+        examItem.push({
+          check: false,
+          courseID: n.ID,
+          courseName: n.name,
+          date: '',
+          startTime: 0,
+          endTime: 0
+        })
+      })
+      this.form.examItem = examItem
+      this.examItem = copyObj(examItem)
+    },
+
+    // 显示分配考场弹窗
+    showAffairsDialog(row) {
+      console.log(row)
+      this.row = row
+      this.$refs.AffairsDialog.dialogFormVisible = true
     }
+  },
+
+  components: { AffairsDialog },
+  created() {
+    this.getTableData()
+    this.getGradeList()
+    this.getCourseList()
   }
 }
 </script>
@@ -222,5 +314,16 @@ export default {
 }
 .warning {
   color: #dc143c;
+}
+.examItem {
+  display: flex;
+  .examItem__checkbox,
+  .examItem__date,
+  .examItem__time {
+    margin-right: 10px;
+  }
+  .examItem__time:last-child {
+    margin-right: 0px;
+  }
 }
 </style>

@@ -14,6 +14,7 @@
     <el-table :data="tableData" border :stripe="true">
       <el-table-column label="考场名称" prop="name" />
       <el-table-column label="考场地址" prop="address" />
+      <el-table-column label="座位数" prop="amount" />
       <el-table-column label="备注" prop="description" />
       <el-table-column label="操作">
         <template slot-scope="scope">
@@ -40,6 +41,9 @@
         </el-form-item>
         <el-form-item label="考场地址" prop="address">
           <el-input v-model="form.address" autocomplete="off" placeholder="请输入考场地址" />
+        </el-form-item>
+        <el-form-item label="座位数" prop="amount">
+          <el-input v-model.number="form.amount" autocomplete="off" placeholder="请输入座位数" />
         </el-form-item>
         <el-form-item label="备注">
           <el-input v-model="form.description" autocomplete="off" placeholder="请选择输入备注" />
@@ -69,30 +73,30 @@ export default {
       form: {
         name: '',
         address: '',
+        amount: '',
         description: ''
       },
       type: '',
       rules: {
         name: [{ required: true, message: '请输入考场名称', trigger: 'blur' }],
+        amount: [{ required: true, message: '请输入考场座位数', trigger: 'blur' }],
         address: [{ required: true, message: '请输入考场地址', trigger: 'blur' }]
       }
     }
   },
   created() {
     this.getTableData()
-    // let p = { id: 1, name: 'tx1', description: '' }
-    // createExamRoom(p)
-    // upExamRoom(p)
-    // deleteExamRoom({ id: 1 })
   },
   methods: {
     initForm() {
-      this.$refs.form.resetFields()
       this.form = {
         name: '',
         address: '',
         description: ''
       }
+      this.$nextTick(() => {
+        this.$refs.form.clearValidate()
+      })
     },
     closeDialog() {
       this.initForm()
@@ -116,6 +120,7 @@ export default {
       this.form.id = row.ID
       this.form.name = row.name
       this.form.address = row.address
+      this.form.amount = row.amount
       this.form.description = row.description
 
       this.openDialog('edit')
