@@ -35,3 +35,12 @@ export const deleteExamRoom = (data) => {
     data
   })
 }
+
+// 设置监考老师
+export const upExamRoomTeacher = (data) => {
+  return service({
+    url: '/examRoom/setExamRoomTeacher',
+    method: 'put',
+    data
+  })
+}

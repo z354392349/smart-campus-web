@@ -21,7 +21,7 @@
       <el-table-column label="班级" prop="name" />
       <el-table-column label="班主任" prop="teacher.name">
         <template v-slot="scope">
-          <span @click="showTeacherDawer(scope.row)" class="change-btn">{{ scope.row.teacher.name || '选择班主任' }}</span>
+          <span @click="showTeacherDawer(scope.row)" class="change-btn">{{ scope.row.teacher ? scope.row.teacher.name : '选择班主任' }}</span>
         </template>
       </el-table-column>
       <el-table-column label="班长" prop="student.name">
@@ -72,7 +72,7 @@
         <el-button type="primary" @click="enterDialog">确 定</el-button>
       </div>
     </el-dialog>
-    <TeacherDawer ref="TeacherDawer" :row="row" />
+    <TeacherDawer ref="TeacherDawer" :row="row" @choice="choiceTeacher" title="选择班主任" />
     <StudentDawer ref="StudentDawer" :row="row" />
   </div>
 </template>
@@ -80,8 +80,8 @@
 <script>
 import { getGradeList } from '@/api/grade'
 import { getTeacherList } from '@/api/teacher'
-import { getClassList, createClass, upClass, deleteClass } from '@/api/class'
-import TeacherDawer from './components/TeacherDawer.vue'
+import { getClassList, createClass, upClass, deleteClass, setClassTeacher } from '@/api/class'
+import TeacherDawer from '@/components/dawer/TeacherDawer.vue'
 import StudentDawer from './components/StudentDawer.vue'
 import infoList from '@/mixins/infoList'
 
@@ -204,6 +204,15 @@ export default {
     showClassDawer(row) {
       this.row = row
       this.$refs.StudentDawer.drawer = true
+    },
+
+    // 选择教师
+    async choiceTeacher(teacherID) {
+      let res = await setClassTeacher({ teacherID: teacherID, classID: this.row.ID })
+      if (res.code === 0) {
+        this.$message.success('设置成功')
+        this.getTableData()
+      }
     }
   }
 }

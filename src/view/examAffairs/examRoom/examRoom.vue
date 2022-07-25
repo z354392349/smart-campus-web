@@ -15,6 +15,12 @@
       <el-table-column label="考场名称" prop="name" />
       <el-table-column label="考场地址" prop="address" />
       <el-table-column label="座位数" prop="amount" />
+      <el-table-column label="监考老师" prop="amount">
+        <template slot-scope="scope">
+          <span @click="showTeacherDawer(scope.row)" class="change-btn">{{ scope.row.teacher ? scope.row.teacher.name : '选择班主任' }}</span>
+        </template>
+      </el-table-column>
+
       <el-table-column label="备注" prop="description" />
       <el-table-column label="操作">
         <template slot-scope="scope">
@@ -54,11 +60,14 @@
         <el-button type="primary" @click="enterDialog">确 定</el-button>
       </div>
     </el-dialog>
+
+    <TeacherDawer ref="TeacherDawer" @choice="choiceTeacher" title="选择监考老师" :row="row" />
   </div>
 </template>
 
 <script>
-import { getExamRoomList, createExamRoom, upExamRoom, deleteExamRoom } from '@/api/examRoom'
+import { getExamRoomList, createExamRoom, upExamRoom, deleteExamRoom, upExamRoomTeacher } from '@/api/examRoom'
+import TeacherDawer from '@/components/dawer/TeacherDawer.vue'
 import infoList from '@/mixins/infoList'
 
 export default {
@@ -76,6 +85,7 @@ export default {
         amount: '',
         description: ''
       },
+      row: null,
       type: '',
       rules: {
         name: [{ required: true, message: '请输入考场名称', trigger: 'blur' }],
@@ -84,10 +94,13 @@ export default {
       }
     }
   },
+  components: { TeacherDawer },
+
   created() {
     this.getTableData()
   },
   methods: {
+    // 初始化 form
     initForm() {
       this.form = {
         name: '',
@@ -98,10 +111,14 @@ export default {
         this.$refs.form.clearValidate()
       })
     },
+
+    // 关闭弹窗
     closeDialog() {
       this.initForm()
       this.dialogFormVisible = false
     },
+
+    // 打开创建,编辑弹窗
     openDialog(type) {
       switch (type) {
         case 'add':
@@ -116,6 +133,8 @@ export default {
       this.type = type
       this.dialogFormVisible = true
     },
+
+    // 编辑考场数据准备
     async editExamRoom(row) {
       this.form.id = row.ID
       this.form.name = row.name
@@ -125,10 +144,13 @@ export default {
 
       this.openDialog('edit')
     },
+
+    // 删除考场
     async deleteExamRoom(row) {
       this.deleteTableData(row.name, deleteExamRoom, { id: row.ID })
     },
 
+    // 提交表单
     async enterDialog() {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
@@ -148,6 +170,21 @@ export default {
           this.closeDialog()
         }
       })
+    },
+
+    // 显示教师抽屉
+    showTeacherDawer(row) {
+      this.row = row
+      this.$refs.TeacherDawer.drawer = true
+    },
+
+    // 选择监考考
+    async choiceTeacher(teacherID) {
+      let res = await upExamRoomTeacher({ teacherID: teacherID, examRoomID: this.row.ID })
+      if (res.code === 0) {
+        this.$message.success('设置成功')
+        this.getTableData()
+      }
     }
   }
 }
@@ -165,5 +202,9 @@ export default {
 }
 .warning {
   color: #dc143c;
+}
+.change-btn {
+  color: #409eff;
+  cursor: pointer;
 }
 </style>

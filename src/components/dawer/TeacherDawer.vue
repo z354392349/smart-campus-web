@@ -1,5 +1,5 @@
 <template>
-  <el-drawer title="选择班主任" :visible.sync="drawer" size="1400px">
+  <el-drawer :title="title" :visible.sync="drawer" size="1400px">
     <div class="drawer-content">
       <div class="search-term">
         <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
@@ -49,36 +49,22 @@
 <script>
 import moment from 'moment'
 import { getTeacherList } from '@/api/teacher'
-import { setClassTeacher } from '@/api/class'
-import { getCourseList } from '@/api/course'
 import { unixTimeToAge, unixTimeFormat } from '@/utils/tool.js'
 
 import infoList from '@/mixins/infoList'
 
 export default {
-  props: ['row'],
+  props: ['row', 'title'],
   name: 'Grade',
   mixins: [infoList],
   data() {
     return {
       drawer: false,
-      listApi: getTeacherList,
-      form: {
-        id: '',
-        name: '',
-        description: '',
-        sex: 1,
-        courseID: '',
-        birthday: '',
-        telephone: ''
-      },
-
-      courseList: []
+      listApi: getTeacherList
     }
   },
   created() {
     this.getTableData()
-    this.getCourseList()
   },
   methods: {
     unixTimeToAge,
@@ -88,22 +74,10 @@ export default {
       return moment().diff(moment.unix(birthday), 'years')
     },
 
-    // 获取课程列表
-    async getCourseList() {
-      let res = await getCourseList()
-      this.courseList = res.data.list
-    },
-
-    // 选择班主任
+    // 选择教师
     async choiceTeacher(teacher) {
-      let params = { classID: this.row.ID, teacherID: teacher.ID }
-      let res = await setClassTeacher(params)
-      if (res.code === 0) {
-        this.$message.success('修改成功')
-        this.drawer = false
-        this.$parent.getTableData()
-      }
-      console.log(res)
+      this.$emit('choice', teacher.ID)
+      this.drawer = false
     }
   }
 }

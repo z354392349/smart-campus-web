@@ -146,7 +146,7 @@ export default {
       this.dialogFormVisible = false
     },
 
-    //  打开 考试创建,编辑弹窗
+    // 打开考试创建,编辑弹窗
     openDialog(type) {
       switch (type) {
         case 'add':
@@ -162,7 +162,7 @@ export default {
       this.dialogFormVisible = true
     },
 
-    // 编辑考试
+    // 编辑考试数据准备
     async editExam(row) {
       row = copyObj(row)
       let examItem = row.examItem
