@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :width="$conf.mediumDialogWidth">
+    <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :width="$conf.mediumDialogWidth" @open="open">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px" class="dialog-form" v-if="row">
         <el-form-item label="考试名称">
           <el-input v-model="row.name" :disabled="true" autocomplete="off" placeholder="请输入考试名称" />
@@ -14,10 +14,9 @@
         </el-form-item>
 
         <el-form-item label="考场">
-          <el-checkbox-group v-model="form.checkList">
-            <el-checkbox v-for="(n, i) in examRoomList" :label="n.name" :key="'q' + i">{{ n.name + '-' + n.amount + '座' }}</el-checkbox>
+          <el-checkbox-group v-model="form.examRoomList">
+            <el-checkbox v-for="(n, i) in examRoomList" :label="n.ID" :key="'q' + i">{{ n.name + '-' + n.amount + '座' }}</el-checkbox>
           </el-checkbox-group>
-          <!-- <el-radio v-for="(n, i) in examRoomList" v-model="form.name" :label="n.ID" :key="'q' + i">{{ n.name }}</el-radio> -->
         </el-form-item>
 
         <el-form-item label="备注">
@@ -35,6 +34,7 @@
 <script>
 import { getCourseList } from '@/api/course'
 import { getExamRoomList } from '@/api/examRoom'
+import { upExamItemRoomAllot } from '@/api/examItem'
 import { unixTimeFormat } from '@/utils/tool.js'
 export default {
   props: ['row'],
@@ -45,7 +45,7 @@ export default {
       rules: {},
       form: {
         crouseID: '',
-        checkList: []
+        examRoomList: []
       },
       gourseList: [], // 考试科目
       examRoomList: [] // 考场列表
@@ -70,6 +70,14 @@ export default {
 
     async enterDialog() {
       this.$refs.form.validate(async (valid) => {
+        let params = {
+          examID: this.row.ID, // 考试ID
+          examItemID: this.form.crouseID, // // 考试项ID
+          gradeID: this.row.gradeID, // 年级 ID
+          examRoomIDs: this.form.examRoomList.join(',') // 考场号ID, 用,分割
+        }
+        let res = await upExamItemRoomAllot(params)
+        console.log(res)
         // if (valid && this.checkExamItem()) {
         //   let form = this.formatFormToServe()
         //   console.log(form)
@@ -91,6 +99,12 @@ export default {
       })
     },
 
+    // 弹窗打开前的回调
+    open() {
+      this.row.examItem = this.row.examItem.filter()
+    },
+
+    // 关闭弹窗
     closeDialog() {
       this.dialogFormVisible = false
     },
@@ -129,6 +143,7 @@ export default {
   created() {
     this.getCourseList()
     this.getExamRoomList()
+    console.log(this.row, 'row')
   }
 }
 </script>

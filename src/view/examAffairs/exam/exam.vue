@@ -287,7 +287,7 @@ export default {
 
     // 显示分配考场弹窗
     showAffairsDialog(row) {
-      console.log(row)
+      console.log(row, 'tow')
       this.row = row
       this.$refs.AffairsDialog.dialogFormVisible = true
     }
