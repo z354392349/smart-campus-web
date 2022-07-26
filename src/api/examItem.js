@@ -1,9 +1,18 @@
 import service from '@/utils/request'
 
-// 更新考试
-export const upExamItemRoomAllot = (data) => {
+// 考试项分配考场
+export const allotExamItemRoom = (data) => {
   return service({
-    url: '/examItem/upExamItemRoomAllot',
+    url: '/examItem/allotExamItemRoom',
+    method: 'put',
+    data
+  })
+}
+
+// 取消考试项的 考场分配
+export const cancelAllotExamItemRoom = (data) => {
+  return service({
+    url: '/examItem/cancelAllotExamItemRoom',
     method: 'put',
     data
   })

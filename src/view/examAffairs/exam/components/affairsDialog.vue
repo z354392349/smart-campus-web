@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :width="$conf.mediumDialogWidth" @open="open">
+      <el-button @click="cancelAllotExamItemRoom">123</el-button>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px" class="dialog-form" v-if="row">
         <el-form-item label="考试名称">
           <el-input v-model="row.name" :disabled="true" autocomplete="off" placeholder="请输入考试名称" />
@@ -34,7 +35,7 @@
 <script>
 import { getCourseList } from '@/api/course'
 import { getExamRoomList } from '@/api/examRoom'
-import { upExamItemRoomAllot } from '@/api/examItem'
+import { allotExamItemRoom, cancelAllotExamItemRoom } from '@/api/examItem'
 import { unixTimeFormat } from '@/utils/tool.js'
 export default {
   props: ['row'],
@@ -76,7 +77,7 @@ export default {
           gradeID: this.row.gradeID, // 年级 ID
           examRoomIDs: this.form.examRoomList.join(',') // 考场号ID, 用,分割
         }
-        let res = await upExamItemRoomAllot(params)
+        let res = await allotExamItemRoom(params)
         console.log(res)
         // if (valid && this.checkExamItem()) {
         //   let form = this.formatFormToServe()
@@ -131,6 +132,9 @@ export default {
       endTime = unixTimeFormat(endTime, 'YYYY-MM-DD HH:mm:ss')
 
       return `开始时间:${startTime}  结束时间:${endTime}`
+    },
+    cancelAllotExamItemRoom() {
+      cancelAllotExamItemRoom({ examItemID: 9 })
     }
   },
 
