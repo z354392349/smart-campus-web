@@ -9,7 +9,7 @@
 
         <el-form-item label="科目">
           <el-tooltip effect="dark" placement="top" v-for="(n, i) in row.examItem" :key="'q' + i">
-            <div slot="content">{{ tooltipContent(n) }}</div>
+            <div slot="content" v-html="tooltipContent(n)"></div>
             <el-radio v-model="form.crouseID" :label="n.ID">{{ n.courseName }}</el-radio>
           </el-tooltip>
         </el-form-item>
@@ -131,7 +131,7 @@ export default {
       startTime = unixTimeFormat(startTime, 'YYYY-MM-DD HH:mm:ss')
       endTime = unixTimeFormat(endTime, 'YYYY-MM-DD HH:mm:ss')
 
-      return `开始时间:${startTime}  结束时间:${endTime}`
+      return `开始时间: ${startTime} <br/> 结束时间: ${endTime}`
     },
     cancelAllotExamItemRoom() {
       cancelAllotExamItemRoom({ examItemID: 9 })
