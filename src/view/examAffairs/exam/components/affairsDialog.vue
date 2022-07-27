@@ -1,20 +1,20 @@
 <template>
   <div>
     <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :width="$conf.mediumDialogWidth" @open="open">
-      <el-button @click="cancelAllotExamItemRoom">123</el-button>
+      <!-- <el-button @click="cancelAllotExamItemRoom">123</el-button> -->
       <el-form ref="form" :model="form" :rules="rules" label-width="80px" class="dialog-form" v-if="row">
         <el-form-item label="考试名称">
           <el-input v-model="row.name" :disabled="true" autocomplete="off" placeholder="请输入考试名称" />
         </el-form-item>
 
-        <el-form-item label="科目">
-          <el-tooltip effect="dark" placement="top" v-for="(n, i) in row.examItem" :key="'q' + i">
+        <el-form-item label="科目" prop="crouseID">
+          <el-tooltip effect="dark" placement="top" v-for="(n, i) in row.examItem.filter((n) => n.examRoomIDs == '')" :key="'q' + i">
             <div slot="content" v-html="tooltipContent(n)"></div>
             <el-radio v-model="form.crouseID" :label="n.ID">{{ n.courseName }}</el-radio>
           </el-tooltip>
         </el-form-item>
 
-        <el-form-item label="考场">
+        <el-form-item label="考场" prop="examRoomList">
           <el-checkbox-group v-model="form.examRoomList">
             <el-checkbox v-for="(n, i) in examRoomList" :label="n.ID" :key="'q' + i">{{ n.name + '-' + n.amount + '座' }}</el-checkbox>
           </el-checkbox-group>
@@ -43,7 +43,10 @@ export default {
     return {
       dialogTitle: '分配考场',
       dialogFormVisible: false,
-      rules: {},
+      rules: {
+        examRoomList: [{ required: true, message: '请选择考场', trigger: 'change' }],
+        crouseID: [{ required: true, message: '请选择科目', trigger: 'change' }]
+      },
       form: {
         crouseID: '',
         examRoomList: []
@@ -69,40 +72,34 @@ export default {
       })
     },
 
+    formatFormToServe() {
+      let form = {
+        examID: this.row.ID, // 考试ID
+        examItemID: this.form.crouseID, // // 考试项ID
+        gradeID: this.row.gradeID, // 年级 ID
+        examRoomIDs: this.form.examRoomList.join(',') // 考场号ID, 用,分割
+      }
+      return form
+    },
+
     async enterDialog() {
       this.$refs.form.validate(async (valid) => {
-        let params = {
-          examID: this.row.ID, // 考试ID
-          examItemID: this.form.crouseID, // // 考试项ID
-          gradeID: this.row.gradeID, // 年级 ID
-          examRoomIDs: this.form.examRoomList.join(',') // 考场号ID, 用,分割
+        if (valid) {
+          let form = this.formatFormToServe()
+          const res = await allotExamItemRoom(form)
+          if (res.code === 0) {
+            this.$message.success('考场分配成功')
+          }
+          this.closeDialog()
+          this.$parent.getTableData()
         }
-        let res = await allotExamItemRoom(params)
-        console.log(res)
-        // if (valid && this.checkExamItem()) {
-        //   let form = this.formatFormToServe()
-        //   console.log(form)
-        //   if (this.type === 'add') {
-        //     delete form.id
-        //     const res = await createtExam(form)
-        //     if (res.code === 0) {
-        //       this.$message.success('添加成功')
-        //     }
-        //   } else {
-        //     const res = await upExam(form)
-        //     if (res.code === 0) {
-        //       this.$message.success('编辑成功')
-        //     }
-        //   }
-        //   this.closeDialog()
-        //   this.getTableData()
-        // }
       })
     },
 
     // 弹窗打开前的回调
     open() {
-      this.row.examItem = this.row.examItem.filter()
+      console.log(this.row.examItem, 'this.row.examItem ')
+      // this.row.examItem = this.row.examItem
     },
 
     // 关闭弹窗
@@ -130,7 +127,6 @@ export default {
       let { startTime, endTime } = data
       startTime = unixTimeFormat(startTime, 'YYYY-MM-DD HH:mm:ss')
       endTime = unixTimeFormat(endTime, 'YYYY-MM-DD HH:mm:ss')
-
       return `开始时间: ${startTime} <br/> 结束时间: ${endTime}`
     },
     cancelAllotExamItemRoom() {

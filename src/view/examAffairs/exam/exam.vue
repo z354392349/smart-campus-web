@@ -17,7 +17,16 @@
       <el-table-column label="科目">
         <template v-slot="scope">{{ scope.row.examItem.map((n) => n.courseName).join(',') }}</template>
       </el-table-column>
-      <el-table-column label="未分配考场" prop="description" />
+      <el-table-column label="未分配考场">
+        <template v-slot="scope">
+          {{
+            scope.row.examItem
+              .filter((n) => n.examRoomIDs == '')
+              .map((n) => n.courseName)
+              .join(',')
+          }}
+        </template>
+      </el-table-column>
       <el-table-column label="备注" prop="description" />
       <el-table-column label="操作" width="340px">
         <template slot-scope="scope">
@@ -74,6 +83,7 @@
 </template>
 
 <script>
+// TODO://撤销分配考场
 import moment from 'moment'
 import { createtExam, upExam, getExamList, deleteExam } from '@/api/exam'
 import { getGradeList } from '@/api/grade'
@@ -237,6 +247,18 @@ export default {
       this.$refs.form.validate(async (valid) => {
         if (valid && this.checkExamItem()) {
           let form = this.formatFormToServe()
+
+          form = {
+            name: '2021年6月七年级期中考试 ',
+            gradeID: 1,
+            description: '',
+            examItem: [
+              { check: true, courseID: 1, courseName: '语文', date: 1658851200000, startTime: 1658883600, endTime: 1658892600 },
+              { check: true, courseID: 2, courseName: '数学', date: 1658851200000, startTime: 1658903400, endTime: 1658912400 },
+              { check: true, courseID: 3, courseName: '英语', date: 1658937600000, startTime: 1658970000, endTime: 1658979000 },
+              { check: true, courseID: 4, courseName: '政治', date: 1658937600000, startTime: 1658989800, endTime: 1658998800 }
+            ]
+          }
           console.log(form)
           if (this.type === 'add') {
             delete form.id
