@@ -21,14 +21,14 @@
       </el-form>
     </div>
     <el-table :data="tableData" border :stripe="true">
-      <el-table-column label="学生姓名" prop="name" />
+      <el-table-column label="学生姓名" prop="studentName" />
       <el-table-column label="年级" prop="gradeName" />
       <el-table-column label="班级" prop="className" />
+      <el-table-column label="成绩" prop="result" />
       <el-table-column label="备注" prop="description" />
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="small" type="primary" icon="el-icon-edit" @click="editStudent(scope.row)">编辑</el-button>
-          <el-button size="small" type="danger" icon="el-icon-delete" @click="deleteStudent(scope.row)">删除</el-button>
+          <el-button size="small" type="primary" icon="el-icon-edit" @click="editExamResult(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -42,6 +42,7 @@
       @current-change="handleCurrentChange"
       @size-change="handleSizeChange"
     />
+    <UpExamResultDialog :row="row" ref="UpExamResultDialog" />
   </div>
 </template>
 
@@ -51,6 +52,7 @@ import { getClassList } from '@/api/class'
 import { getGradeList } from '@/api/grade'
 import infoList from '@/mixins/infoList'
 import { copyObj } from '@/utils/tool.js'
+import UpExamResultDialog from './components/upExamResultDialog'
 export default {
   name: 'Grade',
 
@@ -59,7 +61,7 @@ export default {
     return {
       listApi: getExamResultList,
       dialogTitle: '新增学生',
-
+      row: null,
       searchInfo: {
         gradeID: 0,
         classID: 0
@@ -72,11 +74,7 @@ export default {
       classFormList: []
     }
   },
-  created() {
-    this.getTableData()
-    this.getClassList()
-    this.getGradeList()
-  },
+  components: { UpExamResultDialog },
   methods: {
     // 获取班级列表
     async getClassList() {
@@ -112,7 +110,17 @@ export default {
       if (val !== 0) this.classFormList = this.classListAll.filter((n) => n.gradeID === val)
       else this.classFormList = []
       console.log(this.classFormList, 'classFormList')
+    },
+
+    editExamResult(row) {
+      this.row = row
+      this.$refs.UpExamResultDialog.dialogVisible = true
     }
+  },
+  created() {
+    this.getTableData()
+    this.getClassList()
+    this.getGradeList()
   }
 }
 </script>
