@@ -2,7 +2,7 @@
   <div>
     <div class="search-term">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
-        <el-form-item label="考试考试名称">
+        <el-form-item label="考试名称">
           <el-input v-model="searchInfo.name" placeholder="请输入考试名称" />
         </el-form-item>
         <el-form-item>
