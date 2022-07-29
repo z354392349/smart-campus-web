@@ -21,8 +21,12 @@
       </el-form>
     </div>
     <el-table :data="tableData" border :stripe="true">
-      <el-table-column label="学生姓名" prop="examID" />
-      <el-table-column label="手机号码" prop="telephone" />
+      <el-table-column label="考试名称" prop="examName" />
+      <el-table-column label="学生姓名" prop="studentName" />
+      <el-table-column label="年级" prop="gradeName" />
+      <el-table-column label="班级" prop="className" />
+      <el-table-column label="考场" prop="examRoomName" />
+      <el-table-column label="考场地址" prop="address" />
       <el-table-column label="备注" prop="description" />
     </el-table>
     <el-pagination

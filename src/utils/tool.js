@@ -15,6 +15,11 @@ export const unixTimeFormat = (timeStamp, format) => {
   return moment.unix(timeStamp).format(format)
 }
 
+// unix 时间 格式化
+export const jsTimeToUnix = (timeStamp) => {
+  return moment(timeStamp).unix()
+}
+
 // 获取随机数
 export const rand = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min)

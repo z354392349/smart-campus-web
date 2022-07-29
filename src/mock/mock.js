@@ -1,6 +1,7 @@
 let Mock = require('mockjs')
 import moment from 'moment'
-import { rand } from '@/utils/tool'
+import { rand, copyObj } from '@/utils/tool'
+import { teacherCar } from './data/teacher'
 
 // 获取模拟生日
 let getMockBirthdayUnix = (min, max) => {
@@ -99,4 +100,20 @@ export const mockStudentList = (num, data) => {
     arr.push(mockStudent(data))
   }
   return arr
+}
+
+// 模拟教师车辆通行记录
+
+export const mockCarAccess = (time, data) => {
+  const startTime = moment(time).subtract(30, 'minutes').unix()
+  const endTime = moment(time).add(15, 'minutes').unix()
+  const place = ['东门', '西门', '南门', '北门']
+  let teacherCarCopy = copyObj(teacherCar)
+  teacherCarCopy = teacherCarCopy.map((x) => {
+    x.time = rand(startTime, endTime)
+    x.place = place[rand(0, 3)]
+    return { ...x, ...data }
+  })
+
+  return teacherCarCopy
 }
