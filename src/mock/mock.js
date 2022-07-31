@@ -1,7 +1,7 @@
 let Mock = require('mockjs')
 import moment from 'moment'
 import { rand, copyObj } from '@/utils/tool'
-import { teacherCar } from './data/teacher'
+import { teacherData } from './data/teacher'
 
 // 获取模拟生日
 let getMockBirthdayUnix = (min, max) => {
@@ -114,14 +114,34 @@ export const mockCarAccess = (time, data) => {
     endTime = moment(time).add(30, 'minutes').unix()
   }
   const place = ['东门', '西门', '南门', '北门']
-  let teacherCarCopy = copyObj(teacherCar)
-  teacherCarCopy = teacherCarCopy.map((x) => {
+  let teacherCarData = copyObj(teacherData.filter((n) => n.carNum != null))
+  teacherCarData = teacherCarData.map((x) => {
     x.time = rand(startTime, endTime)
     x.place = place[rand(0, 3)]
     return { ...x, ...data }
   })
 
-  return teacherCarCopy
+  return teacherCarData
 }
 
 // 模拟教师通行记录
+export const mockTeacherAccess = (time, data) => {
+  let startTime, endTime
+  if (data.direction == 1) {
+    startTime = moment(time).subtract(30, 'minutes').unix()
+    endTime = moment(time).add(5, 'minutes').unix()
+  } else {
+    startTime = moment(time).subtract(5, 'minutes').unix()
+    endTime = moment(time).add(30, 'minutes').unix()
+  }
+  const place = ['东门', '西门', '南门', '北门']
+  let teacherDataCopy = copyObj(teacherData.filter((n) => n.carNum == null))
+
+  teacherDataCopy = teacherDataCopy.map((x) => {
+    x.time = rand(startTime, endTime)
+    x.place = place[rand(0, 3)]
+    return { ...x, ...data }
+  })
+
+  return teacherDataCopy
+}

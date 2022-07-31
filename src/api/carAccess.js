@@ -1,6 +1,6 @@
 import service from '@/utils/request'
 
-// 创建通行记录
+// 创建车辆通行记录
 export const createCarAccesss = (data) => {
   return service({
     url: '/carAccess/createCarAccess',
@@ -9,7 +9,7 @@ export const createCarAccesss = (data) => {
   })
 }
 
-// 获取通行记录
+// 获取车辆通行记录
 export const getCarAccessList = (data) => {
   return service({
     url: '/carAccess/getCarAccessList',

@@ -1,6 +1,8 @@
 <template>
   <div>
     <div class="search-term">
+      <!-- <el-button type="primary" size="default" @click="mockCarAccess">模拟数据</el-button> -->
+
       <el-form :inline="true" :model="searchInfo">
         <el-form-item label="教师名称">
           <el-input @keyup.enter.native="getTableData()" v-model="searchInfo.teacherName" placeholder="请输入教师名称" />
@@ -49,7 +51,7 @@
 
 <script>
 import { mockCarAccess } from '@/mock/mock.js'
-import { createCarAccesss, getCarAccessList } from '@/api/car.js'
+import { createCarAccesss, getCarAccessList } from '@/api/carAccess.js'
 import infoList from '@/mixins/infoList'
 import { unixTimeFormat, jsTimeToDayStartUnix, jsTimeToDayEndUnix } from '@/utils/tool.js'
 import moment from 'moment'
@@ -81,11 +83,14 @@ export default {
       let endTime = moment('2022-10-08 17:20:00')
       for (let i = 0; i < 26; i++) {
         console.log(startTime.day(), 'dd')
-        if (startTime.day() == 6 || startTime.day() == 0) {
-          startTime.add(1, 'd')
-          endTime.add(1, 'd')
-          continue
+        if (startTime.date() != 8 && startTime.date() != 9) {
+          if (startTime.day() == 6 || startTime.day() == 0) {
+            startTime.add(1, 'd')
+            endTime.add(1, 'd')
+            continue
+          }
         }
+
         let mockData = []
         mockData = [...mockData, ...mockCarAccess(startTime.valueOf(), { direction: 1 })]
         mockData = [...mockData, ...mockCarAccess(endTime.valueOf(), { direction: 2 })]
