@@ -105,8 +105,14 @@ export const mockStudentList = (num, data) => {
 // 模拟教师车辆通行记录
 
 export const mockCarAccess = (time, data) => {
-  const startTime = moment(time).subtract(30, 'minutes').unix()
-  const endTime = moment(time).add(15, 'minutes').unix()
+  let startTime, endTime
+  if (data.direction == 1) {
+    startTime = moment(time).subtract(30, 'minutes').unix()
+    endTime = moment(time).add(5, 'minutes').unix()
+  } else {
+    startTime = moment(time).subtract(5, 'minutes').unix()
+    endTime = moment(time).add(30, 'minutes').unix()
+  }
   const place = ['东门', '西门', '南门', '北门']
   let teacherCarCopy = copyObj(teacherCar)
   teacherCarCopy = teacherCarCopy.map((x) => {
@@ -117,3 +123,5 @@ export const mockCarAccess = (time, data) => {
 
   return teacherCarCopy
 }
+
+// 模拟教师通行记录
