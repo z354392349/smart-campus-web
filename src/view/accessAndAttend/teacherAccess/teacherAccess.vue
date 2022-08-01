@@ -8,10 +8,10 @@
           <el-input @keyup.enter.native="getTableData()" v-model="searchInfo.teacherName" placeholder="请输入教师名称" />
         </el-form-item>
         <el-form-item label="开始时间">
-          <el-date-picker v-model.number="searchInfo.start" value-format="timestamp" type="date" placeholder="选择开始日期"></el-date-picker>
+          <el-date-picker v-model.number="searchInfo.start" :default-value="1665158400000" value-format="timestamp" type="date" placeholder="选择开始日期"></el-date-picker>
         </el-form-item>
         <el-form-item label="结束时间">
-          <el-date-picker v-model.number="searchInfo.end" value-format="timestamp" type="date" placeholder="选择结束日期"></el-date-picker>
+          <el-date-picker v-model.number="searchInfo.end" :default-value="1665158400000" value-format="timestamp" type="date" placeholder="选择结束日期"></el-date-picker>
         </el-form-item>
         <el-form-item>
           <el-button size="mini" type="primary" icon="el-icon-search" @click="searchTable()">查询</el-button>
@@ -64,28 +64,44 @@ export default {
 
     // 搜索
     searchTable() {
-      if (this.searchInfo.start > 0) this.searchInfo.startTime = jsTimeToDayStartUnix(this.searchInfo.start)
+      //优化 开始结束
+      if (this.searchInfo.start && this.searchInfo.end && this.searchInfo.start > this.searchInfo.end) {
+        this.$message.warning('结束时间早于开始时间, 系统已自动优化')
+        ;[this.searchInfo.start, this.searchInfo.end] = [this.searchInfo.end, this.searchInfo.start]
+      }
+
+      // 整理时间
+      if (this.searchInfo.start) this.searchInfo.startTime = jsTimeToDayStartUnix(this.searchInfo.start)
       else this.searchInfo.startTime = null
 
-      if (this.searchInfo.end > 0) this.searchInfo.endTime = jsTimeToDayEndUnix(this.searchInfo.end)
+      if (this.searchInfo.end) this.searchInfo.endTime = jsTimeToDayEndUnix(this.searchInfo.end)
       else this.searchInfo.endTime = null
+
+      console.log(this.searchInfo)
 
       this.getTableData(1)
     },
 
     // 创建 虚拟数据
     async mockTeacherAccess() {
-      let startTime = moment('2022-10-08 09:00:00')
-      let endTime = moment('2022-10-08 17:20:00')
+      let startTime = moment('2022-10-08 08:00:00') // 上午进入
+      let middayOutTime = moment('2022-10-08 11:30:00') // 上午离开
+      let middayIntoTime = moment('2022-10-08 13:30:00') // 下午进入
+      let endTime = moment('2022-10-08 17:15:00') // 下午离开
+
       for (let i = 0; i < 26; i++) {
-        if (startTime.day() == 6 || startTime.day() == 0) {
-          startTime.add(1, 'd')
-          endTime.add(1, 'd')
-          continue
+        if (startTime.date() != 8 && startTime.date() != 9) {
+          if (startTime.day() == 6 || startTime.day() == 0) {
+            startTime.add(1, 'd')
+            endTime.add(1, 'd')
+            continue
+          }
         }
 
         let mockData = []
         mockData = [...mockData, ...mockTeacherAccess(startTime.valueOf(), { direction: 1 })]
+        mockData = [...mockData, ...mockTeacherAccess(middayOutTime.valueOf(), { direction: 1 })]
+        mockData = [...mockData, ...mockTeacherAccess(middayIntoTime.valueOf(), { direction: 1 })]
         mockData = [...mockData, ...mockTeacherAccess(endTime.valueOf(), { direction: 2 })]
 
         mockData.forEach(async (n) => {
