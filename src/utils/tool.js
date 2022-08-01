@@ -33,3 +33,9 @@ export const jsTimeToDayEndUnix = (timeStamp) => {
 export const rand = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
+
+export const sleep = (n) => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(n), n)
+  })
+}

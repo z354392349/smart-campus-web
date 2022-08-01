@@ -145,3 +145,27 @@ export const mockTeacherAccess = (time, data) => {
 
   return teacherDataCopy
 }
+
+export const mockStudentAccess = (time, data) => {
+  let startTime, endTime
+  if (data.direction == 1) {
+    startTime = moment(time).subtract(30, 'minutes').unix()
+    endTime = moment(time).add(5, 'minutes').unix()
+  } else {
+    startTime = moment(time).subtract(5, 'minutes').unix()
+    endTime = moment(time).add(30, 'minutes').unix()
+  }
+  const place = ['东门', '西门', '南门', '北门']
+  let studentData = []
+
+  for (let i = 4; i <= 485; i++) {
+    studentData.push({
+      studentID: i,
+      place: place[rand(0, 3)],
+      time: rand(startTime, endTime),
+      ...data
+    })
+  }
+
+  return studentData
+}
