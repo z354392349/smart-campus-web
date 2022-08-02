@@ -22,8 +22,8 @@
       </el-form>
     </div>
     <el-table :data="tableData" border :stripe="true">
-      <el-table-column label="车牌号" prop="carNum" />
       <el-table-column label="教师姓名" prop="teacherName" />
+      <el-table-column label="车牌号" prop="carNum" />
       <el-table-column label="位置" prop="place" />
       <el-table-column label="方向" prop="direction">
         <template v-slot="scope">
