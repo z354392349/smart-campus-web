@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="search-term">
-      <el-button type="primary" size="default" @click="mockStudentAccess">模拟数据</el-button>
+      <!-- <el-button type="primary" size="default" @click="mockStudentAccess">模拟数据</el-button> -->
 
       <el-form :inline="true" :model="searchInfo">
         <el-form-item label="学生">

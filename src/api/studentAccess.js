@@ -8,7 +8,7 @@ export const createStudentAccess = (data) => {
     data
   })
 }
-// 创建学生通行记录
+// 创建学生通行记录批量
 export const createStudentAccessMock = (data) => {
   return service({
     url: '/studentAccess/createStudentAccessList',
