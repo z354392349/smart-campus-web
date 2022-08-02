@@ -1,8 +1,6 @@
 <template>
   <div>
     <div class="search-term">
-      <!-- <el-button type="primary" size="default" @click="mockTeacherAccess">模拟数据</el-button> -->
-
       <el-form :inline="true" :model="searchInfo">
         <el-form-item label="教师名称">
           <el-input @keyup.enter.native="getTableData()" v-model="searchInfo.teacherName" placeholder="请输入教师名称" />
@@ -46,16 +44,14 @@
 </template>
 
 <script>
-import { mockTeacherAccess } from '@/mock/mock.js'
-import { createTeacherAccess, getTeacherAccessList } from '@/api/teacherAccess.js'
+import { getTeacherAttendList } from '@/api/teacherAttend.js'
 import infoList from '@/mixins/infoList'
 import { unixTimeFormat, jsTimeToDayStartUnix, jsTimeToDayEndUnix } from '@/utils/tool.js'
-import moment from 'moment'
 export default {
   mixins: [infoList],
   data() {
     return {
-      listApi: getTeacherAccessList
+      listApi: getTeacherAttendList
     }
   },
 
@@ -80,36 +76,6 @@ export default {
       console.log(this.searchInfo)
 
       this.getTableData(1)
-    },
-
-    // 创建 虚拟数据
-    async mockTeacherAccess() {
-      let startTime = moment('2022-10-08 08:00:00') // 上午进入
-      let middayOutTime = moment('2022-10-08 11:30:00') // 上午离开
-      let middayIntoTime = moment('2022-10-08 13:30:00') // 下午进入
-      let endTime = moment('2022-10-08 17:15:00') // 下午离开
-
-      for (let i = 0; i < 26; i++) {
-        if (startTime.date() != 8 && startTime.date() != 9) {
-          if (startTime.day() == 6 || startTime.day() == 0) {
-            startTime.add(1, 'd')
-            endTime.add(1, 'd')
-            continue
-          }
-        }
-
-        let mockData = []
-        mockData = [...mockData, ...mockTeacherAccess(startTime.valueOf(), { direction: 1 })]
-        mockData = [...mockData, ...mockTeacherAccess(middayOutTime.valueOf(), { direction: 1 })]
-        mockData = [...mockData, ...mockTeacherAccess(middayIntoTime.valueOf(), { direction: 1 })]
-        mockData = [...mockData, ...mockTeacherAccess(endTime.valueOf(), { direction: 2 })]
-
-        mockData.forEach(async (n) => {
-          await createTeacherAccess(n)
-        })
-        startTime.add(1, 'd')
-        endTime.add(1, 'd')
-      }
     }
   },
 
