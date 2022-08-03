@@ -91,6 +91,7 @@ import { getCourseList } from '@/api/course'
 import infoList from '@/mixins/infoList'
 import { copyObj, unixTimeToAge, unixTimeFormat } from '@/utils/tool.js'
 import AffairsDialog from './components/affairsDialog'
+import { mockExam } from '@/mock/mock.js'
 export default {
   name: 'Grade',
   mixins: [infoList],
@@ -312,6 +313,17 @@ export default {
       console.log(row, 'tow')
       this.row = row
       this.$refs.AffairsDialog.dialogFormVisible = true
+    },
+
+    // 模拟考试数据
+    mockExam() {
+      let params = {
+        name: '2021年6月七年级期中考试',
+        gradeID: 1,
+        description: ''
+      }
+      let data = mockExam('2021-06-01 00:00:00', params)
+      console.log(data)
     }
   },
 
