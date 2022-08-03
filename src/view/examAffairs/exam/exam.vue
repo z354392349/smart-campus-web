@@ -249,7 +249,7 @@ export default {
           let form = this.formatFormToServe()
 
           form = {
-            name: '2021年6月七年级期中考试 ',
+            name: '2021年6月七年级期中考试1',
             gradeID: 1,
             description: '',
             examItem: [

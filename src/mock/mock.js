@@ -169,3 +169,19 @@ export const mockStudentAccess = (time, data) => {
 
   return studentData
 }
+
+export const mockExam = (time, data) => {
+  // date: 1658851200000, 07:30-9:30, 10:00-12:00,  13:30-15.30, 16:00-18:00
+  let form = {
+    // name: data.,
+    // gradeID: 1,
+    // description: '',
+    ...data,
+    examItem: [
+      { check: true, courseID: 1, startTime: 1658883600, endTime: 1658892600 },
+      { check: true, courseID: 2, startTime: 1658903400, endTime: 1658912400 },
+      { check: true, courseID: 3, startTime: 1658970000, endTime: 1658979000 },
+      { check: true, courseID: 4, startTime: 1658989800, endTime: 1658998800 }
+    ]
+  }
+}

@@ -24,7 +24,11 @@
       <el-table-column label="学生姓名" prop="studentName" />
       <el-table-column label="年级" prop="gradeName" />
       <el-table-column label="班级" prop="className" />
-      <el-table-column label="成绩" prop="result" />
+      <el-table-column label="成绩" prop="result">
+        <template slot-scope="scope">
+          <p>{{ scope.row.result == null ? '-' : scope.row.result }}</p>
+        </template>
+      </el-table-column>
       <el-table-column label="备注" prop="description" />
       <el-table-column label="操作">
         <template slot-scope="scope">

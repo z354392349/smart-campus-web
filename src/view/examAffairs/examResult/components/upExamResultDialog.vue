@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog title="修改成绩" :visible.sync="dialogVisible" :width="$conf.minDialogWidth">
+    <el-dialog title="修改成绩" :visible.sync="dialogVisible" :width="$conf.minDialogWidth" @open="openDialog">
       <el-form ref="form" class="dialog-form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="成绩" prop="result">
           <el-input v-model.number="form.result" autocomplete="off" placeholder="请输入成绩" />
@@ -40,7 +40,6 @@ export default {
     upExamResult() {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
-          this.form.ID = this.row.ID
           let res = await upExamResult(this.form)
           if (res.code === 0) {
             this.$message.success('编辑成功')
@@ -56,14 +55,20 @@ export default {
         result: '',
         description: ''
       }
-      this.$nextTick(() => {
-        this.$refs.form.clearValidate()
-      })
     },
 
     closeDialog() {
       this.dialogVisible = false
       this.initForm()
+    },
+    openDialog() {
+      console.log(this.row)
+      this.form.result = this.row.result
+      this.form.description = this.row.description
+      this.form.ID = this.row.ID
+      this.$nextTick(() => {
+        this.$refs.form.clearValidate()
+      })
     }
   },
 
