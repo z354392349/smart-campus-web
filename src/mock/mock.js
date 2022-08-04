@@ -172,6 +172,8 @@ export const mockStudentAccess = (time, data) => {
 
 export const mockExam = (time, data) => {
   // date: 1658851200000, 07:30-9:30, 10:00-12:00,  13:30-15.30, 16:00-18:00
+  // 期中：2021，11.12，期末2022 1.16
+  // 期中：2022， 4.18，期末2022  6.20
   let form = {
     // name: data,
     // gradeID: 1,
@@ -183,23 +185,26 @@ export const mockExam = (time, data) => {
     let startTime, endTime
     switch (i % 4) {
       case 1:
-        startTime = moment(time).hour(7).minute(30).format()
-        endTime = moment(time).hour(9).minute(30).format()
+        startTime = moment(time).hour(7).minute(30).unix()
+        endTime = moment(time).hour(9).minute(30).unix()
         break
       case 2:
-        startTime = moment(time).hour(10).minute(0).format()
-        endTime = moment(time).hour(12).minute(0).format()
+        startTime = moment(time).hour(10).minute(0).unix()
+        endTime = moment(time).hour(12).minute(0).unix()
         break
       case 3:
-        startTime = moment(time).hour(13).minute(30).format()
-        endTime = moment(time).hour(15).minute(30).format()
+        startTime = moment(time).hour(13).minute(30).unix()
+        endTime = moment(time).hour(15).minute(30).unix()
         break
-      case 4:
-        startTime = moment(time).hour(16).minute(0).format()
-        endTime = moment(time).hour(18).minute(0).format()
+      case 0:
+        startTime = moment(time).hour(16).minute(0).unix()
+        endTime = moment(time).hour(18).minute(0).unix()
         break
       default:
         break
+    }
+    if (i == 4) {
+      time = moment(time).add(1, 'd').valueOf()
     }
     form.examItem.push({ courseID: i, startTime, endTime })
   }

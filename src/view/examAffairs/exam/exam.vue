@@ -1,5 +1,7 @@
 <template>
   <div>
+    <el-button type="primary" size="default" @click="mockExam">模拟数据</el-button>
+
     <div class="search-term">
       <el-form :inline="true" :model="searchInfo">
         <el-form-item label="考试名称">
@@ -317,12 +319,15 @@ export default {
 
     // 模拟考试数据
     mockExam() {
+      // date: 1658851200000, 07:30-9:30, 10:00-12:00,  13:30-15.30, 16:00-18:00
+      // 期中：2021，11.12，期末2022 1.16
+      // 期中：2022， 4.18，期末2022  6.20
       let params = {
-        name: '2021年6月七年级期中考试',
+        name: '2021年七年级上学期期中考试',
         gradeID: 1,
         description: ''
       }
-      let data = mockExam('2021-06-01 00:00:00', params)
+      let data = mockExam('2021-11-12 00:00:00', params)
       console.log(data)
     }
   },
