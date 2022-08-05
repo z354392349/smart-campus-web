@@ -2,6 +2,11 @@
   <div>
     <div class="search-term">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
+        <el-form-item label="考试">
+          <el-select v-model="searchInfo.examID" value-key="" placeholder="请选择考试" clearable filterable>
+            <el-option v-for="n in examList" :key="n.ID" :label="n.name" :value="n.ID"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="学生">
           <el-input v-model="searchInfo.name" placeholder="请输入学生姓名" />
         </el-form-item>
@@ -26,8 +31,8 @@
       <el-table-column label="年级" prop="gradeName" />
       <el-table-column label="班级" prop="className" />
       <el-table-column label="考场" prop="examRoomName" />
+      <el-table-column label="科目" prop="courseName" />
       <el-table-column label="考场地址" prop="address" />
-      <el-table-column label="备注" prop="description" />
     </el-table>
     <el-pagination
       :current-page="page"
@@ -43,7 +48,9 @@
 </template>
 
 <script>
+// TODO: 需要增加按 考试名称查询
 import { getAllotExamRoomList } from '@/api/allotExamRoom.js'
+import { getExamList } from '@/api/exam'
 import { getClassList } from '@/api/class'
 import { getGradeList } from '@/api/grade'
 import { copyObj } from '@/utils/tool.js'
@@ -58,7 +65,8 @@ export default {
       classListAll: [],
       classList: [], // 班级列表
       gradeListAll: [], // 年级列表
-      gradeList: [] // 年级列表
+      gradeList: [], // 年级列表
+      examList: [] // 考试列表
     }
   },
 
@@ -89,12 +97,17 @@ export default {
       classList.unshift({ ID: 0, name: '全部' })
       this.classList = classList
       this.searchInfo.classID = 0
+    },
+    async getExamList() {
+      let res = await getExamList({ page: 1, pageSize: 100 })
+      this.examList = res.data.list
     }
   },
   created() {
     this.getTableData()
     this.getClassList()
     this.getGradeList()
+    this.getExamList()
   }
 }
 </script>

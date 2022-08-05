@@ -24,7 +24,7 @@ export const jsTimeToUnix = (timeStamp) => {
 export const jsTimeToDayStartUnix = (timeStamp) => {
   return moment(timeStamp).startOf('day').unix()
 }
-// js 时间转换 当日0点 unix时间
+// js 时间转换 当日23.59.59点 unix时间
 export const jsTimeToDayEndUnix = (timeStamp) => {
   return moment(timeStamp).add(1, 'd').startOf('day').unix() - 1
 }

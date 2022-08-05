@@ -1,6 +1,7 @@
 <template>
   <div>
-    <el-button type="primary" size="default" @click="mockExam">模拟数据</el-button>
+    <el-button type="primary" size="default" @click="mockExam">模拟考试</el-button>
+    <el-button type="primary" size="default" @click="mockExamAllot">模拟考场分配</el-button>
 
     <div class="search-term">
       <el-form :inline="true" :model="searchInfo">
@@ -33,8 +34,8 @@
       <el-table-column label="操作" width="340px">
         <template slot-scope="scope">
           <el-button size="small" type="primary" icon="el-icon-edit" @click="editExam(scope.row)">编辑</el-button>
-          <el-button size="small" type="primary" icon="el-icon-house" @click="showAffairsDialog(scope.row)">分配考场</el-button>
-          <el-button size="small" type="primary" icon="el-icon-tickets" @click="editExam(scope.row)">详情</el-button>
+          <el-button size="small" type="primary" icon="el-icon-house" @click="showAffairsDialog(scope.row)" v-if="scope.row.examItem.filter((n) => n.examRoomIDs == '').length != 0">分配考场</el-button>
+          <el-button size="small" type="primary" icon="el-icon-tickets" @click="drawerDetailsShow(scope.row)">详情</el-button>
           <el-button size="small" type="danger" icon="el-icon-delete" @click="deleteExam(scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -81,6 +82,7 @@
     </el-dialog>
 
     <AffairsDialog :row="row" ref="AffairsDialog" />
+    <DrawerDetails ref="DrawerDetails" />
   </div>
 </template>
 
@@ -90,9 +92,11 @@ import moment from 'moment'
 import { createtExam, upExam, getExamList, deleteExam } from '@/api/exam'
 import { getGradeList } from '@/api/grade'
 import { getCourseList } from '@/api/course'
+import { allotExamItemRoom } from '@/api/examItem'
 import infoList from '@/mixins/infoList'
 import { copyObj, unixTimeToAge, unixTimeFormat } from '@/utils/tool.js'
 import AffairsDialog from './components/affairsDialog'
+import DrawerDetails from './components/drawerDetails'
 import { mockExam } from '@/mock/mock.js'
 export default {
   name: 'Grade',
@@ -250,19 +254,6 @@ export default {
       this.$refs.form.validate(async (valid) => {
         if (valid && this.checkExamItem()) {
           let form = this.formatFormToServe()
-
-          form = {
-            name: '2021年6月七年级期中考试1',
-            gradeID: 1,
-            description: '',
-            examItem: [
-              { check: true, courseID: 1, courseName: '语文', date: 1658851200000, startTime: 1658883600, endTime: 1658892600 },
-              { check: true, courseID: 2, courseName: '数学', date: 1658851200000, startTime: 1658903400, endTime: 1658912400 },
-              { check: true, courseID: 3, courseName: '英语', date: 1658937600000, startTime: 1658970000, endTime: 1658979000 },
-              { check: true, courseID: 4, courseName: '政治', date: 1658937600000, startTime: 1658989800, endTime: 1658998800 }
-            ]
-          }
-          console.log(form)
           if (this.type === 'add') {
             delete form.id
             const res = await createtExam(form)
@@ -318,21 +309,89 @@ export default {
     },
 
     // 模拟考试数据
-    mockExam() {
+    async mockExam() {
       // date: 1658851200000, 07:30-9:30, 10:00-12:00,  13:30-15.30, 16:00-18:00
       // 期中：2021，11.12，期末2022 1.16
       // 期中：2022， 4.18，期末2022  6.20
-      let params = {
-        name: '2021年七年级上学期期中考试',
-        gradeID: 1,
-        description: ''
+      for (let k = 0; k < 4; k++) {
+        let years = k == 0 ? '2021' : '2022'
+        let range, date
+
+        switch (k) {
+          case 0:
+            range = '上学期期中考试'
+            date = '2021-11-12 00:00:00'
+            break
+          case 1:
+            range = '上学期期末考试'
+            date = '2022-01-16 00:00:00'
+            break
+          case 2:
+            range = '下学期期中考试'
+            date = '2022-04-18 00:00:00'
+            break
+          case 3:
+            range = '下学期期末考试'
+            date = '2022-06-20 00:00:00'
+            break
+        }
+        for (let i = 1; i <= 3; i++) {
+          let grade = ['七', '八', '九']
+          let params = {
+            name: `${years}年${grade[i - 1]}年级${range}`,
+            gradeID: i,
+            description: ''
+          }
+          let data = mockExam(date, params)
+          await createtExam(data)
+        }
       }
-      let data = mockExam('2021-11-12 00:00:00', params)
-      console.log(data)
+    },
+    // 模拟考试分配数据
+    async mockExamAllot() {
+      let res = await getExamList({ page: 1, pageSize: 100 })
+      let list = res.data.list
+
+      //       {
+      //     "ID": 1,
+      //     "CreatedAt": "2022-08-05T11:13:42+08:00",
+      //     "UpdatedAt": "2022-08-05T15:31:54+08:00",
+      //     "examID": 1,
+      //     "courseID": 1,
+      //     "startTime": 1636673400,
+      //     "endTime": 1636680600,
+      //     "examRoomIDs": "",
+      //     "courseName": "语文"
+      // },
+
+      for (let i = 0; i < list.length; i++) {
+        for (let k = 0; k < list[i].examItem.length; k++) {
+          let examRoomList = ['1,2,3,4', '5,6,7,8', '9,10,11,12']
+          let params = {
+            examID: list[i].ID, // 考试ID
+            examItemID: list[i].examItem[k].ID, // // 考试项ID
+            gradeID: list[i].gradeID, // 年级 ID
+            examRoomIDs: examRoomList[list[i].gradeID - 1] // 考场号ID, 用,分割
+          }
+          // console.log(params)
+          res = await allotExamItemRoom(params)
+        }
+      }
+      // list.forEach((n) => {
+      //   n.examItem.forEach((k) => {
+      //     let a = {}
+      //   })
+      // })
+      console.log(res)
+    },
+
+    // 显示详情
+    drawerDetailsShow(data) {
+      this.$refs.DrawerDetails.show(data)
     }
   },
 
-  components: { AffairsDialog },
+  components: { AffairsDialog, DrawerDetails },
   created() {
     this.getTableData()
     this.getGradeList()

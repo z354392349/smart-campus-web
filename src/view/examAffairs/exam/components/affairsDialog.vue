@@ -7,10 +7,10 @@
           <el-input v-model="row.name" :disabled="true" autocomplete="off" placeholder="请输入考试名称" />
         </el-form-item>
 
-        <el-form-item label="科目" prop="crouseID">
+        <el-form-item label="科目" prop="examItemID">
           <el-tooltip effect="dark" placement="top" v-for="(n, i) in row.examItem.filter((n) => n.examRoomIDs == '')" :key="'q' + i">
             <div slot="content" v-html="tooltipContent(n)"></div>
-            <el-radio v-model="form.crouseID" :label="n.ID">{{ n.courseName }}</el-radio>
+            <el-radio v-model="form.examItemID" :label="n.ID">{{ n.courseName }}</el-radio>
           </el-tooltip>
         </el-form-item>
 
@@ -45,10 +45,10 @@ export default {
       dialogFormVisible: false,
       rules: {
         examRoomList: [{ required: true, message: '请选择考场', trigger: 'change' }],
-        crouseID: [{ required: true, message: '请选择科目', trigger: 'change' }]
+        examItemID: [{ required: true, message: '请选择科目', trigger: 'change' }]
       },
       form: {
-        crouseID: '',
+        examItemID: '',
         examRoomList: []
       },
       gourseList: [], // 考试科目
@@ -60,10 +60,8 @@ export default {
     //
     initForm() {
       let form = {
-        id: '',
-        name: '',
-        gradeID: '',
-        description: ''
+        examItemID: '',
+        examRoomList: []
       }
 
       this.form = form
@@ -75,7 +73,7 @@ export default {
     formatFormToServe() {
       let form = {
         examID: this.row.ID, // 考试ID
-        examItemID: this.form.crouseID, // // 考试项ID
+        examItemID: this.form.examItemID, // // 考试项ID
         gradeID: this.row.gradeID, // 年级 ID
         examRoomIDs: this.form.examRoomList.join(',') // 考场号ID, 用,分割
       }
@@ -105,6 +103,7 @@ export default {
     // 关闭弹窗
     closeDialog() {
       this.dialogFormVisible = false
+      this.initForm()
     },
 
     // 获取课程列表
