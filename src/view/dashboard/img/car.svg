@@ -1,0 +1,16 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg t="1659779110572" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1385"
+  fill="#49c285" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200">
+  <defs>
+    <style type="text/css">
+      @font-face {
+        font-family: feedback-iconfont;
+        src: url("//at.alicdn.com/t/font_1031158_u69w8yhxdu.woff2?t=1630033759944") format("woff2"), url("//at.alicdn.com/t/font_1031158_u69w8yhxdu.woff?t=1630033759944") format("woff"), url("//at.alicdn.com/t/font_1031158_u69w8yhxdu.ttf?t=1630033759944") format("truetype");
+      }
+    </style>
+  </defs>
+  <path
+    d="M928 784a144 144 0 1 1-287.136-16h-257.728a144 144 0 1 1-286.24 0H32a32 32 0 0 1-32-32V192a96 96 0 0 1 96-96h448a96 96 0 0 1 96 96v60.8a87.04 87.04 0 0 1 56.32 0.768l265.856 94.944c37.28 13.312 61.824 50.08 61.824 90.912V672c0 52.48-40.192 96-91.072 96h-5.792c0.576 5.248 0.864 10.592 0.864 16z m4.928-80c14.336 0 27.072-13.76 27.072-32v-232.576c0-14.4-8.16-26.656-19.328-30.624l-265.856-94.944a22.944 22.944 0 0 0-7.744-1.376c-14.336 0-27.072 13.76-27.072 32V704h24.256a143.872 143.872 0 0 1 119.744-64c49.92 0 93.92 25.408 119.744 64h29.184zM240 640c49.92 0 93.92 25.408 119.744 64H576V192a32 32 0 0 0-32-32H96a32 32 0 0 0-32 32v512h56.256A143.872 143.872 0 0 1 240 640z m0 224a80 80 0 1 0 0-160 80 80 0 0 0 0 160z m544 0a80 80 0 1 0 0-160 80 80 0 0 0 0 160z"
+    p-id="1386"></path>
+</svg>

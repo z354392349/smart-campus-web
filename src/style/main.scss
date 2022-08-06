@@ -731,10 +731,10 @@ li {
 }
 
 .admin-box {
-    min-height: calc(100vh - 200px);
+    min-height: calc(100vh - 155px);
     background-color: $white-bg;
     padding: 14px;
-    margin: 114px 14px 20px;
+    margin: 114px 14px 0px;
     border-radius: 2px;
 
     .el-table--border {

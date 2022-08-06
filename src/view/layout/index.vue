@@ -66,7 +66,6 @@
         <transition mode="out-in" name="el-fade-in-linear">
           <router-view v-if="!$route.meta.keepAlive && reloadFlag" v-loading="loadingFlag" element-loading-text="正在加载中" class="admin-box" />
         </transition>
-        <BottomInfo />
         <setting />
       </el-main>
     </el-container>
@@ -78,7 +77,6 @@ import Aside from '@/view/layout/aside'
 import HistoryComponent from '@/view/layout/aside/historyComponent/history'
 import Screenfull from '@/view/layout/screenfull'
 import Search from '@/view/layout/search/search'
-import BottomInfo from '@/view/layout/bottomInfo/bottomInfo'
 import { mapGetters, mapActions } from 'vuex'
 import CustomPic from '@/components/customPic'
 import Setting from './setting'
@@ -89,7 +87,6 @@ export default {
     HistoryComponent,
     Screenfull,
     Search,
-    BottomInfo,
     CustomPic,
     Setting
   },

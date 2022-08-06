@@ -48,7 +48,6 @@
 </template>
 
 <script>
-// TODO: 需要增加按 考试名称查询
 import { getAllotExamRoomList } from '@/api/allotExamRoom.js'
 import { getExamList } from '@/api/exam'
 import { getClassList } from '@/api/class'
