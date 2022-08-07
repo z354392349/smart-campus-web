@@ -13,21 +13,21 @@ export default {
     init() {
       let myChart = echarts.init(this.$refs.char)
       let option = {
-        grid: {
-          left: '50px',
-          right: '2%',
-          bottom: '10%',
-          top: '12%'
-          // containLabel: false
-        },
         tooltip: {
           trigger: 'axis'
+        },
+        grid: {
+          left: '30px',
+          right: '2%',
+          bottom: '10%',
+          top: '12%',
+          containLabel: true
         },
 
         xAxis: {
           type: 'category',
-          boundaryGap: false,
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+
           axisTick: {
             lineStyle: { color: '#a2a2a2' }
           },
@@ -47,6 +47,7 @@ export default {
             // }
           }
         },
+
         yAxis: {
           type: 'value',
           splitLine: {
@@ -55,11 +56,17 @@ export default {
             }
           }
         },
+        color: ['#5487ff', '#ff6d8a'],
         series: [
           {
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
-            type: 'line',
-            smooth: true
+            type: 'bar',
+            barWidth: '15px',
+            data: [10, 52, 200, 334, 390, 330, 220]
+          },
+          {
+            barWidth: '15px',
+            type: 'bar',
+            data: [10, 52, 200, 334, 390, 330, 220]
           }
         ]
       }

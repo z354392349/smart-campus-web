@@ -5,29 +5,36 @@
 <script>
 import * as echarts from 'echarts'
 export default {
+  props: ['type'],
   data() {
     return {}
   },
 
   methods: {
     init() {
+      let color = { student: ['#ff8f00', '#5c8af5'], teacher: ['#5882f6', '#39e399'] }
+      let useColor
+      if (this.type == 'teacher') useColor = color.teacher
+      else useColor = color.student
       let myChart = echarts.init(this.$refs.char)
       let option = {
-        tooltip: {
-          trigger: 'axis'
-        },
+        color: useColor,
+
         grid: {
-          left: '30px',
+          left: '50px',
           right: '2%',
           bottom: '10%',
-          top: '12%',
-          containLabel: true
+          top: '12%'
+          // containLabel: false
+        },
+        tooltip: {
+          trigger: 'axis'
         },
 
         xAxis: {
           type: 'category',
+          boundaryGap: false,
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-
           axisTick: {
             lineStyle: { color: '#a2a2a2' }
           },
@@ -47,7 +54,6 @@ export default {
             // }
           }
         },
-
         yAxis: {
           type: 'value',
           splitLine: {
@@ -56,17 +62,18 @@ export default {
             }
           }
         },
-        color: ['#5487ff', '#ff6d8a'],
         series: [
           {
-            type: 'bar',
-            barWidth: '15px',
-            data: [10, 52, 200, 334, 390, 330, 220]
+            name: '出勤率',
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            type: 'line',
+            smooth: true
           },
           {
-            barWidth: '15px',
-            type: 'bar',
-            data: [10, 52, 200, 334, 390, 330, 220]
+            name: '准点率',
+            data: [932, 901, 934, 1290, 1330, 1320, 20],
+            type: 'line',
+            smooth: true
           }
         ]
       }

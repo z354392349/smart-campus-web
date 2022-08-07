@@ -17,7 +17,8 @@ export default {
       let myChart = echarts.init(this.$refs.char)
       let option = {
         tooltip: {
-          trigger: 'item'
+          trigger: 'item',
+          borderColor: 'white'
         },
 
         title: {

@@ -55,7 +55,7 @@
       </div>
       <div class="row2__col2">
         <p class="p-char-title">教师考勤</p>
-        <TeacherAttendChar class="teacher_attend_char" />
+        <AttendChar type="teacher" class="teacher_attend_char" />
       </div>
       <div class="row2__col3">
         <p class="p-char-title">前十名</p>
@@ -67,14 +67,17 @@
         <p class="p-char-title">各班级学生人数</p>
         <StudentChar />
       </div>
-      <div class="row3__col2"><p class="p-char-title">学生考勤</p></div>
+      <div class="row3__col2">
+        <p class="p-char-title">学生考勤</p>
+        <AttendChar type="student" class="teacher_attend_char" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import TeacherChar from './components/teacherChar.vue'
-import TeacherAttendChar from './components/teacherAttendChar.vue'
+import AttendChar from './components/attendChar.vue'
 import StudentTop10 from './components/studentTop10.vue'
 import StudentChar from './components/studentChar.vue'
 export default {
@@ -86,7 +89,7 @@ export default {
 
   components: {
     TeacherChar,
-    TeacherAttendChar,
+    AttendChar,
     StudentTop10,
     StudentChar
   },

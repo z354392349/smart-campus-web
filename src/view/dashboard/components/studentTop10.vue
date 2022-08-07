@@ -1,6 +1,6 @@
 <template>
   <ul class="student_top10">
-    <li v-for="n in Array(10).fill(0)" :key="n">
+    <li v-for="(n, i) in Array(10).fill(0)" :key="'q' + i">
       <img :src="defaultImg" alt="" />
       <p>100分</p>
       <p>张佳伟 &emsp;&emsp;三年级二班</p>
