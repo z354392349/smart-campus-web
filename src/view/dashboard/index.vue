@@ -6,8 +6,8 @@
           <img src="./img/car.svg" alt="" />
         </div>
         <div class="row1__item__right">
-          <p class="key">车辆通行数量</p>
-          <p class="val">123</p>
+          <p class="key">今日车辆通行次数</p>
+          <p class="val">{{ censusNum.carAccess }}</p>
         </div>
       </li>
       <li class="row1__item row1__item--icon row1__item--icon-purple">
@@ -15,15 +15,16 @@
           <img src="./img/user.svg" alt="" />
         </div>
         <div class="row1__item__right">
-          <p class="key">人员通行数量</p>
-          <p class="val">123</p>
+          <p class="key">今日人员通行次数</p>
+          <p class="val">{{ censusNum.peopleAccess }}</p>
         </div>
       </li>
       <li class="row1__item row1__item--char">
-        <div class="title">教师考勤</div>
+        <div class="title">今日教师考勤</div>
         <div class="char char--blue">
           <div class="char__data">
-            <p class="char__data__number">12/123</p>
+            <p class="char__data__number" v-if="censusNum.teacherCensus">{{ censusNum.teacherCensus.attend }} / {{ censusNum.teacherCensus.num }}</p>
+            <p class="char__data__number" v-else>- / -</p>
             <p class="char__data__text">出勤数 / 总人数</p>
           </div>
           <div class="char__content">
@@ -32,10 +33,11 @@
         </div>
       </li>
       <li class="row1__item row1__item--char">
-        <div class="title">学生考勤</div>
+        <div class="title">今日学生考勤</div>
         <div class="char char--red">
           <div class="char__data">
-            <p class="char__data__number">12/123</p>
+            <p class="char__data__number" v-if="censusNum.studentCensus">{{ censusNum.studentCensus.attend }} / {{ censusNum.studentCensus.num }}</p>
+            <p class="char__data__number" v-else>- / -</p>
             <p class="char__data__text">出勤数 / 总人数</p>
           </div>
           <div class="char__content">
@@ -46,11 +48,11 @@
     </ul>
     <div class="row2">
       <div class="row2__col1">
-        <p class="p-char-title">教师</p>
-        <TeacherChar class="teacher_char" />
+        <p class="p-char-title">教师人数</p>
+        <TeacherChar :charData="teacherNum" class="teacher_char" />
         <div class="teacher-data">
-          <p>男教师 30 人</p>
-          <p>女教师 30 人</p>
+          <p>男教师 {{ teacherNum[0] ? teacherNum[0].val : '-' }} 人</p>
+          <p>女教师 {{ teacherNum[1] ? teacherNum[1].val : '-' }} 人</p>
         </div>
       </div>
       <div class="row2__col2">
@@ -80,15 +82,37 @@ import TeacherChar from './components/teacherChar.vue'
 import AttendChar from './components/attendChar.vue'
 import StudentTop10 from './components/studentTop10.vue'
 import StudentChar from './components/studentChar.vue'
-import { getDashboardCensusNums } from '@/api/dashboard.js'
+import { getDashboardCensusNum, getTeacherNum } from '@/api/dashboard.js'
 export default {
   data() {
-    return {}
+    return {
+      censusNum: {
+        peopleAccess: '-',
+        carAccess: '-',
+        teacherCensus: null,
+        studentCensus: null
+      },
+      teacherNum: []
+    }
   },
 
   methods: {
-    getDashboardCensusNums() {
-      getDashboardCensusNums()
+    // 获取人员，车辆通行数量，学生教师考勤
+    async getDashboardCensusNum() {
+      let res = await getDashboardCensusNum()
+      this.censusNum = res.data
+    },
+
+    // 获取教师数量
+    async getTeacherNum() {
+      let res = await getTeacherNum()
+      let teacherNum = res.data
+
+      teacherNum.sort((x, y) => x - y)
+      this.teacherNum = teacherNum.map((x) => {
+        return { name: x.sex == 1 ? '男' : '女', value: x.num }
+      })
+      console.log(this.teacherNum)
     }
   },
 
@@ -104,7 +128,8 @@ export default {
   mounted() {},
 
   created() {
-    this.getDashboardCensusNums()
+    this.getDashboardCensusNum()
+    this.getTeacherNum()
   }
 }
 </script>

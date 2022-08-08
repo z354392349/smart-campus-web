@@ -5,15 +5,18 @@
 <script>
 import * as echarts from 'echarts'
 export default {
+  props: ['charData'],
   data() {
     return {}
   },
 
   methods: {
     init() {
-      let int = 122,
+      let total = 0,
         title = '总人数'
-
+      this.charData.forEach((n) => {
+        total = n.value
+      })
       let myChart = echarts.init(this.$refs.char)
       let option = {
         tooltip: {
@@ -22,7 +25,7 @@ export default {
         },
 
         title: {
-          text: '{a|' + int + '}\n{b|' + title + '}',
+          text: '{a|' + total + '}\n{b|' + title + '}',
           x: 'center',
           y: 'center',
           textStyle: {
@@ -44,7 +47,7 @@ export default {
         series: [
           {
             color: ['#5487ff', '#ff6d8a'],
-            name: 'Access From',
+            name: '教师人数',
             type: 'pie',
             radius: ['65%', '80%'],
             avoidLabelOverlap: false,
@@ -56,10 +59,7 @@ export default {
             labelLine: {
               show: false
             },
-            data: [
-              { value: 1048, name: 'Search Engine' },
-              { value: 735, name: 'Direct' }
-            ]
+            data: this.charData
           }
         ]
       }
