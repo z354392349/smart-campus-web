@@ -80,12 +80,17 @@ import TeacherChar from './components/teacherChar.vue'
 import AttendChar from './components/attendChar.vue'
 import StudentTop10 from './components/studentTop10.vue'
 import StudentChar from './components/studentChar.vue'
+import { getDashboardCensusNums } from '@/api/dashboard.js'
 export default {
   data() {
     return {}
   },
 
-  methods: {},
+  methods: {
+    getDashboardCensusNums() {
+      getDashboardCensusNums()
+    }
+  },
 
   components: {
     TeacherChar,
@@ -98,7 +103,9 @@ export default {
 
   mounted() {},
 
-  created() {}
+  created() {
+    this.getDashboardCensusNums()
+  }
 }
 </script>
 <style lang="scss" scoped>

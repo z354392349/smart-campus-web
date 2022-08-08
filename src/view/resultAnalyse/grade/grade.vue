@@ -16,11 +16,11 @@
     </div>
     <div class="row2">
       <div class="row2__item">
-        <ModuleTitle title="及格率" tooltip="全年级成绩大于60分的科目/全年级参加考试的总科目" />
+        <ModuleTitle title="平均总成绩" tooltip="全年级成绩大于60分的科目/全年级参加考试的总科目" />
         <LineChar />
       </div>
       <div class="row2__item">
-        <ModuleTitle title="及格率" tooltip="全年级成绩大于60分的科目/全年级参加考试的总科目" />
+        <ModuleTitle title="平均单科成绩" tooltip="全年级成绩大于60分的科目/全年级参加考试的总科目" />
         <LineChar />
       </div>
     </div>
