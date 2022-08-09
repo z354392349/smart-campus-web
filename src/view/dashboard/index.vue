@@ -82,7 +82,7 @@ import TeacherChar from './components/teacherChar.vue'
 import AttendChar from './components/attendChar.vue'
 import StudentTop10 from './components/studentTop10.vue'
 import StudentChar from './components/studentChar.vue'
-import { getDashboardCensusNum, getTeacherNum } from '@/api/dashboard.js'
+import { getDashboardCensusNum, getTeacherNum, getExamPassRate } from '@/api/dashboard.js'
 export default {
   data() {
     return {
@@ -92,7 +92,8 @@ export default {
         teacherCensus: null,
         studentCensus: null
       },
-      teacherNum: []
+      teacherNum: [],
+      examPassRate: []
     }
   },
 
@@ -113,6 +114,17 @@ export default {
         return { name: x.sex == 1 ? '男' : '女', value: x.num }
       })
       console.log(this.teacherNum)
+    },
+
+    // 获取教师数量
+    async getExamPassRate() {
+      let res = await getExamPassRate()
+      let data = res.data
+
+      data.forEach((n) => {
+        n.scale = ((n.rate / n.total) * 100).toFixed(2)
+      })
+      this.examPassRate = data
     }
   },
 
@@ -130,6 +142,7 @@ export default {
   created() {
     this.getDashboardCensusNum()
     this.getTeacherNum()
+    this.getExamPassRate()
   }
 }
 </script>

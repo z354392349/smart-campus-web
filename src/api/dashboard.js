@@ -14,3 +14,10 @@ export const getTeacherNum = () => {
     method: 'get'
   })
 }
+// 获取通过率
+export const getExamPassRate = () => {
+  return service({
+    url: '/dashboard/getExamPassRate',
+    method: 'get'
+  })
+}
