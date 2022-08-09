@@ -60,8 +60,8 @@
         <AttendChar type="teacher" class="teacher_attend_char" />
       </div>
       <div class="row2__col3">
-        <p class="p-char-title">前十名</p>
-        <StudentTop10 class="student_top10" />
+        <p class="p-char-title">合格率</p>
+        <CssLineChar :charData="examPassRate" class="css-line-char" />
       </div>
     </div>
     <div class="row3">
@@ -80,9 +80,10 @@
 <script>
 import TeacherChar from './components/teacherChar.vue'
 import AttendChar from './components/attendChar.vue'
-import StudentTop10 from './components/studentTop10.vue'
+// import StudentTop10 from './components/studentTop10.vue'
 import StudentChar from './components/studentChar.vue'
-import { getDashboardCensusNum, getTeacherNum, getExamPassRate } from '@/api/dashboard.js'
+import CssLineChar from './components/cssLineChar.vue'
+import { getDashboardCensusNum, getTeacherNum, getExamPassRate, getTeacherAttendCensus } from '@/api/dashboard.js'
 export default {
   data() {
     return {
@@ -116,7 +117,7 @@ export default {
       console.log(this.teacherNum)
     },
 
-    // 获取教师数量
+    // 获取合格率
     async getExamPassRate() {
       let res = await getExamPassRate()
       let data = res.data
@@ -125,13 +126,20 @@ export default {
         n.scale = ((n.rate / n.total) * 100).toFixed(2)
       })
       this.examPassRate = data
+      console.log(this.examPassRate)
+    },
+
+    // 获取教师考勤
+    async getTeacherAttendCensus() {
+      let res = await getTeacherAttendCensus()
+      console.log(res)
     }
   },
 
   components: {
     TeacherChar,
     AttendChar,
-    StudentTop10,
+    CssLineChar,
     StudentChar
   },
 
@@ -143,6 +151,7 @@ export default {
     this.getDashboardCensusNum()
     this.getTeacherNum()
     this.getExamPassRate()
+    this.getTeacherAttendCensus()
   }
 }
 </script>
@@ -322,7 +331,7 @@ export default {
       box-sizing: border-box;
       background: white;
       padding: 14px;
-      .student_top10 {
+      .css-line-char {
         height: calc(100% - 20px);
       }
     }

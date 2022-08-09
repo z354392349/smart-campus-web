@@ -21,3 +21,10 @@ export const getExamPassRate = () => {
     method: 'get'
   })
 }
+// 获取获取教师考勤 统计 - 历史
+export const getTeacherAttendCensus = () => {
+  return service({
+    url: '/dashboard/getTeacherAttendCensus',
+    method: 'get'
+  })
+}
