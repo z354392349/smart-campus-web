@@ -57,7 +57,7 @@
       </div>
       <div class="row2__col2">
         <p class="p-char-title">教师考勤</p>
-        <AttendChar type="teacher" class="teacher_attend_char" />
+        <AttendChar :charData="teacherAttendCharData" type="teacher" class="teacher_attend_char" />
       </div>
       <div class="row2__col3">
         <p class="p-char-title">合格率</p>
@@ -71,7 +71,7 @@
       </div>
       <div class="row3__col2">
         <p class="p-char-title">学生考勤</p>
-        <AttendChar type="student" class="teacher_attend_char" />
+        <!-- <AttendChar type="student" class="teacher_attend_char" /> -->
       </div>
     </div>
   </div>
@@ -94,7 +94,8 @@ export default {
         studentCensus: null
       },
       teacherNum: [],
-      examPassRate: []
+      examPassRate: [],
+      teacherAttendCharData: null
     }
   },
 
@@ -132,7 +133,21 @@ export default {
     // 获取教师考勤
     async getTeacherAttendCensus() {
       let res = await getTeacherAttendCensus()
-      console.log(res)
+      let data = res.data
+      let charData = {
+        time: [],
+        data: [
+          { name: '出勤率', value: [] },
+          { name: '准点率', value: [] }
+        ]
+      }
+      data = data.slice(-7)
+      data.forEach((n) => {
+        charData.time.push(n.time)
+        charData.data[0].value.push(n.attend)
+        charData.data[1].value.push(n.onTime)
+      })
+      this.teacherAttendCharData = charData
     }
   },
 

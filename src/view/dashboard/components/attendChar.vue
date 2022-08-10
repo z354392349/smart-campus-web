@@ -5,13 +5,14 @@
 <script>
 import * as echarts from 'echarts'
 export default {
-  props: ['type'],
+  props: ['type', 'charData'],
   data() {
     return {}
   },
 
   methods: {
     init() {
+      console.log(this.charData, 'charData')
       let color = { student: ['#ff8f00', '#5c8af5'], teacher: ['#5882f6', '#39e399'] }
       let useColor
       if (this.type == 'teacher') useColor = color.teacher
@@ -34,7 +35,7 @@ export default {
         xAxis: {
           type: 'category',
           boundaryGap: false,
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: this.charData.time,
           axisTick: {
             lineStyle: { color: '#a2a2a2' }
           },
@@ -45,13 +46,6 @@ export default {
           },
           axisLabel: {
             color: '#a2a2a2'
-            //X轴标签 label 做了特殊处理，防止左右溢出
-            // formatter: (value, index) => {
-            //   if (index === 0 || index === xAxisData.length - 1) {
-            //     return ''
-            //   }
-            //   return value
-            // }
           }
         },
         yAxis: {
@@ -63,20 +57,28 @@ export default {
           }
         },
         series: [
-          {
-            name: '出勤率',
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
-            type: 'line',
-            smooth: true
-          },
-          {
-            name: '准点率',
-            data: [932, 901, 934, 1290, 1330, 1320, 20],
-            type: 'line',
-            smooth: true
-          }
+          // {
+          //   name: '出勤率',
+          //   data: [820, 932, 901, 934, 1290, 1330, 1320],
+          //   type: 'line',
+          //   smooth: true
+          // },
+          // {
+          //   name: '准点率',
+          //   data: [932, 901, 934, 1290, 1330, 1320, 20],
+          //   type: 'line',
+          //   smooth: true
+          // }
         ]
       }
+      this.charData.data.forEach((n) => {
+        option.series.push({
+          name: n.name,
+          data: n.value,
+          type: 'line',
+          smooth: true
+        })
+      })
       myChart.setOption(option)
     }
   },
@@ -86,7 +88,9 @@ export default {
   computed: {},
 
   mounted() {
-    this.init()
+    setTimeout(() => {
+      this.init()
+    }, 2000)
   },
 
   created() {}

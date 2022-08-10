@@ -26,7 +26,7 @@ export default {
 
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: ['七年级', '八年级', '九年级'],
 
           axisTick: {
             lineStyle: { color: '#a2a2a2' }

@@ -72,7 +72,9 @@ export default {
   computed: {},
 
   mounted() {
-    this.init()
+    setTimeout(() => {
+      this.init()
+    }, 2000)
   },
 
   created() {}

@@ -1,0 +1,68 @@
+option = {
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow'
+    }
+  },
+  legend: {},
+  grid: {
+    left: '3%',
+    right: '4%',
+    bottom: '3%',
+    containLabel: true
+  },
+  xAxis: [
+    {
+      type: 'category',
+      data: ['七年级', '八年级', '九年级'],
+
+    }
+  ],
+  yAxis: [
+    {
+      type: 'value'
+    }
+  ],
+  series: [
+    {
+      name: '二班女',
+      type: 'bar',
+          stack: '二班',
+      emphasis: {
+        focus: 'series'
+      },
+      data: [320, 332, 301, 334, 390, 330, 320]
+    },
+    {
+      name: '二班男',
+      type: 'bar',
+       stack: '二班',
+      emphasis: {
+        focus: 'series'
+      },
+      data: [120, 132, 101, 134, 90, 230, 210]
+    },
+    {
+      name: '一班女生',
+      type: 'bar',
+      stack: '一班',
+      emphasis: {
+        focus: 'series'
+      },
+      data: [220, 182, 191, 234, 290, 330, 310]
+    },
+    {
+      name: '一班男生',
+      type: 'bar',
+      stack: '一班',
+      emphasis: {
+        focus: 'series'
+      },
+      data: [150, 232, 201, 154, 190, 330, 410]
+    },
+
+ 
+ 
+  ]
+};
