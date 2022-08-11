@@ -67,11 +67,11 @@
     <div class="row3">
       <div class="row3__col1">
         <p class="p-char-title">各班级学生人数</p>
-        <StudentChar />
+        <StudentChar :charData="studentCharData" />
       </div>
       <div class="row3__col2">
         <p class="p-char-title">学生考勤</p>
-        <!-- <AttendChar type="student" class="teacher_attend_char" /> -->
+        <AttendChar :charData="studentAttendCharData" type="student" class="teacher_attend_char" />
       </div>
     </div>
   </div>
@@ -83,7 +83,7 @@ import AttendChar from './components/attendChar.vue'
 // import StudentTop10 from './components/studentTop10.vue'
 import StudentChar from './components/studentChar.vue'
 import CssLineChar from './components/cssLineChar.vue'
-import { getDashboardCensusNum, getTeacherNum, getExamPassRate, getTeacherAttendCensus } from '@/api/dashboard.js'
+import { getDashboardCensusNum, getTeacherNum, getExamPassRate, getTeacherAttendCensus, getStudentNum, getStudentAttendCensus } from '@/api/dashboard.js'
 export default {
   data() {
     return {
@@ -95,7 +95,9 @@ export default {
       },
       teacherNum: [],
       examPassRate: [],
-      teacherAttendCharData: null
+      teacherAttendCharData: null,
+      studentCharData: null,
+      studentAttendCharData: null
     }
   },
 
@@ -148,6 +150,34 @@ export default {
         charData.data[1].value.push(n.onTime)
       })
       this.teacherAttendCharData = charData
+    },
+
+    // 获取教师考勤
+    async getStudentNum() {
+      let res = await getStudentNum()
+      let data = res.data
+      this.studentCharData = data
+    },
+
+    // 获取学生考勤 - 历史
+    async getStudentAttendCensus() {
+      let res = await getStudentAttendCensus()
+      let data = res.data
+
+      let charData = {
+        time: [],
+        data: [
+          { name: '出勤率', value: [] },
+          { name: '准点率', value: [] }
+        ]
+      }
+      data = data.slice(-7)
+      data.forEach((n) => {
+        charData.time.push(n.time)
+        charData.data[0].value.push(n.attend)
+        charData.data[1].value.push(n.onTime)
+      })
+      this.studentAttendCharData = charData
     }
   },
 
@@ -167,6 +197,8 @@ export default {
     this.getTeacherNum()
     this.getExamPassRate()
     this.getTeacherAttendCensus()
+    this.getStudentNum()
+    this.getStudentAttendCensus()
   }
 }
 </script>

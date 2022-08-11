@@ -28,3 +28,19 @@ export const getTeacherAttendCensus = () => {
     method: 'get'
   })
 }
+
+// 获取学生数量
+export const getStudentNum = () => {
+  return service({
+    url: '/dashboard/getStudentNum',
+    method: 'get'
+  })
+}
+
+// 获取获取学生考勤 统计 - 历史
+export const getStudentAttendCensus = () => {
+  return service({
+    url: '/dashboard/getStudentAttendCensus',
+    method: 'get'
+  })
+}

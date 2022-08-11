@@ -5,6 +5,7 @@
 <script>
 import * as echarts from 'echarts'
 export default {
+  props: ['charData'],
   data() {
     return {}
   },
@@ -59,14 +60,68 @@ export default {
         color: ['#5487ff', '#ff6d8a'],
         series: [
           {
+            name: '一班男生',
             type: 'bar',
-            barWidth: '15px',
-            data: [10, 52, 200, 334, 390, 330, 220]
+            stack: '一班',
+            emphasis: { focus: 'series' },
+            color: '#5487ff',
+            data: [18, 22, 20]
           },
           {
-            barWidth: '15px',
+            name: '二班男生',
             type: 'bar',
-            data: [10, 52, 200, 334, 390, 330, 220]
+            stack: '二班',
+            emphasis: { focus: 'series' },
+            color: '#5487ff',
+            data: [18, 12, 22]
+          },
+          {
+            name: '三班男生',
+            type: 'bar',
+            stack: '三班',
+            emphasis: { focus: 'series' },
+            color: '#5487ff',
+            data: [20, 17, 10]
+          },
+          {
+            name: '四班男生',
+            type: 'bar',
+            stack: '四班',
+            emphasis: { focus: 'series' },
+            color: '#5487ff',
+            data: [17, 18, 18]
+          },
+          {
+            name: '一班女生',
+            type: 'bar',
+            stack: '一班',
+            emphasis: { focus: 'series' },
+            color: '#ff6d8a',
+            data: [22, 18, 20]
+          },
+          {
+            name: '二班女生',
+            type: 'bar',
+            stack: '二班',
+            emphasis: { focus: 'series' },
+            color: '#ff6d8a',
+            data: [22, 28, 18]
+          },
+          {
+            name: '三班女生',
+            type: 'bar',
+            stack: '三班',
+            emphasis: { focus: 'series' },
+            color: '#ff6d8a',
+            data: [20, 23, 30]
+          },
+          {
+            name: '四班女生',
+            type: 'bar',
+            stack: '四班',
+            emphasis: { focus: 'series' },
+            color: '#ff6d8a',
+            data: [23, 22, 22]
           }
         ]
       }
