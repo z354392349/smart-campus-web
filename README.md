@@ -29,4 +29,5 @@ npm run test
 ```
 git config --global core.autocrlf false
 npm run lint --fix
+npm install --registry=https://registry.npm.taobao.org
 ```
