@@ -29,6 +29,7 @@
 
 <script>
 import { getGradeList } from '@/api/grade'
+import { getGradeAverageResult, getGradePassPercent } from '@/api/resultAnalyseGrade.js'
 import StudentChar from '../components/char/barChar.vue'
 import ModuleTitle from '../components/moduleTitle.vue'
 import CssLineChar from '../components/char/cssLineChar'
@@ -49,6 +50,24 @@ export default {
     async getGradeList() {
       const res = await getGradeList()
       this.gradeList = res.data.list
+    },
+
+    // 获取年级全部科目平均成绩
+    async getGradeAverageResult() {
+      const res = await getGradeAverageResult({ gradeID: 1 })
+      console.log(res)
+    },
+
+    // 获取年级指定科目平均成绩
+    async getGradeCourseAverageResult() {
+      const res = await getGradeAverageResult({ gradeID: 1, courseID: 1 })
+      console.log(res)
+    },
+
+    // 获取年级指定科目平均成绩
+    async getGradePassPercent() {
+      const res = await getGradePassPercent({ gradeID: 1 })
+      console.log(res)
     }
   },
 
@@ -65,6 +84,9 @@ export default {
 
   created() {
     this.getGradeList()
+    this.getGradeAverageResult()
+    this.getGradeCourseAverageResult()
+    this.getGradePassPercent()
   }
 }
 </script>
