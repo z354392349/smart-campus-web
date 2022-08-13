@@ -56,20 +56,7 @@ export default {
             }
           }
         },
-        series: [
-          // {
-          //   name: '出勤率',
-          //   data: [820, 932, 901, 934, 1290, 1330, 1320],
-          //   type: 'line',
-          //   smooth: true
-          // },
-          // {
-          //   name: '准点率',
-          //   data: [932, 901, 934, 1290, 1330, 1320, 20],
-          //   type: 'line',
-          //   smooth: true
-          // }
-        ]
+        series: []
       }
       this.charData.data.forEach((n) => {
         option.series.push({

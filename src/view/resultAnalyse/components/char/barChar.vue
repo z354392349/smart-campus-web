@@ -5,6 +5,7 @@
 <script>
 import * as echarts from 'echarts'
 export default {
+  props: ['type', 'charData'],
   data() {
     return {}
   },
@@ -21,12 +22,12 @@ export default {
           right: '2%',
           bottom: '10%',
           top: '12%',
-          containLabel: true
+          containLabel: false
         },
 
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: this.charData.time,
 
           axisTick: {
             lineStyle: { color: '#a2a2a2' }
@@ -38,13 +39,6 @@ export default {
           },
           axisLabel: {
             color: '#a2a2a2'
-            //X轴标签 label 做了特殊处理，防止左右溢出
-            // formatter: (value, index) => {
-            //   if (index === 0 || index === xAxisData.length - 1) {
-            //     return ''
-            //   }
-            //   return value
-            // }
           }
         },
 
@@ -56,17 +50,12 @@ export default {
             }
           }
         },
-        color: ['#5487ff', '#ff6d8a'],
+        color: this.type == 1 ? ['#5487ff', '#ff6d8a'] : ['#ff6d8a', '#5487ff'],
         series: [
           {
             type: 'bar',
             barWidth: '15px',
-            data: [10, 52, 200, 334, 390, 330, 220]
-          },
-          {
-            barWidth: '15px',
-            type: 'bar',
-            data: [10, 52, 200, 334, 390, 330, 220]
+            data: this.charData.data
           }
         ]
       }
@@ -79,15 +68,11 @@ export default {
   computed: {},
 
   mounted() {
-    this.init()
+    setTimeout(() => {
+      this.init()
+    }, 4000)
   },
-
   created() {}
 }
 </script>
-<style lang="scss" scoped>
-.char {
-  width: 100%;
-  height: 100%;
-}
-</style>
+<style lang="scss" scoped></style>

@@ -1,49 +1,47 @@
 var data = [
-  { className: '一班', gradeName: '七年级', sex: '1', total: 18 },
-  { className: '二班', gradeName: '七年级', sex: '1', total: 18 },
-  { className: '三班', gradeName: '七年级', sex: '1', total: 20 },
-  { className: '四班', gradeName: '七年级', sex: '1', total: 17 },
-  { className: '一班', gradeName: '八年级', sex: '1', total: 22 },
-  { className: '二班', gradeName: '八年级', sex: '1', total: 12 },
-  { className: '三班', gradeName: '八年级', sex: '1', total: 17 },
-  { className: '四班', gradeName: '八年级', sex: '1', total: 18 },
-  { className: '一班', gradeName: '九年级', sex: '1', total: 20 },
-  { className: '二班', gradeName: '九年级', sex: '1', total: 22 },
-  { className: '三班', gradeName: '九年级', sex: '1', total: 10 },
-  { className: '四班', gradeName: '九年级', sex: '1', total: 18 },
-  { className: '一班', gradeName: '七年级', sex: '2', total: 22 },
-  { className: '二班', gradeName: '七年级', sex: '2', total: 22 },
-  { className: '三班', gradeName: '七年级', sex: '2', total: 20 },
-  { className: '四班', gradeName: '七年级', sex: '2', total: 23 },
-  { className: '一班', gradeName: '八年级', sex: '2', total: 18 },
-  { className: '二班', gradeName: '八年级', sex: '2', total: 28 },
-  { className: '三班', gradeName: '八年级', sex: '2', total: 23 },
-  { className: '四班', gradeName: '八年级', sex: '2', total: 22 },
-  { className: '一班', gradeName: '九年级', sex: '2', total: 20 },
-  { className: '二班', gradeName: '九年级', sex: '2', total: 18 },
-  { className: '三班', gradeName: '九年级', sex: '2', total: 30 },
-  { className: '四班', gradeName: '九年级', sex: '2', total: 22 }
+  { examName: '2021年七年级上学期期中考试', className: '一班', result: '593.68' },
+  { examName: '2021年七年级上学期期中考试', className: '二班', result: '604.20' },
+  { examName: '2021年七年级上学期期中考试', className: '三班', result: '593.85' },
+  { examName: '2021年七年级上学期期中考试', className: '四班', result: '593.85' },
+  { examName: '2022年七年级上学期期末考试', className: '一班', result: '592.05' },
+  { examName: '2022年七年级上学期期末考试', className: '二班', result: '590.40' },
+  { examName: '2022年七年级上学期期末考试', className: '三班', result: '585.60' },
+  { examName: '2022年七年级上学期期末考试', className: '四班', result: '598.58' },
+  { examName: '2022年七年级下学期期中考试', className: '二班', result: '588.03' },
+  { examName: '2022年七年级下学期期中考试', className: '三班', result: '591.80' },
+  { examName: '2022年七年级下学期期中考试', className: '四班', result: '594.93' },
+  { examName: '2022年七年级下学期期中考试', className: '一班', result: '594.93' },
+  { examName: '2022年七年级下学期期末考试', className: '二班', result: '587.75' },
+  { examName: '2022年七年级下学期期末考试', className: '三班', result: '593.25' },
+  { examName: '2022年七年级下学期期末考试', className: '四班', result: '593.93' },
+  { examName: '2022年七年级下学期期末考试', className: '一班', result: '593.13' }
 ]
 
-let groupData = {} // 0-4 对应四个班数据
-let series = []
+let charData = {
+  time: [],
+  data: [
+    { name: '一班', value: [] },
+    { name: '二班', value: [] },
+    { name: '三班', value: [] },
+    { name: '四班', value: [] }
+  ]
+}
 data.forEach((n) => {
-  let name = n.className + (n.sex == '1' ? '男生' : '女生')
-  if (!(name in groupData)) groupData[name] = []
-  groupData[name].push(n.total)
+  if (!charData.time.includes(n.examName)) charData.time.push(n.examName)
+  switch (n.className) {
+    case '一班':
+      charData.data[0].value.push(n.result)
+      break
+    case '二班':
+      charData.data[1].value.push(n.result)
+      break
+    case '三班':
+      charData.data[2].value.push(n.result)
+      break
+    case '四班':
+      charData.data[3].value.push(n.result)
+      break
+  }
 })
 
-for (const key in groupData) {
-  series.push({
-    name: key,
-    type: 'bar',
-    stack: key.substring(0, 2),
-    emphasis: {
-      focus: 'series'
-    },
-    color: key.substring(2) == '男生' ? '#5487ff' : '#ff6d8a',
-    data: groupData[key]
-  })
-}
-
-console.log(series)
+console.log(charData)
