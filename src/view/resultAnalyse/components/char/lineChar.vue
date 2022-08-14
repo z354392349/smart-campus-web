@@ -7,9 +7,20 @@ import * as echarts from 'echarts'
 export default {
   props: ['type', 'charData'],
   data() {
-    return {}
+    return { charO: null }
   },
-
+  watch: {
+    charData: {
+      handler: function (val) {
+        if (val !== null) {
+          if (this.charO != null) {
+            this.charO.dispose() // 销毁现有数据
+          }
+          this.init()
+        }
+      }
+    }
+  },
   methods: {
     init() {
       let color = { student: ['#ff8f00', '#5c8af5'], teacher: ['#5882f6', '#39e399'] }
@@ -67,6 +78,21 @@ export default {
         })
       })
       myChart.setOption(option)
+      this.charO = myChart
+    },
+
+    // 图重绘
+    charRize() {
+      if (this.charO) this.charO.resize()
+    },
+    // 图重绘绑定
+    charRizeBind() {
+      window.addEventListener('resize', this.charRize)
+    },
+
+    // 图重绘解绑
+    charRizeUnBind() {
+      window.removeEventListener('resize', this.charRize)
     }
   },
 
@@ -74,10 +100,11 @@ export default {
 
   computed: {},
 
+  beforeDestroy() {
+    this.charRizeUnBind()
+  },
   mounted() {
-    setTimeout(() => {
-      this.init()
-    }, 4000)
+    this.charRizeBind()
   },
 
   created() {}

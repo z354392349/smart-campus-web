@@ -7,9 +7,22 @@ import * as echarts from 'echarts'
 export default {
   props: ['type', 'charData'],
   data() {
-    return {}
+    return {
+      charO: null
+    }
   },
-
+  watch: {
+    charData: {
+      handler: function (val) {
+        if (val !== null) {
+          if (this.charO != null) {
+            this.charO.dispose() // 销毁现有数据
+          }
+          this.init()
+        }
+      }
+    }
+  },
   methods: {
     init() {
       let myChart = echarts.init(this.$refs.char)
@@ -60,6 +73,21 @@ export default {
         ]
       }
       myChart.setOption(option)
+      this.charO = myChart
+    },
+
+    // 图重绘
+    charRize() {
+      if (this.charO) this.charO.resize()
+    },
+    // 图重绘绑定
+    charRizeBind() {
+      window.addEventListener('resize', this.charRize)
+    },
+
+    // 图重绘解绑
+    charRizeUnBind() {
+      window.removeEventListener('resize', this.charRize)
     }
   },
 
@@ -67,10 +95,11 @@ export default {
 
   computed: {},
 
+  beforeDestroy() {
+    this.charRizeUnBind()
+  },
   mounted() {
-    setTimeout(() => {
-      this.init()
-    }, 4000)
+    this.charRizeBind()
   },
   created() {}
 }

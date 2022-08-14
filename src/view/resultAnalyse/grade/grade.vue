@@ -8,7 +8,7 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button size="mini" type="primary" icon="el-icon-search" @click="search()">分析</el-button>
+          <el-button size="mini" type="primary" icon="el-icon-search" @click="searchAllChar()">分析</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -16,11 +16,11 @@
       <div class="row1">
         <div class="row1__item">
           <ModuleTitle title="平均总成绩" tooltip="全年级学生成绩总数/年级学生总数" />
-          <StudentChar :charData="gradeAverageResult" :type="1" class="char-box" />
+          <BarChar :charData="gradeAverageResult" :type="1" class="char-box" />
         </div>
         <div class="row1__item">
-          <ModuleTitle title="平均单科成绩" tooltip="全年级学生单科成绩总数/年级学生总数" />
-          <StudentChar :charData="gradeCourseAverageResult" :type="2" class="char-box" />
+          <ModuleTitle title="平均单科成绩" tooltip="全年级学生单科成绩总数/年级学生总数" :selectOpt="courseList" @selChange="allCourseChange" :selValue="allCourseID" />
+          <BarChar :charData="gradeCourseAverageResult" :type="2" class="char-box" />
         </div>
         <div class="row1__item">
           <ModuleTitle title="及格率" tooltip="全年级成绩大于60分的科目/全年级参加考试的总科目" />
@@ -33,7 +33,7 @@
           <LineChar class="char-box" :charData="gradeAverageResultHistory" />
         </div>
         <div class="row2__item">
-          <ModuleTitle title="平均单科成绩" tooltip="全年级成绩大于60分的科目/全年级参加考试的总科目" />
+          <ModuleTitle title="平均单科成绩" tooltip="全年级成绩大于60分的科目/全年级参加考试的总科目" @selChange="singleCourseChange" :selectOpt="courseList" :selValue="singleCourseID" />
           <LineChar class="char-box" :charData="gradeCourseAverageResultHistory" />
         </div>
       </div>
@@ -45,7 +45,7 @@
 import { getGradeList } from '@/api/grade'
 import { getGradeAverageResult, getGradePassPercent, getGradeAverageResultHistory, getGradeCourseAverageResultHistory } from '@/api/resultAnalyseGrade.js'
 import { getCourseList } from '@/api/course'
-import StudentChar from '../components/char/barChar.vue'
+import BarChar from '../components/char/barChar.vue'
 import ModuleTitle from '../components/moduleTitle.vue'
 
 import LineChar from '../components/char/lineChar.vue'
@@ -56,6 +56,8 @@ export default {
       searchInfo: {
         gradeID: ''
       },
+      allCourseID: null,
+      singleCourseID: null,
       gradeList: [],
       courseList: [],
       gradeAverageResult: null,
@@ -69,21 +71,44 @@ export default {
   methods: {
     search() {},
 
+    // 所有科目平均成绩改变
+    allCourseChange(val) {
+      this.allCourseID = val
+      console.log('在线')
+      this.getGradeCourseAverageResult()
+    },
+
+    // 单个科目平均成绩改变
+    singleCourseChange(val) {
+      this.singleCourseID = val
+      this.getGradeCourseAverageResultHistory()
+    },
+
     // 获取年级列表
     async getGradeList() {
       const res = await getGradeList()
       this.gradeList = res.data.list
+      this.searchInfo.gradeID = this.gradeList[0].ID
     },
 
     // 获取课程列表
     async getCourseList() {
       const res = await getCourseList()
-      this.courseList = res.data.list
+      let list = res.data.list
+      this.courseList = list.map((x) => {
+        return {
+          label: x.name,
+          value: x.ID
+        }
+      })
+      this.singleCourseID = this.courseList[0].value
+      this.allCourseID = this.courseList[0].value
+      console.log(this.courseList)
     },
 
     // 获取年级全部科目平均成绩
     async getGradeAverageResult() {
-      const res = await getGradeAverageResult({ gradeID: 1 })
+      const res = await getGradeAverageResult({ gradeID: this.searchInfo.gradeID })
       const data = res.data
       let charData = {
         time: [],
@@ -98,7 +123,7 @@ export default {
 
     // 获取年级指定科目平均成绩
     async getGradeCourseAverageResult() {
-      const res = await getGradeAverageResult({ gradeID: 1, courseID: 1 })
+      const res = await getGradeAverageResult({ gradeID: this.searchInfo.gradeID, courseID: this.allCourseID })
       console.log(res, '平均成绩')
       const data = res.data
       let charData = {
@@ -114,7 +139,7 @@ export default {
 
     // 获取年级通过率
     async getGradePassPercent() {
-      const res = await getGradePassPercent({ gradeID: 1 })
+      const res = await getGradePassPercent({ gradeID: this.searchInfo.gradeID })
       console.log(res, 'tongg')
       const data = res.data
       let charData = [
@@ -126,7 +151,7 @@ export default {
 
     // 获取年级全部科目平均成绩 - 历史
     async getGradeAverageResultHistory() {
-      const res = await getGradeAverageResultHistory({ gradeID: 1 })
+      const res = await getGradeAverageResultHistory({ gradeID: this.searchInfo.gradeID })
       const data = res.data
       let charData = {
         time: [],
@@ -159,7 +184,7 @@ export default {
 
     // 获取年级指定科目平均成绩 -历史
     async getGradeCourseAverageResultHistory() {
-      const res = await getGradeCourseAverageResultHistory({ gradeID: 1, courseID: 1 })
+      const res = await getGradeCourseAverageResultHistory({ gradeID: this.searchInfo.gradeID, courseID: this.singleCourseID })
       const data = res.data
       console.log(res, 'rd')
       let charData = {
@@ -189,11 +214,20 @@ export default {
         }
       })
       this.gradeCourseAverageResultHistory = charData
+    },
+
+    // 获取所有char 数据
+    searchAllChar() {
+      this.getGradeAverageResult()
+      this.getGradeCourseAverageResult()
+      this.getGradePassPercent()
+      this.getGradeAverageResultHistory()
+      this.getGradeCourseAverageResultHistory()
     }
   },
 
   components: {
-    StudentChar,
+    BarChar,
     ModuleTitle,
     PieChar,
     LineChar
@@ -203,14 +237,10 @@ export default {
 
   mounted() {},
 
-  created() {
-    this.getGradeList()
-    this.getGradeAverageResult()
-    this.getGradeCourseAverageResult()
-    this.getGradePassPercent()
-    this.getGradeAverageResultHistory()
-    this.getGradeCourseAverageResultHistory()
-    this.getCourseList()
+  async created() {
+    await this.getGradeList()
+    await this.getCourseList()
+    this.searchAllChar()
   }
 }
 </script>
