@@ -99,8 +99,6 @@ export default {
       if (this.searchInfo.end) this.searchInfo.endTime = jsTimeToDayEndUnix(this.searchInfo.end)
       else this.searchInfo.endTime = null
 
-      console.log(this.searchInfo)
-
       this.getTableData(1)
     },
 

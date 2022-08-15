@@ -62,7 +62,6 @@ export default {
       this.initForm()
     },
     openDialog() {
-      console.log(this.row)
       this.form.result = this.row.result
       this.form.description = this.row.description
       this.form.ID = this.row.ID

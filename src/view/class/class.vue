@@ -165,7 +165,7 @@ export default {
       for (const key in this.form) {
         this.form[key] = row[key]
       }
-      console.log(this.form)
+
       this.form.id = row.ID
       this.openDialog('edit')
     },

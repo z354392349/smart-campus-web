@@ -12,7 +12,6 @@ export default {
 
   methods: {
     init() {
-      console.log(this.charData, 'charData')
       let color = { student: ['#ff8f00', '#5c8af5'], teacher: ['#5882f6', '#39e399'] }
       let useColor
       if (this.type == 'teacher') useColor = color.teacher

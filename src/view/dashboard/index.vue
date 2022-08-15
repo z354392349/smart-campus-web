@@ -117,7 +117,6 @@ export default {
       this.teacherNum = teacherNum.map((x) => {
         return { name: x.sex == 1 ? '男' : '女', value: x.num }
       })
-      console.log(this.teacherNum)
     },
 
     // 获取合格率
@@ -129,7 +128,6 @@ export default {
         n.scale = ((n.rate / n.total) * 100).toFixed(2)
       })
       this.examPassRate = data
-      console.log(this.examPassRate)
     },
 
     // 获取教师考勤

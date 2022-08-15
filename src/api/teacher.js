@@ -2,7 +2,6 @@ import service from '@/utils/request'
 
 // 获取教师列表
 export const getTeacherList = (data) => {
-  console.log(data, 'data')
   return service({
     url: '/teacher/getTeacherList',
     method: 'get',

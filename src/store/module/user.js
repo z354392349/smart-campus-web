@@ -63,7 +63,7 @@ export const user = {
         const asyncRouters = rootGetters['router/asyncRouters']
         router.addRoutes(asyncRouters)
         // const redirect = router.history.current.query.redirect
-        // console.log(redirect)
+        //
         // if (redirect) {
         //     router.push({ path: redirect })
         // } else {

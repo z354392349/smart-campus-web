@@ -81,8 +81,6 @@ export default {
       if (this.searchInfo.end) this.searchInfo.endTime = jsTimeToDayEndUnix(this.searchInfo.end)
       else this.searchInfo.endTime = null
 
-      console.log(this.searchInfo)
-
       this.getTableData(1)
     },
     // 创建 虚拟数据
@@ -93,7 +91,6 @@ export default {
       let endTime = moment('2022-10-08 17:15:00') // 下午离开
 
       for (let i = 0; i < 26; i++) {
-        console.log(startTime.day(), 'dd')
         if (startTime.date() != 8 && startTime.date() != 9) {
           if (startTime.day() == 6 || startTime.day() == 0) {
             startTime.add(1, 'd')

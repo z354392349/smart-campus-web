@@ -192,9 +192,6 @@ export default {
           message: '设置成功'
         })
       }
-    },
-    handleClick(tab, event) {
-      console.log(tab, event)
     }
   }
 }

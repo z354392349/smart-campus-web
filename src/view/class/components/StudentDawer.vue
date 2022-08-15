@@ -102,7 +102,6 @@ export default {
     }
   },
   created() {
-    console.log(this.row, 'rew')
     this.getClassList()
     this.getGradeList()
   },
@@ -135,7 +134,6 @@ export default {
 
     // 年级改变
     gradeChane(val) {
-      console.log(val, '12')
       let classList = []
       if (val !== 0) classList = this.classListAll.filter((n) => n.gradeID === val)
       classList.unshift({ ID: 0, name: '全部' })
@@ -145,7 +143,6 @@ export default {
 
     // 打开diaolog
     open() {
-      console.log(this.row, 'rew')
       this.searchInfo.gradeID = this.row.gradeID
       this.gradeChane(this.row.gradeID)
       this.searchInfo.classID = this.row.ID

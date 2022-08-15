@@ -96,7 +96,6 @@ export default {
 
     // 弹窗打开前的回调
     open() {
-      console.log(this.row.examItem, 'this.row.examItem ')
       // this.row.examItem = this.row.examItem
     },
 
@@ -118,7 +117,6 @@ export default {
       let res = await getExamRoomList({ pageSize: 100, page: 1 })
       let list = res.data.list
       this.examRoomList = list
-      console.log(list, 'list1')
     },
 
     // 提示框文字
@@ -142,7 +140,6 @@ export default {
   created() {
     this.getCourseList()
     this.getExamRoomList()
-    console.log(this.row, 'row')
   }
 }
 </script>

@@ -291,16 +291,13 @@ export default {
 
     // 表单 年级改变
     gradeFormChane(val) {
-      console.log(val, 'va')
       if (val !== 0) this.classFormList = this.classListAll.filter((n) => n.gradeID === val)
       else this.classFormList = []
-      console.log(this.classFormList, 'classFormList')
     },
 
     // 表单多选处理
     handleSelectionChange(val) {
       this.batchSetData.studentsID = val.map((n) => n.ID)
-      console.log(this.batchSetData.studentsID, 's')
     },
 
     // 批量修改年级班级 弹窗

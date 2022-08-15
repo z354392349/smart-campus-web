@@ -74,7 +74,7 @@ export default {
     // 所有科目平均成绩改变
     allCourseChange(val) {
       this.allCourseID = val
-      console.log('在线')
+
       this.getGradeCourseAverageResult()
     },
 
@@ -103,7 +103,6 @@ export default {
       })
       this.singleCourseID = this.courseList[0].value
       this.allCourseID = this.courseList[0].value
-      console.log(this.courseList)
     },
 
     // 获取年级全部科目平均成绩
@@ -124,7 +123,7 @@ export default {
     // 获取年级指定科目平均成绩
     async getGradeCourseAverageResult() {
       const res = await getGradeAverageResult({ gradeID: this.searchInfo.gradeID, courseID: this.allCourseID })
-      console.log(res, '平均成绩')
+
       const data = res.data
       let charData = {
         time: [],
@@ -140,7 +139,7 @@ export default {
     // 获取年级通过率
     async getGradePassPercent() {
       const res = await getGradePassPercent({ gradeID: this.searchInfo.gradeID })
-      console.log(res, 'tongg')
+
       const data = res.data
       let charData = [
         { name: '及格', value: data },
@@ -186,7 +185,7 @@ export default {
     async getGradeCourseAverageResultHistory() {
       const res = await getGradeCourseAverageResultHistory({ gradeID: this.searchInfo.gradeID, courseID: this.singleCourseID })
       const data = res.data
-      console.log(res, 'rd')
+
       let charData = {
         time: [],
         data: [

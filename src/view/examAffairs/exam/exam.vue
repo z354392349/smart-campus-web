@@ -153,8 +153,6 @@ export default {
       this.$nextTick(() => {
         this.$refs.form.clearValidate()
       })
-      console.log('zx', this.form)
-      console.log('this.examItem', this.examItem)
     },
 
     // 关闭弹窗
@@ -208,7 +206,7 @@ export default {
     // 将前台格式整理为 服务器端 格式
     formatFormToServe() {
       let form = copyObj(this.form)
-      console.log(form)
+
       let examItem = []
       form.examItem.forEach((n) => {
         if (n.check) {
@@ -303,7 +301,6 @@ export default {
 
     // 显示分配考场弹窗
     showAffairsDialog(row) {
-      console.log(row, 'tow')
       this.row = row
       this.$refs.AffairsDialog.dialogFormVisible = true
     },
@@ -373,7 +370,7 @@ export default {
             gradeID: list[i].gradeID, // 年级 ID
             examRoomIDs: examRoomList[list[i].gradeID - 1] // 考场号ID, 用,分割
           }
-          // console.log(params)
+          //
           res = await allotExamItemRoom(params)
         }
       }
@@ -382,7 +379,6 @@ export default {
       //     let a = {}
       //   })
       // })
-      console.log(res)
     },
 
     // 显示详情

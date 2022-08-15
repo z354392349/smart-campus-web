@@ -109,7 +109,6 @@ export default {
       })
       this.singleCourseID = this.courseList[0].value
       this.lastExamCourseID = this.courseList[0].value
-      console.log(this.courseList)
     },
 
     // 年级改变
@@ -118,7 +117,6 @@ export default {
       if (val !== 0) classList = this.classListAll.filter((n) => n.gradeID === val)
       this.classList = classList
       this.searchInfo.classID = this.classList[0].ID
-      console.log(this.classList, ' this.classList')
     },
 
     // 获取班级列表
@@ -143,7 +141,7 @@ export default {
     async getStudentTotalResult() {
       let res = await getStudentTotalResult({ gradeID: this.searchInfo.gradeID, classID: this.searchInfo.classID })
       const data = res.data
-      console.log(res, 'rrrrr')
+
       let charData = {
         time: [],
         data: []
@@ -159,7 +157,7 @@ export default {
     async getStudentCourseTotalResult() {
       let res = await getStudentTotalResult({ gradeID: this.searchInfo.gradeID, classID: this.searchInfo.classID, courseID: this.lastExamCourseID })
       const data = res.data
-      console.log(data)
+
       let charData = {
         time: [],
         data: []
@@ -174,7 +172,7 @@ export default {
     // 获取班级通过率
     async getClassPassPercent() {
       let res = await getClassPassPercent({ gradeID: this.searchInfo.gradeID, classID: this.searchInfo.classID })
-      console.log(res, 'tongg')
+
       const data = res.data
       let charData = [
         { name: '及格', value: data },

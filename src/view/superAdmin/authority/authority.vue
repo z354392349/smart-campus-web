@@ -120,7 +120,6 @@ export default {
     this.pageSize = 999
     await this.getTableData()
     const res = await getStudentList()
-    console.log(res)
   },
   methods: {
     autoEnter(activeName, oldActiveName) {
