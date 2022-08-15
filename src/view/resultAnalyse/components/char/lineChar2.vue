@@ -7,9 +7,7 @@ import * as echarts from 'echarts'
 export default {
   props: ['type', 'charData'],
   data() {
-    return {
-      charO: null
-    }
+    return { charO: null }
   },
   watch: {
     charData: {
@@ -25,34 +23,47 @@ export default {
   },
   methods: {
     init() {
+      let color = { type1: ['#ff8f00', '#5c8af5', '#A66CFF'], type2: ['#5882f6', '#39e399', '#FD5D5D'] }
+      let useColor
+      if (this.type == 1) useColor = color.type1
+      else useColor = color.type2
       let myChart = echarts.init(this.$refs.char)
       let option = {
-        tooltip: {
-          trigger: 'axis'
-        },
+        color: useColor,
+
         grid: {
-          left: '30px',
+          left: '50px',
           right: '2%',
           bottom: '10%',
-          top: '12%',
-          containLabel: false
+          top: '12%'
+          // containLabel: false
         },
-        dataZoom: [
-          {
-            type: 'slider', // 这个 dataZoom 组件是 slider 型 dataZoom 组件
-            start: 0, // 左边在 10% 的位置。
-            end: 20 // 右边在 60% 的位置。
-          },
-          {
-            type: 'inside', // 这个 dataZoom 组件是 inside 型 dataZoom 组件
-            start: 10, // 左边在 10% 的位置。
-            end: 60 // 右边在 60% 的位置。
+        tooltip: {
+          trigger: 'axis',
+          formatter: function (params) {
+            var str = '',
+              sValue,
+              marker,
+              seriesName
+
+            str += `<p>${params[0].axisValue}</p>`
+            params.forEach((n, i) => {
+              seriesName = n.seriesName
+              sValue = n.data
+              marker = `<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${n.color};"></span>`
+              marker += `<span style="display:inline-block;width:60px;">${seriesName}: </span>`
+              marker += `<span style="display:inline-block;width:60px;margin-right:10px;text-align: right;">${sValue}</span> `
+              str += marker
+              if ((i + 1) % 3 == 0) str += '<br />'
+            })
+            return str
           }
-        ],
+        },
+
         xAxis: {
           type: 'category',
+          boundaryGap: false,
           data: this.charData.time,
-
           axisTick: {
             lineStyle: { color: '#a2a2a2' }
           },
@@ -65,7 +76,6 @@ export default {
             color: '#a2a2a2'
           }
         },
-
         yAxis: {
           type: 'value',
           splitLine: {
@@ -74,18 +84,18 @@ export default {
             }
           }
         },
-        color: this.type == 1 ? ['#5487ff', '#ff6d8a'] : ['#ff6d8a', '#5487ff'],
-        series: [
-          {
-            type: 'bar',
-            barWidth: '15px',
-            data: this.charData.data
-          }
-        ]
+        series: []
       }
-      if (this.charData.time.length < 6) {
-        option.dataZoom = [] // 小于9条不显示滚动条
-      }
+
+      this.charData.data.forEach((n) => {
+        option.series.push({
+          name: n.name,
+          data: n.value,
+          type: 'line',
+          smooth: true
+        })
+      })
+
       myChart.setOption(option)
       this.charO = myChart
     },
@@ -115,7 +125,13 @@ export default {
   mounted() {
     this.charRizeBind()
   },
+
   created() {}
 }
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.char {
+  width: 100%;
+  height: 100%;
+}
+</style>

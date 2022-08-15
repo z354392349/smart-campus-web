@@ -30,11 +30,11 @@
       <div class="row2">
         <div class="row2__item">
           <ModuleTitle title="平均总成绩" tooltip="全年级成绩大于60分的科目/全年级参加考试的总科目" />
-          <LineChar class="char-box" :charData="gradeAverageResultHistory" />
+          <LineChar :type="1" class="char-box" :charData="gradeAverageResultHistory" />
         </div>
         <div class="row2__item">
           <ModuleTitle title="平均单科成绩" tooltip="全年级成绩大于60分的科目/全年级参加考试的总科目" @selChange="singleCourseChange" :selectOpt="courseList" :selValue="singleCourseID" />
-          <LineChar class="char-box" :charData="gradeCourseAverageResultHistory" />
+          <LineChar :type="2" class="char-box" :charData="gradeCourseAverageResultHistory" />
         </div>
       </div>
     </div>

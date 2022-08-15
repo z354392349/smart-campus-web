@@ -40,11 +40,11 @@
       <div class="row2">
         <div class="row2__item">
           <ModuleTitle title="总成绩" tooltip="每个学生每一期参加考试的总成绩" />
-          <LineChar class="char-box" :charData="studentTotalResultHistory" />
+          <LineChar :type="1" class="char-box" :charData="studentTotalResultHistory" />
         </div>
         <div class="row2__item">
           <ModuleTitle title="单科成绩" tooltip="每个学生每一期参加考试的单科成绩" @selChange="singleCourseChange" :selectOpt="courseList" :selValue="singleCourseID" />
-          <LineChar class="char-box" :charData="studentCourseResultHistory" />
+          <LineChar :type="2" class="char-box" :charData="studentCourseResultHistory" />
         </div>
       </div>
     </div>
@@ -60,7 +60,7 @@ import { copyObj } from '@/utils/tool.js'
 import BarChar from '../components/char/barChar.vue'
 import ModuleTitle from '../components/moduleTitle.vue'
 
-import LineChar from '../components/char/lineChar.vue'
+import LineChar from '../components/char/lineChar2.vue'
 import PieChar from '../components/char/pieChar.vue'
 export default {
   data() {
@@ -94,7 +94,7 @@ export default {
     // 单个科目平均成绩改变
     singleCourseChange(val) {
       this.singleCourseID = val
-      this.getGradeCourseAverageResultHistory()
+      this.getStudentCourseResultHistory()
     },
 
     // 获取课程列表
@@ -209,7 +209,7 @@ export default {
 
     // 获取班级通过率
     async getStudentCourseResultHistory() {
-      let res = await getStudentCourseResultHistory({ gradeID: this.searchInfo.gradeID, classID: this.searchInfo.classID })
+      let res = await getStudentCourseResultHistory({ gradeID: this.searchInfo.gradeID, classID: this.searchInfo.classID, courseID: this.singleCourseChange })
       let data = res.data
       let charData = {
         time: [],
@@ -230,15 +230,16 @@ export default {
           value: obj[key]
         })
       }
-      this.studentTotalResultHistory = charData
+      this.studentCourseResultHistory = charData
     },
 
     // 获取所有char 数据
     searchAllChar() {
-      this.getGradeAverageResult()
-      this.getGradeCourseAverageResult()
-      this.getGradeAverageResultHistory()
-      this.getGradeCourseAverageResultHistory()
+      this.getStudentTotalResult()
+      this.getStudentCourseTotalResult()
+      this.getClassPassPercent()
+      this.getStudentToTalResultHistory()
+      this.getStudentCourseResultHistory()
     }
   },
 
@@ -257,12 +258,8 @@ export default {
     await this.getClassList()
     await this.getGradeList()
     await this.getCourseList()
-    this.getStudentTotalResult()
-    this.getStudentCourseTotalResult()
-    this.getClassPassPercent()
-    this.getStudentToTalResultHistory()
-    this.getStudentCourseResultHistory()
-    // this.searchAllChar()
+
+    this.searchAllChar()
   }
 }
 </script>
