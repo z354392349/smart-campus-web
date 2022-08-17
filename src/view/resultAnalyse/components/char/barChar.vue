@@ -83,9 +83,8 @@ export default {
           }
         ]
       }
-      if (this.charData.time.length < 6) {
-        option.dataZoom = [] // 小于9条不显示滚动条
-      }
+      if (this.charData.time.length < 9) option.dataZoom = []
+
       myChart.setOption(option)
       this.charO = myChart
     },

@@ -17,3 +17,12 @@ export const getStudentTotalResultHistory = (data) => {
     params: data
   })
 }
+
+// 获取学生全部考试单科成绩
+export const getStudentCourseResultHistory = (data) => {
+  return service({
+    url: '/studentResultAnalyse/getStudentCourseResultHistory',
+    method: 'get',
+    params: data
+  })
+}

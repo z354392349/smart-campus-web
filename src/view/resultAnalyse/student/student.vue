@@ -29,7 +29,7 @@
           <BarChar :charData="studentTotalResult" :type="1" class="char-box" />
         </div>
         <div class="row1__item">
-          <ModuleTitle title="单科成绩" tooltip="每个学生考试单科成绩-当期" :selectOpt="courseList" @selChange="allCourseChange" :selValue="lastExamCourseID" />
+          <ModuleTitle title="单科成绩" tooltip="每个学生考试单科成绩-当期" />
           <BarChar :charData="gradeCourseAverageResult" :type="2" class="char-box" />
         </div>
         <div class="row1__item">
@@ -54,8 +54,8 @@
 <script>
 import { getGradeList } from '@/api/grade'
 import { getClassList } from '@/api/class'
-import { getStudentTotalResult, getClassPassPercent, getStudentToTalResultHistory, getStudentCourseResultHistory } from '@/api/resultAnalyseClass.js'
-import { getStudentCourseResult, getStudentTotalResultHistory } from '@/api/resultAnalyseStudent.js'
+import { getStudentTotalResult, getClassPassPercent, getStudentToTalResultHistory } from '@/api/resultAnalyseClass.js'
+import { getStudentCourseResult, getStudentTotalResultHistory, getStudentCourseResultHistory } from '@/api/resultAnalyseStudent.js'
 import { getCourseList } from '@/api/course'
 import { copyObj } from '@/utils/tool.js'
 import BarChar from '../components/char/barChar.vue'
@@ -95,7 +95,7 @@ export default {
     // 单个科目平均成绩改变
     singleCourseChange(val) {
       this.singleCourseID = val
-      this.getGradeCourseAverageResultHistory()
+      this.getStudentCourseResultHistory()
     },
 
     // 获取课程列表
@@ -208,48 +208,81 @@ export default {
       this.studentTotalResultHistory = charData
     },
 
-    // 获取班级通过率
-    async getStudentCourseResultHistory() {
-      let res = await getStudentCourseResultHistory({ gradeID: this.searchInfo.gradeID, classID: this.searchInfo.classID })
+    // 获取学生当期 每一个科目成绩，对应上面三个图表
+    async getStudentCourseResult() {
+      let res = await getStudentCourseResult({ gradeID: this.searchInfo.gradeID, studentID: 10 })
       let data = res.data
+
+      // 总成绩数据整理
       let charData = {
+        time: ['总成绩'],
+        data: [0]
+      }
+      data.forEach((n) => {
+        charData.data[0] += n.result
+      })
+      this.studentTotalResult = charData
+
+      // 单科成绩数据整理
+      charData = {
         time: [],
         data: []
       }
-
-      let obj = {}
       data.forEach((n) => {
-        if (!charData.time.includes(n.examName)) charData.time.push(n.examName)
-        let key = n.studentID + '_' + n.studentName
-        if (!(key in obj)) obj[key] = []
-        obj[key].push(n.result)
+        charData.time.push(n.courseName)
+        charData.data.push(n.result)
       })
 
-      for (const key in obj) {
-        charData.data.push({
-          name: key.split('_')[1],
-          value: obj[key]
-        })
-      }
-      this.studentTotalResultHistory = charData
-    },
+      this.gradeCourseAverageResult = charData
 
-    // 获取班级下，学生考试总成绩-历史
-    async getStudentCourseResult() {
-      let res = await getStudentCourseResult({ gradeID: this.searchInfo.gradeID, studentID: 10 })
-      console.log(res)
+      // 及格率
+      charData = [
+        { name: '及格', value: 0 },
+        { name: '不及格', value: 0 }
+      ]
+      let passNum = data.filter((n) => n.result >= 60).length
+      let passPercent = ((passNum / data.length) * 100).toFixed(2)
+      charData[0].value = passPercent
+      charData[1].value = (100 - passPercent).toFixed(2)
+      this.classPassPercent = charData
     },
 
     // 获取学生每一期考试的总成绩
     async getStudentTotalResultHistory() {
       let res = await getStudentTotalResultHistory({ gradeID: this.searchInfo.gradeID, studentID: 10 })
+      let data = res.data
+      let charData = {
+        time: [],
+        data: [{ name: '总成绩', value: [] }]
+      }
+      data.forEach((n) => {
+        charData.time.push(n.examName)
+        charData.data[0].value.push(n.total)
+      })
+      this.studentTotalResultHistory = charData
+    },
+
+    // 获取学生全部考试单科成绩
+    async getStudentCourseResultHistory() {
+      let res = await getStudentCourseResultHistory({ studentID: 10, courseID: this.singleCourseID })
       console.log(res)
+      let data = res.data
+      let charData = {
+        time: [],
+        data: [{ name: this.courseList.filter((n) => n.value == this.singleCourseID)[0].label, value: [] }]
+      }
+      data.forEach((n) => {
+        charData.time.push(n.examName)
+        charData.data[0].value.push(n.result)
+      })
+      this.studentCourseResultHistory = charData
     },
 
     // 获取所有char 数据
     searchAllChar() {
-      // this.getStudentCourseResult()
+      this.getStudentCourseResult()
       this.getStudentTotalResultHistory()
+      this.getStudentCourseResultHistory()
     }
   },
 
@@ -268,8 +301,7 @@ export default {
     await this.getClassList()
     await this.getGradeList()
     await this.getCourseList()
-    this.getStudentCourseResult()
-    // this.searchAllChar()
+    this.searchAllChar()
   }
 }
 </script>
