@@ -55,6 +55,7 @@
 import { getGradeList } from '@/api/grade'
 import { getClassList } from '@/api/class'
 import { getStudentTotalResult, getClassPassPercent, getStudentToTalResultHistory, getStudentCourseResultHistory } from '@/api/resultAnalyseClass.js'
+import { getStudentCourseResult, getStudentTotalResultHistory } from '@/api/resultAnalyseStudent.js'
 import { getCourseList } from '@/api/course'
 import { copyObj } from '@/utils/tool.js'
 import BarChar from '../components/char/barChar.vue'
@@ -233,12 +234,22 @@ export default {
       this.studentTotalResultHistory = charData
     },
 
+    // 获取班级下，学生考试总成绩-历史
+    async getStudentCourseResult() {
+      let res = await getStudentCourseResult({ gradeID: this.searchInfo.gradeID, studentID: 10 })
+      console.log(res)
+    },
+
+    // 获取学生每一期考试的总成绩
+    async getStudentTotalResultHistory() {
+      let res = await getStudentTotalResultHistory({ gradeID: this.searchInfo.gradeID, studentID: 10 })
+      console.log(res)
+    },
+
     // 获取所有char 数据
     searchAllChar() {
-      this.getGradeAverageResult()
-      this.getGradeCourseAverageResult()
-      this.getGradeAverageResultHistory()
-      this.getGradeCourseAverageResultHistory()
+      // this.getStudentCourseResult()
+      this.getStudentTotalResultHistory()
     }
   },
 
@@ -257,11 +268,7 @@ export default {
     await this.getClassList()
     await this.getGradeList()
     await this.getCourseList()
-    this.getStudentTotalResult()
-    this.getStudentCourseTotalResult()
-    this.getClassPassPercent()
-    this.getStudentToTalResultHistory()
-    this.getStudentCourseResultHistory()
+    this.getStudentCourseResult()
     // this.searchAllChar()
   }
 }
