@@ -55,7 +55,6 @@
 import { getGradeList } from '@/api/grade'
 import { getClassList } from '@/api/class'
 import { getClassTotalResult, getClassPassPercent, getClassToTalResultHistory, getClassCourseResultHistory } from '@/api/resultAnalyseClass.js'
-import { getStudentList } from '@/api/student.js'
 import { getCourseList } from '@/api/course'
 import { copyObj } from '@/utils/tool.js'
 import BarChar from '../components/char/barChar.vue'
@@ -135,16 +134,15 @@ export default {
       let res = await getClassList()
       let list = res.data.list
       this.classListAll = list
-      this.searchInfo.classID = this.gradeList[0].ID
     },
 
-    // 获取学生列表
-    async getStudentList() {
-      let res = await getStudentList()
-      let list = res.data.list
-      this.classListAll = list
-      this.searchInfo.classID = this.gradeList[0].ID
-    },
+    // // 获取学生列表
+    // async getStudentList() {
+    //   let res = await getStudentList()
+    //   let list = res.data.list
+    //   this.classListAll = list
+    //   this.searchInfo.classID = this.gradeList[0].ID
+    // },
 
     // 获取班级每个学生总成绩
     async getClassTotalResult() {
@@ -218,7 +216,7 @@ export default {
 
     // 获取班级通过率
     async getClassCourseResultHistory() {
-      let res = await getClassCourseResultHistory({ gradeID: this.searchInfo.gradeID, classID: this.searchInfo.classID, courseID: this.singleCourseChange })
+      let res = await getClassCourseResultHistory({ gradeID: this.searchInfo.gradeID, classID: this.searchInfo.classID, courseID: this.singleCourseID })
       let data = res.data
       let charData = {
         time: [],
