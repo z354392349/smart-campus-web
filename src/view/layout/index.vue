@@ -4,8 +4,8 @@
       <el-row :class="[isShadowBg ? 'shadowBg' : '']" @click.native="changeShadow()" />
       <el-aside class="main-cont main-left">
         <div class="tilte" :style="{ background: backgroundColor }">
-          <img alt class="logoimg" :src="$GIN_VUE_ADMIN.appLogo" />
-          <h2 v-if="isSider" class="tit-text" :style="{ color: textColor }">{{ $GIN_VUE_ADMIN.appName }}</h2>
+          <img alt class="logoimg" :src="require('@/assets/img/logo/11.png')" />
+          <h2 v-if="isSider" class="tit-text" :style="{ color: textColor }">英才中学管理系统</h2>
         </div>
         <Aside class="aside" />
       </el-aside>

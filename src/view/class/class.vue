@@ -58,11 +58,6 @@
         <el-form-item label="班级名称" prop="name">
           <el-input v-model="form.name" autocomplete="off" placeholder="请输入班级名称" />
         </el-form-item>
-        <!-- <el-form-item label="班主任" prop="name">
-          <el-select v-model="form.teacherID" placeholder="请选择年级">
-            <el-option v-for="n in teacherList" :key="n.ID" :label="n.name" :value="n.ID" />
-          </el-select>
-        </el-form-item> -->
         <el-form-item label="备注">
           <el-input v-model="form.description" autocomplete="off" placeholder="请选择输入备注" />
         </el-form-item>

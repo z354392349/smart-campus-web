@@ -571,12 +571,10 @@ li {
             text-align: center;
             transition: all 0.3s;
             .logoimg {
-                width: $width-aside-img;
-                height: $height-aside-img;
+                width: 36px;
+                height: 36px;
                 vertical-align: middle;
-                background: #fff;
                 border-radius: 50%;
-                padding: 3px;
             }
 
             .tit-text {
@@ -1214,11 +1212,6 @@ $mainHight: 100vh;
         vertical-align: middle;
         margin-right: 10px;
 
-        img {
-            vertical-align: middle;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
     }
 
     .header-cont {
@@ -1259,7 +1252,7 @@ $mainHight: 100vh;
         }
 
         .aside {
-            overflow: auto;
+            overflow-y: auto;
 
             // background: #fff;
             &::-webkit-scrollbar {

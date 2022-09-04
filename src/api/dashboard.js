@@ -1,6 +1,6 @@
 import service from '@/utils/request'
 
-// 获取人员，车辆通行数量，学生教师考勤
+// 获取人员，车辆通行数量，学生教师考勤 - 当日数据请求
 export const getDashboardCensusNum = () => {
   return service({
     url: '/dashboard/getDashboardCensusNum',

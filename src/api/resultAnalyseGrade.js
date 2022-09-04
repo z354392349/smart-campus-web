@@ -17,7 +17,7 @@ export const getGradePassPercent = (data) => {
     params: data
   })
 }
-// 获取年级考试通过率
+// 获取历史平均学习成绩
 export const getGradeAverageResultHistory = (data) => {
   return service({
     url: '/gradeResultAnalyse/getGradeAverageResultHistory',

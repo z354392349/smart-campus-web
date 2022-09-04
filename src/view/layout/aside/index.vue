@@ -90,7 +90,9 @@ export default {
     color: inherit !important;
   }
 }
-
+.el-scrollbar__wrap {
+  overflow-x: hidden;
+}
 .el-submenu__title:hover,
 .el-menu-item:hover {
   i {

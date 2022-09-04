@@ -28,7 +28,7 @@
             <p class="char__data__text">出勤数 / 总人数</p>
           </div>
           <div class="char__content">
-            <div class="char__line"></div>
+            <div class="char__line" v-if="censusNum.teacherCensus" :style="{ width: (censusNum.teacherCensus.attend / censusNum.teacherCensus.num) * 100 + '%' }"></div>
           </div>
         </div>
       </li>
@@ -41,7 +41,7 @@
             <p class="char__data__text">出勤数 / 总人数</p>
           </div>
           <div class="char__content">
-            <div class="char__line"></div>
+            <div class="char__line" v-if="censusNum.studentCensus" :style="{ width: (censusNum.studentCensus.attend / censusNum.studentCensus.num) * 100 + '%' }"></div>
           </div>
         </div>
       </li>
@@ -51,8 +51,8 @@
         <p class="p-char-title">教师人数</p>
         <TeacherChar :charData="teacherNum" class="teacher_char" />
         <div class="teacher-data">
-          <p>男教师 {{ teacherNum[0] ? teacherNum[0].val : '-' }} 人</p>
-          <p>女教师 {{ teacherNum[1] ? teacherNum[1].val : '-' }} 人</p>
+          <p>男教师 {{ teacherNum[0] ? teacherNum[0].value : '-' }}人</p>
+          <p>女教师 {{ teacherNum[1] ? teacherNum[1].value : '-' }} 人</p>
         </div>
       </div>
       <div class="row2__col2">
@@ -71,7 +71,7 @@
       </div>
       <div class="row3__col2">
         <p class="p-char-title">学生考勤</p>
-        <AttendChar :charData="studentAttendCharData" type="student" class="teacher_attend_char" />
+        <AttendChar :charData="studentAttendCharData" type="student" class="student_attend_char" />
       </div>
     </div>
   </div>
@@ -112,11 +112,11 @@ export default {
     async getTeacherNum() {
       let res = await getTeacherNum()
       let teacherNum = res.data
-
-      teacherNum.sort((x, y) => x - y)
+      teacherNum.sort((x, y) => x.sex - y.sex)
       this.teacherNum = teacherNum.map((x) => {
         return { name: x.sex == 1 ? '男' : '女', value: x.num }
       })
+      console.log(this.teacherNum, 'teacherNum')
     },
 
     // 获取合格率
@@ -392,6 +392,10 @@ export default {
       box-sizing: border-box;
       background: white;
       padding: 14px;
+      .student_attend_char {
+        width: 100%;
+        height: calc(100% - 20px);
+      }
     }
     .row3__col1 {
       margin-right: 14px;

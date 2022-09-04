@@ -1,6 +1,6 @@
 <template>
-  <span class="headerAvatar">
-    <template v-if="picType === 'avatar'">
+  <!-- <span class="headerAvatar"> -->
+  <!-- <template v-if="picType === 'avatar'">
       <el-avatar v-if="userInfo.headerImg" :size="30" :src="avatar" />
       <el-avatar v-else :size="30" :src="require('@/assets/noBody.png')" />
     </template>
@@ -10,8 +10,15 @@
     </template>
     <template v-if="picType === 'file'">
       <img :src="file" class="file" />
-    </template>
+    </template> -->
+  <span class="user-header user-header--student" v-if="false">
+    <img :src="require('@/assets/img/user-header/student.svg')" alt="" />
   </span>
+  <span class="user-header user-header--teacher" v-else>
+    <img :src="require('@/assets/img/user-header/teacher.svg')" alt="" />
+  </span>
+  <!-- <img v-else :src="require('@/assets/noBody.png')" class="avatar" /> -->
+  <!-- </span> -->
 </template>
 
 <script>
@@ -61,7 +68,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .headerAvatar {
   display: flex;
   justify-content: center;
@@ -71,5 +78,25 @@ export default {
   width: 80px;
   height: 80px;
   position: relative;
+}
+.user-header {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  border: none;
+  line-height: 30px;
+  img {
+    width: 20px;
+    height: 20px;
+    vertical-align: -5px;
+  }
+}
+
+.user-header--student {
+  background-image: linear-gradient(135deg, #ce9ffc 10%, #7367f0 100%);
+}
+.user-header--teacher {
+  background-image: linear-gradient(135deg, #5efce8 10%, #736efe 100%);
 }
 </style>
