@@ -1,7 +1,7 @@
 <template>
   <div>
-    <el-button type="primary" size="default" @click="mockExam">模拟考试</el-button>
-    <el-button type="primary" size="default" @click="mockExamAllot">模拟考场分配</el-button>
+    <!-- <el-button type="primary" size="default" @click="mockExam">模拟考试</el-button>
+    <el-button type="primary" size="default" @click="mockExamAllot">模拟考场分配</el-button> -->
 
     <div class="search-term">
       <el-form :inline="true" :model="searchInfo">
