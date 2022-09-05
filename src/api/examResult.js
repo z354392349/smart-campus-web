@@ -9,7 +9,7 @@ export const getExamResultList = (data) => {
   })
 }
 
-// 获取成绩列表
+//更新成绩列表
 export const upExamResult = (data) => {
   return service({
     url: '/examResult/upExamResult',

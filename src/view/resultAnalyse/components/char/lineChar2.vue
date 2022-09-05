@@ -46,6 +46,7 @@ export default {
               marker,
               seriesName
 
+            params.sort((a, b) => b.data - a.data)
             str += `<p>${params[0].axisValue}</p>`
             params.forEach((n, i) => {
               seriesName = n.seriesName

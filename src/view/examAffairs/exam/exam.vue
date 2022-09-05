@@ -200,7 +200,7 @@ export default {
 
     // 删除考试
     async deleteExam(row) {
-      this.deleteTableData(row.name, deleteExam + '并删除相关考场分配，考试成绩等信息 ', { id: row.ID })
+      this.deleteTableData(row.name + '并删除相关考场分配，考试成绩等信息 ', deleteExam, { id: row.ID })
     },
 
     // 将前台格式整理为 服务器端 格式

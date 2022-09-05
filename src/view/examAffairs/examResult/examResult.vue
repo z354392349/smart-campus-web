@@ -2,6 +2,11 @@
   <div>
     <div class="search-term">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
+        <el-form-item label="考试">
+          <el-select v-model="searchInfo.examID" value-key="" placeholder="请选择考试" clearable filterable>
+            <el-option v-for="n in examList" :key="n.ID" :label="n.name" :value="n.ID"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="学生">
           <el-input v-model.trim="searchInfo.name" @keyup.enter.native="getTableData()" placeholder="请输入学生姓名" />
         </el-form-item>
@@ -21,6 +26,7 @@
       </el-form>
     </div>
     <el-table :data="tableData" border :stripe="true">
+      <el-table-column label="考试名称" prop="examName" />
       <el-table-column label="学生姓名" prop="studentName" />
       <el-table-column label="年级" prop="gradeName" />
       <el-table-column label="班级" prop="className" />
@@ -52,6 +58,7 @@
 
 <script>
 import { getExamResultList } from '@/api/examResult'
+import { getExamList } from '@/api/exam'
 import { getClassList } from '@/api/class'
 import { getGradeList } from '@/api/grade'
 import infoList from '@/mixins/infoList'
@@ -75,7 +82,8 @@ export default {
       classList: [], // 班级列表
       gradeListAll: [], // 年级列表
       gradeList: [], // 年级列表
-      classFormList: []
+      classFormList: [],
+      examList: []
     }
   },
   components: { UpExamResultDialog },
@@ -114,15 +122,23 @@ export default {
       else this.classFormList = []
     },
 
+    // 修改考试成绩
     editExamResult(row) {
       this.row = row
       this.$refs.UpExamResultDialog.dialogVisible = true
+    },
+
+    // 获取考试列表
+    async getExamList() {
+      let res = await getExamList({ page: 1, pageSize: 100 })
+      this.examList = res.data.list
     }
   },
   created() {
     this.getTableData()
     this.getClassList()
     this.getGradeList()
+    this.getExamList()
   }
 }
 </script>

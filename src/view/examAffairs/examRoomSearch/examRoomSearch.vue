@@ -32,6 +32,16 @@
       <el-table-column label="班级" prop="className" />
       <el-table-column label="考场" prop="examRoomName" />
       <el-table-column label="科目" prop="courseName" />
+      <el-table-column label="开始时间" prop="time">
+        <template v-slot="scope">
+          <span class="change-btn">{{ unixTimeFormat(scope.row.startTime, 'YYYY-MM-DD HH:mm:ss') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="结束时间" prop="time">
+        <template v-slot="scope">
+          <span class="change-btn">{{ unixTimeFormat(scope.row.endTime, 'YYYY-MM-DD HH:mm:ss') }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="考场地址" prop="address" />
     </el-table>
     <el-pagination
@@ -52,7 +62,7 @@ import { getAllotExamRoomList } from '@/api/allotExamRoom.js'
 import { getExamList } from '@/api/exam'
 import { getClassList } from '@/api/class'
 import { getGradeList } from '@/api/grade'
-import { copyObj } from '@/utils/tool.js'
+import { copyObj, unixTimeFormat } from '@/utils/tool.js'
 import infoList from '@/mixins/infoList'
 export default {
   name: 'Grade',
@@ -70,6 +80,7 @@ export default {
   },
 
   methods: {
+    unixTimeFormat,
     // 获取班级列表
     async getClassList() {
       let res = await getClassList()
