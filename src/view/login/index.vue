@@ -3,8 +3,8 @@
     <div class="login_panle">
       <div class="login_panle_form">
         <div class="login_panle_form_title">
-          <img class="login_panle_form_title_logo" :src="$GIN_VUE_ADMIN.appLogo" alt="" />
-          <p class="login_panle_form_title_p">{{ $GIN_VUE_ADMIN.appName }}</p>
+          <img class="login_panle_form_title_logo" :src="require('@/assets/img/logo/logo-login.png')" alt="" />
+          <p class="login_panle_form_title_p">英才中学智慧校园系统</p>
         </div>
         <el-form ref="loginForm" :model="loginForm" :rules="rules" @keyup.enter.native="submitForm">
           <el-form-item prop="username">
@@ -18,28 +18,19 @@
             </el-input>
           </el-form-item>
           <el-form-item style="position: relative">
-            <el-input v-model="loginForm.captcha" name="logVerify" placeholder="请输入验证码" style="width: 60%" />
+            <el-input v-model="loginForm.captcha" name="logVerify" placeholder="请输入验证码" style="width: 63%" />
             <div class="vPic">
               <img v-if="picPath" :src="picPath" width="100%" height="100%" alt="请输入验证码" @click="loginVerify()" />
             </div>
           </el-form-item>
           <div />
           <el-form-item>
-            <el-button type="primary" style="width: 46%" @click="checkInit">前往初始化</el-button>
-            <el-button type="primary" style="width: 46%; margin-left: 8%" @click="submitForm">登 录</el-button>
+            <!-- <el-button type="primary" style="width: 46%" @click="checkInit">前往初始化</el-button> -->
+            <el-button type="primary" style="width: 100%" @click="submitForm">登 录</el-button>
           </el-form-item>
         </el-form>
       </div>
       <div class="login_panle_right" />
-      <div class="login_panle_foot">
-        <div class="links">
-          <a href="http://doc.henrongyi.top/"><img src="@/assets/docs.png" class="link-icon" /></a>
-          <a href="https://www.yuque.com/flipped-aurora/"><img src="@/assets/yuque.png" class="link-icon" /></a>
-          <a href="https://github.com/flipped-aurora/gin-vue-admin"><img src="@/assets/github.png" class="link-icon" /></a>
-          <a href="https://space.bilibili.com/322210472"><img src="@/assets/video.png" class="link-icon" /></a>
-        </div>
-        <div class="copyright">Copyright &copy; {{ curYear }} 💖 flipped-aurora</div>
-      </div>
     </div>
   </div>
 </template>

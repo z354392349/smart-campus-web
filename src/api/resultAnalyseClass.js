@@ -8,6 +8,7 @@ export const getClassTotalResult = (data) => {
     params: data
   })
 }
+
 // 获取班级通过率
 export const getClassPassPercent = (data) => {
   return service({
@@ -16,6 +17,7 @@ export const getClassPassPercent = (data) => {
     params: data
   })
 }
+
 // 获取班级下，学生考试总成绩-历史
 export const getClassToTalResultHistory = (data) => {
   return service({
