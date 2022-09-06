@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="search-term">
-      <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
+      <el-form :inline="true" :model="searchInfo" class="demo-form-inline" @keyup.enter.native="onSubmit">
         <el-form-item label="路径">
           <el-input v-model="searchInfo.path" placeholder="路径" />
         </el-form-item>

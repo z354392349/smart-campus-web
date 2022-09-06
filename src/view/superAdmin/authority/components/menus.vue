@@ -4,13 +4,8 @@
       <el-button class="fl-right" size="small" type="primary" @click="relation">确 定</el-button>
     </div>
     <el-tree ref="menuTree" :data="menuTreeData" :default-checked-keys="menuTreeIds" :props="menuDefaultProps" default-expand-all highlight-current node-key="ID" show-checkbox @check="nodeChange">
-      <span slot-scope="{ node, data }" class="custom-tree-node">
+      <span slot-scope="{ node }" class="custom-tree-node">
         <span>{{ node.label }}</span>
-        <span>
-          <el-button type="text" size="mini" :style="{ color: row.defaultRouter === data.name ? '#E6A23C' : '#85ce61' }" :disabled="!node.checked" @click="() => setDefault(data)">
-            {{ row.defaultRouter === data.name ? '首页' : '设为首页' }}
-          </el-button>
-        </span>
       </span>
     </el-tree>
   </div>

@@ -1,7 +1,18 @@
 <template>
   <div>
-    <div class="button-box clearflex">
+    <!-- <div class="button-box clearflex">
       <el-button size="mini" type="primary" icon="el-icon-plus" @click="addUser">新增用户</el-button>
+    </div> -->
+    <div class="search-term">
+      <el-form :inline="true" :model="searchInfo" class="demo-form-inline" @keyup.enter.native="getTableData()">
+        <el-form-item label="用户姓名">
+          <el-input v-model.trim="searchInfo.nickName" placeholder="请输入用户姓名" />
+        </el-form-item>
+        <el-form-item>
+          <el-button size="mini" type="primary" icon="el-icon-search" @click="getTableData()">查询</el-button>
+          <el-button size="mini" type="primary" icon="el-icon-plus" @click="addUser">新增</el-button>
+        </el-form-item>
+      </el-form>
     </div>
     <el-table :data="tableData" border stripe>
       <el-table-column label="头像" min-width="50">
@@ -11,9 +22,9 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="uuid" min-width="250" prop="uuid" />
+      <!-- <el-table-column label="uuid" min-width="250" prop="uuid" /> -->
       <el-table-column label="用户名" min-width="150" prop="userName" />
-      <el-table-column label="昵称" min-width="150" prop="nickName" />
+      <el-table-column label="用户姓名" min-width="150" prop="nickName" />
       <el-table-column label="用户角色" min-width="150">
         <template slot-scope="scope">
           <el-cascader
@@ -60,12 +71,6 @@
         </el-form-item>
         <el-form-item label="别名" label-width="80px" prop="nickName">
           <el-input v-model="userInfo.nickName" />
-        </el-form-item>
-        <el-form-item label="头像" label-width="80px">
-          <div style="display: inline-block" @click="openHeaderChange">
-            <img v-if="userInfo.headerImg" class="header-img-box" :src="userInfo.headerImg" />
-            <div v-else class="header-img-box">从媒体库选择</div>
-          </div>
         </el-form-item>
         <el-form-item label="用户角色" label-width="80px" prop="authorityId">
           <el-cascader v-model="userInfo.authorityId" :options="authOptions" :show-all-levels="false" :props="{ checkStrictly: true, label: 'authorityName', value: 'authorityId', disabled: 'disabled', emitPath: false }" filterable />

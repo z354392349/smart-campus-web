@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="search-term">
-      <el-form :inline="true" :model="searchInfo">
+      <el-form :inline="true" :model="searchInfo" @keyup.enter.native="getTableData()">
         <el-form-item label="教师名称">
-          <el-input @keyup.enter.native="getTableData()" v-model="searchInfo.teacherName" placeholder="请输入教师名称" />
+          <el-input v-model="searchInfo.teacherName" placeholder="请输入教师名称" />
         </el-form-item>
         <el-form-item label="开始时间">
           <el-date-picker v-model.number="searchInfo.start" :default-value="1665158400000" value-format="timestamp" type="date" placeholder="选择开始日期"></el-date-picker>

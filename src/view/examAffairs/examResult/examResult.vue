@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="search-term">
-      <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
+      <el-form :inline="true" :model="searchInfo" class="demo-form-inline" @keyup.enter.native="getTableData()">
         <el-form-item label="考试">
           <el-select v-model="searchInfo.examID" value-key="" placeholder="请选择考试" clearable filterable>
             <el-option v-for="n in examList" :key="n.ID" :label="n.name" :value="n.ID"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="学生">
-          <el-input v-model.trim="searchInfo.name" @keyup.enter.native="getTableData()" placeholder="请输入学生姓名" />
+          <el-input v-model.trim="searchInfo.name" placeholder="请输入学生姓名" />
         </el-form-item>
         <el-form-item label="年级">
           <el-select v-model="searchInfo.gradeID" placeholder="请选择年级" @change="gradeChane">

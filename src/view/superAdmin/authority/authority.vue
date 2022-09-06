@@ -50,9 +50,6 @@
         <el-tab-pane label="角色api">
           <apis ref="apis" :row="activeRow" />
         </el-tab-pane>
-        <el-tab-pane label="资源权限">
-          <Datas ref="datas" :authority="tableData" :row="activeRow" />
-        </el-tab-pane>
       </el-tabs>
     </el-drawer>
   </div>
@@ -66,15 +63,13 @@ import { getStudentList } from '@/api/student'
 
 import Menus from '@/view/superAdmin/authority/components/menus'
 import Apis from '@/view/superAdmin/authority/components/apis'
-import Datas from '@/view/superAdmin/authority/components/datas'
 
 import infoList from '@/mixins/infoList'
 export default {
   name: 'Authority',
   components: {
     Menus,
-    Apis,
-    Datas
+    Apis
   },
   mixins: [infoList],
   data() {
