@@ -59,7 +59,6 @@
 // 获取列表内容封装在mixins内部  getTableData方法 初始化已封装完成
 
 import { getAuthorityList, deleteAuthority, createAuthority, updateAuthority, copyAuthority } from '@/api/authority'
-import { getStudentList } from '@/api/student'
 
 import Menus from '@/view/superAdmin/authority/components/menus'
 import Apis from '@/view/superAdmin/authority/components/apis'
@@ -114,7 +113,6 @@ export default {
   async created() {
     this.pageSize = 999
     await this.getTableData()
-    const res = await getStudentList()
   },
   methods: {
     autoEnter(activeName, oldActiveName) {
