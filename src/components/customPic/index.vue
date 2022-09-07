@@ -11,11 +11,12 @@
     <template v-if="picType === 'file'">
       <img :src="file" class="file" />
     </template> -->
-  <span class="user-header user-header--student" v-if="false">
-    <img :src="require('@/assets/img/user-header/student.svg')" alt="" />
-  </span>
-  <span class="user-header user-header--teacher" v-else>
+
+  <span class="user-header user-header--teacher" v-if="this.userInfo.authorityId != '03'">
     <img :src="require('@/assets/img/user-header/teacher.svg')" alt="" />
+  </span>
+  <span class="user-header user-header--student" v-else>
+    <img :src="require('@/assets/img/user-header/student.svg')" alt="" />
   </span>
   <!-- <img v-else :src="require('@/assets/noBody.png')" class="avatar" /> -->
   <!-- </span> -->
@@ -64,6 +65,9 @@ export default {
       }
       return this.picSrc
     }
+  },
+  created() {
+    console.log(this.picType, 'picType')
   }
 }
 </script>

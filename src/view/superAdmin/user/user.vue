@@ -5,8 +5,8 @@
     </div> -->
     <div class="search-term">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline" @keyup.enter.native="getTableData()">
-        <el-form-item label="用户姓名">
-          <el-input v-model.trim="searchInfo.nickName" placeholder="请输入用户姓名" />
+        <el-form-item label="用户名">
+          <el-input v-model.trim="searchInfo.nickName" placeholder="请输入用户名" />
         </el-form-item>
         <el-form-item>
           <el-button size="mini" type="primary" icon="el-icon-search" @click="getTableData()">查询</el-button>
@@ -15,13 +15,13 @@
       </el-form>
     </div>
     <el-table :data="tableData" border stripe>
-      <el-table-column label="头像" min-width="50">
+      <!-- <el-table-column label="头像" min-width="50">
         <template slot-scope="scope">
           <div :style="{ textAlign: 'center' }">
             <CustomPic :pic-src="scope.row.headerImg" />
           </div>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <!-- <el-table-column label="uuid" min-width="250" prop="uuid" /> -->
       <el-table-column label="用户名" min-width="150" prop="userName" />
       <el-table-column label="用户姓名" min-width="150" prop="nickName" />

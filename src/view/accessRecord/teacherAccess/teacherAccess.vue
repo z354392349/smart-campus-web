@@ -4,7 +4,7 @@
       <!-- <el-button type="primary" size="default" @click="mockTeacherAccess">模拟数据</el-button> -->
 
       <el-form :inline="true" :model="searchInfo" @keyup.enter.native="getTableData()">
-        <el-form-item label="教师名称">
+        <el-form-item label="教师名称" v-if="this.authorityId != '02'">
           <el-input v-model="searchInfo.teacherName" placeholder="请输入教师名称" />
         </el-form-item>
         <el-form-item label="开始时间">
@@ -51,11 +51,13 @@ import { createTeacherAccess, getTeacherAccessList } from '@/api/teacherAccess.j
 import infoList from '@/mixins/infoList'
 import { unixTimeFormat, jsTimeToDayStartUnix, jsTimeToDayEndUnix } from '@/utils/tool.js'
 import moment from 'moment'
+import { mapGetters } from 'vuex'
 export default {
   mixins: [infoList],
   data() {
     return {
-      listApi: getTeacherAccessList
+      listApi: getTeacherAccessList,
+      authorityId: ''
     }
   },
 
@@ -113,11 +115,18 @@ export default {
 
   components: {},
 
-  computed: {},
+  computed: {
+    ...mapGetters('user', ['userInfo'])
+  },
 
   mounted() {},
 
   created() {
+    if (this.userInfo.authority.authorityId == '02') {
+      this.searchInfo.teacherID = this.userInfo.authority.teacherID
+      this.authorityId = this.userInfo.authority.authorityId
+    }
+    console.log(this.searchInfo.teacherID, 'this.teacherID')
     this.getTableData()
   }
 }
