@@ -1,6 +1,6 @@
 <template>
   <div class="resultAnalyse">
-    <div class="resultAnalyse__form">
+    <div class="resultAnalyse__form" v-if="authorityId !== '03'">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
         <el-form-item label="年级">
           <el-select v-model="searchInfo.gradeID" placeholder="请选择年级" @change="gradeChange">
@@ -22,7 +22,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <div class="result-analyse-content">
+    <div class="result-analyse-content" :class="{ 'result-analyse-content--student': authorityId == '03' }">
       <div class="row1">
         <div class="row1__item">
           <ModuleTitle title="总成绩" tooltip="每个学生考试总成绩-当期" />
@@ -63,6 +63,7 @@ import ModuleTitle from '../components/moduleTitle.vue'
 
 import LineChar from '../components/char/lineChar.vue'
 import PieChar from '../components/char/pieChar.vue'
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -83,7 +84,8 @@ export default {
       classList: [], // 班级列表
       gradeListAll: [], // 年级列表
       gradeList: [],
-      studentList: []
+      studentList: [],
+      authorityId: ''
     }
   },
 
@@ -240,15 +242,23 @@ export default {
     LineChar
   },
 
-  computed: {},
+  computed: {
+    ...mapGetters('user', ['userInfo'])
+  },
 
   mounted() {},
 
   async created() {
-    await this.getClassList()
-    await this.getGradeList()
+    if (this.userInfo.authority.authorityId == '03') {
+      this.searchInfo.studentID = this.userInfo.authority.studentID
+      this.searchInfo.gradeID = this.userInfo.authority.gradeID
+      this.authorityId = this.userInfo.authority.authorityId
+    } else {
+      await this.getClassList()
+      await this.getGradeList()
+      await this.getStudentList()
+    }
     await this.getCourseList()
-    await this.getStudentList()
     this.searchAllChar()
   }
 }
@@ -307,6 +317,9 @@ export default {
   }
 }
 
+.result-analyse-content--student {
+  height: calc(100vh - 136px);
+}
 .resultAnalyse {
   padding: 0;
   .resultAnalyse__form {

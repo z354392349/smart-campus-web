@@ -5,8 +5,8 @@
     </div> -->
     <div class="search-term">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline" @keyup.enter.native="getTableData()">
-        <el-form-item label="用户名">
-          <el-input v-model.trim="searchInfo.nickName" placeholder="请输入用户名" />
+        <el-form-item label="用户姓名">
+          <el-input v-model.trim="searchInfo.nickName" placeholder="请输入用户姓名" />
         </el-form-item>
         <el-form-item>
           <el-button size="mini" type="primary" icon="el-icon-search" @click="getTableData()">查询</el-button>

@@ -7,15 +7,15 @@
             <el-option v-for="n in examList" :key="n.ID" :label="n.name" :value="n.ID"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="学生">
+        <el-form-item label="学生" v-if="authorityId !== '03'">
           <el-input v-model="searchInfo.name" placeholder="请输入学生姓名" />
         </el-form-item>
-        <el-form-item label="年级">
+        <el-form-item label="年级" v-if="authorityId !== '03'">
           <el-select v-model="searchInfo.gradeID" placeholder="请选择年级" @change="gradeChane">
             <el-option v-for="n in gradeList" :key="n.ID" :label="n.name" :value="n.ID" />
           </el-select>
         </el-form-item>
-        <el-form-item label="班级">
+        <el-form-item label="班级" v-if="authorityId !== '03'">
           <el-select v-model="searchInfo.classID" placeholder="请选择班级">
             <el-option v-for="n in classList" :key="n.ID" :label="n.name" :value="n.ID" />
           </el-select>
@@ -64,6 +64,7 @@ import { getClassList } from '@/api/class'
 import { getGradeList } from '@/api/grade'
 import { copyObj, unixTimeFormat } from '@/utils/tool.js'
 import infoList from '@/mixins/infoList'
+import { mapGetters } from 'vuex'
 export default {
   name: 'Grade',
 
@@ -78,7 +79,9 @@ export default {
       examList: [] // 考试列表
     }
   },
-
+  computed: {
+    ...mapGetters('user', ['userInfo'])
+  },
   methods: {
     unixTimeFormat,
     // 获取班级列表
@@ -114,10 +117,17 @@ export default {
     }
   },
   created() {
-    this.getTableData()
-    this.getClassList()
-    this.getGradeList()
+    if (this.userInfo.authority.authorityId == '03') {
+      this.searchInfo.studentID = this.userInfo.authority.studentID
+      this.searchInfo.gradeID = this.userInfo.authority.gradeID
+      this.authorityId = this.userInfo.authority.authorityId
+    } else {
+      this.getClassList()
+      this.getGradeList()
+      this.getExamList()
+    }
     this.getExamList()
+    this.getTableData()
   }
 }
 </script>
