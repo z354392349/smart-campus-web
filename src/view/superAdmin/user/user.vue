@@ -15,14 +15,6 @@
       </el-form>
     </div>
     <el-table :data="tableData" border stripe>
-      <!-- <el-table-column label="头像" min-width="50">
-        <template slot-scope="scope">
-          <div :style="{ textAlign: 'center' }">
-            <CustomPic :pic-src="scope.row.headerImg" />
-          </div>
-        </template>
-      </el-table-column> -->
-      <!-- <el-table-column label="uuid" min-width="250" prop="uuid" /> -->
       <el-table-column label="用户名" min-width="150" prop="userName" />
       <el-table-column label="用户姓名" min-width="150" prop="nickName" />
       <el-table-column label="用户角色" min-width="150">
@@ -92,11 +84,10 @@ import { getUserList, setUserAuthority, register, deleteUser } from '@/api/user'
 import { getAuthorityList } from '@/api/authority'
 import infoList from '@/mixins/infoList'
 import { mapGetters } from 'vuex'
-import CustomPic from '@/components/customPic'
 import ChooseImg from '@/components/chooseImg'
 export default {
   name: 'Api',
-  components: { CustomPic, ChooseImg },
+  components: { ChooseImg },
   mixins: [infoList],
   data() {
     return {
