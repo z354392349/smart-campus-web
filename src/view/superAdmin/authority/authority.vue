@@ -8,18 +8,18 @@
       <el-table-column label="角色名称" min-width="180" prop="authorityName" />
       <el-table-column fixed="right" label="操作" width="460">
         <template slot-scope="scope">
-          <el-button size="mini" type="primary" @click="opdendrawer(scope.row)">设置权限</el-button>
-          <el-button icon="el-icon-plus" size="mini" type="primary" @click="addAuthority(scope.row.authorityId)">新增子角色</el-button>
-          <el-button icon="el-icon-copy-document" size="mini" type="primary" @click="copyAuthority(scope.row)">拷贝</el-button>
+          <el-button icon="el-icon-tickets" size="mini" type="primary" @click="opdendrawer(scope.row)">设置权限</el-button>
+          <!-- <el-button icon="el-icon-plus" size="mini" type="primary" @click="addAuthority(scope.row.authorityId)">新增子角色</el-button>
+          <el-button icon="el-icon-copy-document" size="mini" type="primary" @click="copyAuthority(scope.row)">拷贝</el-button> -->
           <el-button icon="el-icon-edit" size="mini" type="primary" @click="editAuthority(scope.row)">编辑</el-button>
           <el-button icon="el-icon-delete" size="mini" type="danger" @click="deleteAuth(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <!-- 新增角色弹窗 -->
-    <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible">
-      <el-form ref="authorityForm" :model="form" :rules="rules">
-        <el-form-item label="父级角色" prop="parentId">
+    <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :width="$conf.minDialogWidth">
+      <el-form ref="authorityForm" :model="form" :rules="rules" label-width="80px">
+        <!-- <el-form-item label="父级角色" prop="parentId">
           <el-cascader
             v-model="form.parentId"
             :disabled="dialogType == 'add'"
@@ -28,7 +28,7 @@
             :show-all-levels="false"
             filterable
           />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="角色ID" prop="authorityId">
           <el-input v-model="form.authorityId" :disabled="dialogType == 'edit'" autocomplete="off" />
         </el-form-item>
