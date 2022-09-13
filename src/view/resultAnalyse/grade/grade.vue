@@ -15,25 +15,25 @@
     <div class="result-analyse-content">
       <div class="row1">
         <div class="row1__item">
-          <ModuleTitle title="平均总成绩" tooltip="全年级学生成绩总数/年级学生总数" />
+          <ModuleTitle title="当期平均总成绩" tooltip="班级的考试总分数/班级参加考试总人数" />
           <BarChar :charData="gradeAverageResult" :type="1" class="char-box" />
         </div>
         <div class="row1__item">
-          <ModuleTitle title="平均单科成绩" tooltip="全年级学生单科成绩总数/年级学生总数" :selectOpt="courseList" @selChange="allCourseChange" :selValue="allCourseID" />
+          <ModuleTitle title="当期平均单科成绩" tooltip="科目的班级总成绩/班级参加考试的人数" :selectOpt="courseList" @selChange="allCourseChange" :selValue="allCourseID" />
           <BarChar :charData="gradeCourseAverageResult" :type="2" class="char-box" />
         </div>
         <div class="row1__item">
-          <ModuleTitle title="及格率" tooltip="全年级成绩大于60分的科目/全年级参加考试的总科目" />
+          <ModuleTitle title="当期及格率" tooltip="全年级成绩大于60分的科目/全年级参加考试的总科目" />
           <PieChar :charData="gradePassPercent" class="char-box" />
         </div>
       </div>
       <div class="row2">
         <div class="row2__item">
-          <ModuleTitle title="平均总成绩" tooltip="全年级成绩大于60分的科目/全年级参加考试的总科目" />
+          <ModuleTitle title="历史平均总成绩" tooltip="班级的考试总分数/班级参加考试总人数" />
           <LineChar :type="1" class="char-box" :charData="gradeAverageResultHistory" />
         </div>
         <div class="row2__item">
-          <ModuleTitle title="平均单科成绩" tooltip="全年级成绩大于60分的科目/全年级参加考试的总科目" @selChange="singleCourseChange" :selectOpt="courseList" :selValue="singleCourseID" />
+          <ModuleTitle title="历史平均单科成绩" tooltip="科目的班级总成绩/班级参加考试的人数" @selChange="singleCourseChange" :selectOpt="courseList" :selValue="singleCourseID" />
           <LineChar :type="2" class="char-box" :charData="gradeCourseAverageResultHistory" />
         </div>
       </div>

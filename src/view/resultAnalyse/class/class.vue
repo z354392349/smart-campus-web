@@ -25,25 +25,25 @@
     <div class="result-analyse-content">
       <div class="row1">
         <div class="row1__item">
-          <ModuleTitle title="总成绩" tooltip="每个学生考试总成绩-当期" />
+          <ModuleTitle title="当期总成绩" tooltip="每个学生考试总成绩" />
           <BarChar :charData="studentTotalResult" :type="1" class="char-box" />
         </div>
         <div class="row1__item">
-          <ModuleTitle title="单科成绩" tooltip="每个学生考试单科成绩-当期" :selectOpt="courseList" @selChange="allCourseChange" :selValue="lastExamCourseID" />
+          <ModuleTitle title="当期单科成绩" tooltip="每个学生考试单科成绩" :selectOpt="courseList" @selChange="allCourseChange" :selValue="lastExamCourseID" />
           <BarChar :charData="gradeCourseAverageResult" :type="2" class="char-box" />
         </div>
         <div class="row1__item">
-          <ModuleTitle title="及格率" tooltip="全班级成绩大于60分的科目/全班级参加考试的总科目-当期" />
+          <ModuleTitle title="当期及格率" tooltip="全班级成绩大于60分的科目/全班级参加考试的总科目" />
           <PieChar :charData="classPassPercent" class="char-box" />
         </div>
       </div>
       <div class="row2">
         <div class="row2__item">
-          <ModuleTitle title="总成绩" tooltip="每个学生每一期参加考试的总成绩" />
+          <ModuleTitle title="历史总成绩" tooltip="每个学生每一期参加考试的总成绩" />
           <LineChar :type="1" class="char-box" :charData="studentTotalResultHistory" />
         </div>
         <div class="row2__item">
-          <ModuleTitle title="单科成绩" tooltip="每个学生每一期参加考试的单科成绩" @selChange="singleCourseChange" :selectOpt="courseList" :selValue="singleCourseID" />
+          <ModuleTitle title="历史单科成绩" tooltip="每个学生每一期参加考试的单科成绩" @selChange="singleCourseChange" :selectOpt="courseList" :selValue="singleCourseID" />
           <LineChar :type="2" class="char-box" :charData="studentCourseResultHistory" />
         </div>
       </div>
