@@ -41,7 +41,8 @@ export default {
           // containLabel: false
         },
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
+          valueFormatter: (value) => value + '%'
         },
 
         xAxis: {

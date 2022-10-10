@@ -3,19 +3,19 @@
     <div class="search-term">
       <el-form :inline="true" :model="searchInfo" class="demo-form-inline">
         <el-form-item label="考试">
-          <el-select v-model="searchInfo.examID" value-key="" placeholder="请选择考试" clearable filterable>
+          <el-select v-model="searchInfo.examID" value-key="" placeholder="请选择考试" filterable>
             <el-option v-for="n in examList" :key="n.ID" :label="n.name" :value="n.ID"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="学生" v-if="authorityId !== '03'">
+        <el-form-item label="学生" v-if="userInfo.authority.authorityId !== '03'">
           <el-input v-model="searchInfo.name" placeholder="请输入学生姓名" />
         </el-form-item>
-        <el-form-item label="年级" v-if="authorityId !== '03'">
+        <el-form-item label="年级" v-if="userInfo.authority.authorityId !== '03'">
           <el-select v-model="searchInfo.gradeID" placeholder="请选择年级" @change="gradeChane">
             <el-option v-for="n in gradeList" :key="n.ID" :label="n.name" :value="n.ID" />
           </el-select>
         </el-form-item>
-        <el-form-item label="班级" v-if="authorityId !== '03'">
+        <el-form-item label="班级" v-if="userInfo.authority.authorityId !== '03'">
           <el-select v-model="searchInfo.classID" placeholder="请选择班级">
             <el-option v-for="n in classList" :key="n.ID" :label="n.name" :value="n.ID" />
           </el-select>

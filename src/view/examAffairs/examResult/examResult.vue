@@ -38,7 +38,7 @@
       <el-table-column label="备注" prop="description" />
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="small" type="primary" icon="el-icon-edit" @click="editExamResult(scope.row)">编辑</el-button>
+          <el-button size="small" type="primary" icon="el-icon-edit" @click="editExamResult(scope.row)" v-if="userInfo.authority.authorityId == '01'">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -64,6 +64,7 @@ import { getGradeList } from '@/api/grade'
 import infoList from '@/mixins/infoList'
 import { copyObj } from '@/utils/tool.js'
 import UpExamResultDialog from './components/upExamResultDialog'
+import { mapGetters } from 'vuex'
 export default {
   name: 'Grade',
 
@@ -87,6 +88,9 @@ export default {
     }
   },
   components: { UpExamResultDialog },
+  computed: {
+    ...mapGetters('user', ['userInfo'])
+  },
   methods: {
     // 获取班级列表
     async getClassList() {

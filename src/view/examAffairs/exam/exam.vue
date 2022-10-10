@@ -87,7 +87,6 @@
 </template>
 
 <script>
-// TODO://撤销分配考场
 import moment from 'moment'
 import { createtExam, upExam, getExamList, deleteExam } from '@/api/exam'
 import { getGradeList } from '@/api/grade'
