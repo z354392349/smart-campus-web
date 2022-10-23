@@ -11,7 +11,7 @@
           <el-input v-model="searchInfo.name" placeholder="请输入班级名称" />
         </el-form-item>
         <el-form-item>
-          <el-button size="mini" type="primary" icon="el-icon-search" @click="getTableData()">查询</el-button>
+          <el-button size="mini" type="primary" icon="el-icon-search" @click="getTableData(1)">查询</el-button>
           <el-button size="mini" type="primary" icon="el-icon-plus" @click="openDialog('add')">新增</el-button>
         </el-form-item>
       </el-form>
