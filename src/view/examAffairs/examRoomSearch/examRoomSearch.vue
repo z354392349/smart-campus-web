@@ -110,6 +110,7 @@ export default {
       classList.unshift({ ID: 0, name: '全部' })
       this.classList = classList
       this.searchInfo.classID = 0
+      this.searchInfo = JSON.parse(JSON.stringify(this.searchInfo))
     },
     async getExamList() {
       let res = await getExamList({ page: 1, pageSize: 100 })
