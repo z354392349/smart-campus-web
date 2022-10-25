@@ -30,6 +30,7 @@
       <el-table-column label="学生姓名" prop="studentName" />
       <el-table-column label="年级" prop="gradeName" />
       <el-table-column label="班级" prop="className" />
+      <el-table-column label="科目" prop="courseName" />
       <el-table-column label="成绩" prop="result">
         <template slot-scope="scope">
           <p>{{ scope.row.result == null ? '-' : scope.row.result }}</p>
