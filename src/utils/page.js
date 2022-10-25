@@ -1,7 +1,7 @@
-import config from '@/core/config'
+// import config from '@/core/config'
 export default function getPageTitle(pageTitle) {
   if (pageTitle) {
-    return `${pageTitle} - ${config.appName}`
+    return `${pageTitle}`
   }
-  return `${config.appName}`
+  return `英才中学智慧校园系统`
 }
