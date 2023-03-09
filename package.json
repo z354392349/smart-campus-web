@@ -1,6 +1,6 @@
 {
-  "name": "gin-vue-admin",
-  "version": "0.1.0",
+  "name": "smart-campus-admin",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
